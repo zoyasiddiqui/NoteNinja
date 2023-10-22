@@ -61,13 +61,20 @@
 +class FileUserDataAccess {
 }
 
+'Implementations
 CommonNote ..|> Note
 CommonNoteFactory ..|> NoteFactory
 CreateNoteInteractor ..|> CreateNoteInputBoundary
 CreateNotePresenter ..|> CreateNoteOutputBoundary
 FileUserDataAccess ..|> CreateNoteDataAccessInterface
+
+'Compositions
 CreateNoteFactory --* FileUserDataAccess
 CreateNoteInputBoundary --* CreateNoteController
 CreateNoteViewModel --* CreateNotePresenter
+
+'Associations
+CommonNoteFactory -- CommonNote
+
 
 @enduml
