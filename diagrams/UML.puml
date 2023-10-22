@@ -1,0 +1,73 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
++abstract class Note {
+
++getName()
++getCodeSnippets()
++getAISnippets()
++getTags()
+
+}
+
++abstract class NoteFactory {
+
++create(): Note
+}
+
++class CommonNote {
+
+}
+
++class CommonNoteFactory {
+}
+
++class CreateNoteController {
+
++execute()
+}
+
++class CreateNotePresenter {
+}
+
++class CreateNoteState {
+}
+
++class CreateNoteViewModel {
+}
+
++interface CreateNoteInputBoundary {
+}
+
++class CreateNoteInputData {
+}
+
++class CreateNoteInteractor {
+}
+
++interface CreateNoteOutputBoundary {
+}
+
++class CreateNoteOutputData {
+}
+
++interface CreateNoteDataAccessInterface {
+}
+
++class CreateNoteView {
+}
+
++class FileUserDataAccess {
+}
+
+CommonNote ..|> Note
+CommonNoteFactory ..|> NoteFactory
+CreateNoteInteractor ..|> CreateNoteInputBoundary
+CreateNotePresenter ..|> CreateNoteOutputBoundary
+FileUserDataAccess ..|> CreateNoteDataAccessInterface
+CreateNoteFactory --* FileUserDataAccess
+CreateNoteInputBoundary --* CreateNoteController
+CreateNoteViewModel --* CreateNotePresenter
+
+@enduml
