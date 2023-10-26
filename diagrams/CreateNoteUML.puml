@@ -13,7 +13,8 @@
 
 +abstract class NoteFactory {
 
-+create(): Note
++create(): Note {
+
 }
 
 +class CommonNote {
