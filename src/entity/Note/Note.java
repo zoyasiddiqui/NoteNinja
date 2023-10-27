@@ -1,4 +1,7 @@
-package entity;
+package entity.Note;
+
+import entity.Tag;
+import java.util.List;
 
 public interface Note {
 
