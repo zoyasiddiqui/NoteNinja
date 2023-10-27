@@ -1,4 +1,4 @@
-package entity;
+package entity.AISnippet;
 
 public interface AISnippet {
 
@@ -8,6 +8,6 @@ public interface AISnippet {
 
     String getSnippetQuestion();
 
-    String getSnippetQuestion();
+    String getSnippetResponse();
 
 }
