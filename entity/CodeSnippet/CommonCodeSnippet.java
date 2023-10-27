@@ -1,5 +1,5 @@
 package entity;
 
-class CodeSnippet implements CommonCodeSnippet {
+class CommonCodeSnippet implements CodeSnippet {
 
 }
