@@ -1,6 +1,6 @@
 package entity;
 
-class CommonCodeSnippet implements CodeSnippet {
+class CommonCodeSnippet implements entity.CodeSnippet {
 
     @Override
     public void setCode(String code) {
