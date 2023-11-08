@@ -1,4 +1,4 @@
-package interface_adapter.create_AI_snippet;
+package interface_adapter.delete_note;
 
 import interface_adapter.ViewModel;
 
