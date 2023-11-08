@@ -14,8 +14,16 @@ public class EditViewModel extends ViewModel {
     private String noteTitle;
 
     //TODO: modify constructor as needed
-    public EditViewModel(String viewName) {
-        super(viewName);
+    public EditViewModel() {
+        super("edit view");
+    }
+
+    public void setNoteTitle(String noteTitle) {
+        this.noteTitle = noteTitle;
+    }
+
+    public String getNoteTitle() {
+        return noteTitle;
     }
 
     @Override
