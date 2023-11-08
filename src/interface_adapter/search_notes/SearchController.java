@@ -13,7 +13,7 @@ public class SearchController {
         this.searchNotesInteractor= searchNotesInteractor;
     }
 
-    public void execute(String request, String prompt) throws IOException {
+    public void execute(String search) throws IOException {
         this.searchNotesInteractor.execute();
     }
 }

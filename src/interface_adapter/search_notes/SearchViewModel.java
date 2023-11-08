@@ -9,9 +9,15 @@ public class SearchViewModel extends ViewModel {
 
     public final String CREATE_BUTTON = "Create Button";
 
+    private final SearchState state = new SearchState();
+
     //TODO: modify constructor as needed
     public SearchViewModel(String viewName) {
         super(viewName);
+    }
+
+    public SearchState getState() {
+        return state;
     }
 
     @Override
