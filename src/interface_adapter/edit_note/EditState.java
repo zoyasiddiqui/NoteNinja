@@ -10,10 +10,10 @@ public class EditState {
     // Because of the previous copy constructor, the default constructor must be explicit.
     public EditState() {}
 
-    public String getUsername() {
+    public String getNoteTitle() {
         return noteTitle;
     }
-    public void setUsername(String noteTitle) {
+    public void setNoteTitle(String noteTitle) {
         this.noteTitle = noteTitle;
     }
 }
