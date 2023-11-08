@@ -1,0 +1,1 @@
+//TODO: decide if we need a separate view model for saving the note
