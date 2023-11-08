@@ -7,6 +7,8 @@ import java.beans.PropertyChangeSupport;
 
 public class SearchViewModel extends ViewModel {
 
+    public final String CREATE_BUTTON = "Create Button";
+
     //TODO: modify constructor as needed
     public SearchViewModel(String viewName) {
         super(viewName);
