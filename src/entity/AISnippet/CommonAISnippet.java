@@ -1,4 +1,4 @@
-package entity;
+package entity.AISnippet;
 
 import entity.AISnippet.AISnippet;
 

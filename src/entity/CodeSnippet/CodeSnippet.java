@@ -1,4 +1,4 @@
-package entity;
+package entity.CodeSnippet;
 
 public interface CodeSnippet {
 

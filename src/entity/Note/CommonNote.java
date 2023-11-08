@@ -1,5 +1,7 @@
 package entity.Note;
 
+import entity.Tag.Tag;
+
 import java.util.List;
 
 class CommonNote implements Note {
@@ -10,9 +12,10 @@ class CommonNote implements Note {
     }
 
     @Override
-    public void setTags(List<entity.Tag> tags) {
+    public void setTags(List<Tag> tags) {
 
     }
+
 
     @Override
     public void setText(List<String> text) {
@@ -35,7 +38,7 @@ class CommonNote implements Note {
     }
 
     @Override
-    public List<entity.Tag> getTags() {
+    public List<Tag> getTags() {
         return null;
     }
 

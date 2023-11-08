@@ -1,4 +1,4 @@
-package entity;
+package entity.Tag;
 
 public interface Tag {
 
