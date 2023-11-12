@@ -1,27 +1,47 @@
 package app;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.edit_note.EditViewModel;
+import interface_adapter.search_notes.SearchViewModel;
 import view.NoteEditorView;
+import view.SearchNotesView;
+import view.ViewManager;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        // Create an instance of EditViewModel (assuming you have implemented it)
+        // The main application window.
+        JFrame application = new JFrame("Trial");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        CardLayout cardLayout = new CardLayout();
+
+        // The various View objects. Only one view is visible at a time.
+        JPanel views = new JPanel(cardLayout);
+        application.add(views);
+
+        // This keeps track of and manages which view is currently showing.
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
+
+        // Create view models and views to add to list of accessible views
+        SearchViewModel searchViewModel = new SearchViewModel();
         EditViewModel editViewModel = new EditViewModel();
 
-        // Create an instance of NoteEditorView with the EditViewModel
+        SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
+        views.add(searchNotesView, searchNotesView.viewName);
+
         NoteEditorView noteEditorView = new NoteEditorView(editViewModel);
+        views.add(noteEditorView, noteEditorView.viewName);
 
-        // Set up the JFrame
-        JFrame application = new JFrame("Edit Note Example");
-        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        application.getContentPane().add(noteEditorView); // Add the NoteEditorView to the JFrame
+        viewManagerModel.setActiveView(searchNotesView.viewName);
+        viewManagerModel.firePropertyChanged();
 
-        // Pack and display the JFrame
         application.pack();
         application.setVisible(true);
-
     }
 }
