@@ -1,8 +1,8 @@
 package view;
 
 import interface_adapter.create_note.CreateNoteController;
+import interface_adapter.edit_note.EditViewModel;
 import interface_adapter.search_notes.SearchController;
-import interface_adapter.search_notes.SearchState;
 import interface_adapter.search_notes.SearchViewModel;
 
 import javax.swing.*;
@@ -16,13 +16,16 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
     public final String viewName = "search notes";
     private final SearchViewModel searchViewModel;
     private final SearchController searchController;
+    private final EditViewModel editViewModel;
     private final CreateNoteController createNoteController;
     private final JButton createNote;
 
-    public SearchNotesView(SearchViewModel searchViewModel, SearchController searchController, CreateNoteController createNoteController) {
+    public SearchNotesView(SearchViewModel searchViewModel, SearchController searchController, EditViewModel editViewModel, CreateNoteController createNoteController) {
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
+        this.editViewModel = editViewModel;
         this.createNoteController = createNoteController;
+        this.addPropertyChangeListener(this);
 
         JPanel buttons = new JPanel();
         this.createNote = new JButton(searchViewModel.CREATE_BUTTON);
@@ -42,8 +45,10 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
                     }
                 }
         );
-    }
 
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(buttons);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -52,6 +57,6 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        JOptionPane.showMessageDialog(this, "Created a note!");
     }
 }
