@@ -5,6 +5,8 @@ import entity.Tag.Tag;
 import java.util.List;
 
 class CommonNote implements Note {
+    private String name;
+
 
     @Override
     public void setName(String title) {

@@ -8,7 +8,7 @@ class CommonNoteFactory implements NoteFactory{
 
     @Override
     public void create(String name, List<Tag> tags, List<String> text) {
-
+        //want to return new common note
     }
 
 }
