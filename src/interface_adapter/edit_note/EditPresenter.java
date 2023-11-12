@@ -5,7 +5,7 @@ import use_case.edit_note.EditNoteOutputData;
 
 public class EditPresenter implements EditNoteOutputBoundary {
     @Override
-    public void prepareSaveView(EditNoteOutputData note) {
+    public void prepareSuccessView(EditNoteOutputData note) {
 
     }
 }
