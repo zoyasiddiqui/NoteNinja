@@ -7,8 +7,9 @@ import java.util.List;
 class CommonNoteFactory implements NoteFactory{
 
     @Override
-    public void create(String name, List<Tag> tags, List<String> text) {
-        //want to return new common note
+    public Note create(String name, List<Tag> tags, List<String> text) {
+        // add implementation to actually create the note
+        return new CommonNote(name, tags, text);
     }
 
 }

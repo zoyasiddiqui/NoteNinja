@@ -6,6 +6,14 @@ import java.util.List;
 
 class CommonNote implements Note {
     private String name;
+    private List<Tag> tags;
+    private List<String> text;
+
+    public CommonNote(String name, List<Tag> tags, List<String> text) {
+        this.name = name;
+        this.tags = tags;
+        this.text = text;
+    }
 
 
     @Override
