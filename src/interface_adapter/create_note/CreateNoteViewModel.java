@@ -6,10 +6,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class CreateNoteViewModel extends ViewModel {
-
-    //TODO: modify constructor as needed
-    public CreateNoteViewModel (String viewName) {
-        super(viewName);
+    public CreateNoteViewModel () {
+        super("create note");
     }
 
     @Override
