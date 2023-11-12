@@ -1,13 +1,14 @@
 package interface_adapter.create_note;
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
+import use_case.create_note.CreateNoteInputBoundary;
 import use_case.create_note.CreateNoteInteractor;
 
 import java.io.IOException;
 
 public class CreateNoteController{
-    final CreateNoteInteractor createNoteInteractor;
+    final CreateNoteInputBoundary createNoteInteractor;
 
-    public CreateNoteController(CreateNoteInteractor createNoteInteractor) {
+    public CreateNoteController(CreateNoteInputBoundary createNoteInteractor) {
         this.createNoteInteractor = createNoteInteractor;
     }
 

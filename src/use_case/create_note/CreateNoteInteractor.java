@@ -1,6 +1,5 @@
 package use_case.create_note;
 
-import data_access.NoteDataAccessObject;
 import entity.Note.Note;
 import entity.Note.NoteFactory;
 import entity.Tag.Tag;
@@ -11,9 +10,9 @@ import java.util.List;
 public class CreateNoteInteractor implements CreateNoteInputBoundary{
 
     final NoteFactory noteFactory;
-    final NoteDataAccessObject noteDataAccessObject;
+    final CreateNoteDataAccessInterface noteDataAccessObject;
 
-    public CreateNoteInteractor(NoteFactory noteFactory, NoteDataAccessObject noteDataAccessObject) {
+    public CreateNoteInteractor(NoteFactory noteFactory, CreateNoteDataAccessInterface noteDataAccessObject) {
         this.noteFactory = noteFactory;
         this.noteDataAccessObject = noteDataAccessObject;
     }
