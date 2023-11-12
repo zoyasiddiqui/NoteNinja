@@ -57,6 +57,5 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        JOptionPane.showMessageDialog(this, "Created a note!");
     }
 }
