@@ -7,13 +7,12 @@ import java.beans.PropertyChangeSupport;
 
 public class SearchViewModel extends ViewModel {
 
-    public final String CREATE_BUTTON = "Create Button";
+    public final String CREATE_BUTTON = "Create Note";
 
     private final SearchState state = new SearchState();
 
-    //TODO: modify constructor as needed
-    public SearchViewModel(String viewName) {
-        super(viewName);
+    public SearchViewModel() {
+        super("search notes");
     }
 
     public SearchState getState() {
