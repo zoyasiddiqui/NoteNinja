@@ -31,7 +31,6 @@ public class SearchNotesUseCaseFactory {
         CreateNoteController createNoteController = createCreateNoteController(searchViewModel, editViewModel, viewManagerModel);
 
         return new SearchNotesView(searchViewModel, searchController, editViewModel, createNoteController);
-
     }
 
     private static SearchController createSearchController() {
