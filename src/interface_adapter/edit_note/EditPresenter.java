@@ -18,6 +18,11 @@ public class EditPresenter implements EditNoteOutputBoundary {
 
     @Override
     public void prepareSuccessView(EditNoteOutputData note) {
-
+        EditState noteState = editViewModel.getState();
+        this.editViewModel.setState(noteState);
+        this.editViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(editViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        System.out.println(viewManagerModel.getActiveView());
     }
 }
