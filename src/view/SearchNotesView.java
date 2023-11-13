@@ -25,7 +25,8 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
         this.searchController = searchController;
         this.editViewModel = editViewModel;
         this.createNoteController = createNoteController;
-        this.addPropertyChangeListener(this);
+        searchViewModel.addPropertyChangeListener(this);
+        editViewModel.addPropertyChangeListener(this);
 
         JPanel buttons = new JPanel();
         this.createNote = new JButton(searchViewModel.CREATE_BUTTON);
