@@ -52,7 +52,6 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override
