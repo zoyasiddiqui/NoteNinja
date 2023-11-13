@@ -1,5 +1,7 @@
 package app;
 
+import entity.Note.CommonNoteFactory;
+import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.edit_note.EditViewModel;
@@ -10,9 +12,10 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // The main application window.
         JFrame application = new JFrame("Trial");
@@ -32,6 +35,10 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         EditViewModel editViewModel = new EditViewModel();
 
+        NoteFactory noteFactory = new CommonNoteFactory();
+
+        //note: when you click create note and edit a note and then you want to go back to searchnotesview,
+        //you should create a new searchnotesview.
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
         views.add(searchNotesView, searchNotesView.viewName);
 
