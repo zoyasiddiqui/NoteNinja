@@ -15,7 +15,6 @@ public class EditViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    //TODO: modify constructor as needed
     public EditViewModel() {
         super("edit view");
     }
@@ -30,6 +29,10 @@ public class EditViewModel extends ViewModel {
 
     public String getNoteTitle() {
         return noteTitle;
+    }
+
+    public EditState getState() {
+        return this.state;
     }
 
     // firePropertyChanged() is what the EditPresenter will call a
