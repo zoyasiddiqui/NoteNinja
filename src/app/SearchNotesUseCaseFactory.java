@@ -7,6 +7,7 @@ import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteController;
 import interface_adapter.create_note.CreateNotePresenter;
+import interface_adapter.edit_note.EditPresenter;
 import interface_adapter.edit_note.EditViewModel;
 import interface_adapter.search_notes.SearchController;
 import interface_adapter.search_notes.SearchPresenter;
@@ -15,6 +16,7 @@ import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.create_note.CreateNoteInputBoundary;
 import use_case.create_note.CreateNoteInteractor;
 import use_case.create_note.CreateNoteOutputBoundary;
+import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.search_notes.SearchInputBoundary;
 import use_case.search_notes.SearchInteractor;
 import use_case.search_notes.SearchNotesAccessInterface;
@@ -46,12 +48,11 @@ public class SearchNotesUseCaseFactory {
     private static CreateNoteController createCreateNoteController(SearchViewModel searchViewModel, EditViewModel editViewModel, ViewManagerModel viewManagerModel) {
         CreateNoteDataAccessInterface dataAccessObject = new EditNoteDataAccessObject();
 
-        //need to figure out why we even have this boundary
-        CreateNoteOutputBoundary createNoteOutputBoundary = new CreateNotePresenter(searchViewModel, editViewModel, viewManagerModel);
+        EditNoteOutputBoundary editNotePresenter = new EditPresenter(searchViewModel, editViewModel, viewManagerModel);
 
         NoteFactory noteFactory = new CommonNoteFactory();
 
-        CreateNoteInputBoundary createNoteInteractor = new CreateNoteInteractor(noteFactory, dataAccessObject);
+        CreateNoteInputBoundary createNoteInteractor = new CreateNoteInteractor(noteFactory, dataAccessObject, editNotePresenter);
         return new CreateNoteController(createNoteInteractor);
     }
 
