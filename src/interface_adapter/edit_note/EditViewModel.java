@@ -44,4 +44,7 @@ public class EditViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
+    public void setState(EditState noteState) {
+        this.state = noteState;
+    }
 }
