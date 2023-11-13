@@ -6,7 +6,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class EditViewModel extends ViewModel {
-    public final String TITLE_LABEL = "Editing View";
 
     private EditState state = new EditState();
 
