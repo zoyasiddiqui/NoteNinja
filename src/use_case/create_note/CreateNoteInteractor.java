@@ -6,6 +6,7 @@ import entity.Tag.Tag;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary{
     }
 
     @Override
-    public void execute(String name) {
+    public void execute(String name) throws IOException {
         List<Tag> tags = new ArrayList<Tag>();
         List<String> text = new ArrayList<String>();
         Note note = noteFactory.create(name, tags, text);
