@@ -15,21 +15,20 @@ class CommonNote implements Note {
         this.text = text;
     }
 
-
     @Override
     public void setName(String title) {
-
+        this.name = title;
     }
 
     @Override
     public void setTags(List<Tag> tags) {
-
+        this.tags = tags;
     }
 
 
     @Override
     public void setText(List<String> text) {
-
+        this.text = text;
     }
 
     @Override
@@ -44,16 +43,16 @@ class CommonNote implements Note {
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
     public List<Tag> getTags() {
-        return null;
+        return this.tags;
     }
 
     @Override
     public List<String> getText() {
-        return null;
+        return this.text;
     }
 }

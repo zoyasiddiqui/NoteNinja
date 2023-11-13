@@ -1,14 +1,20 @@
 package entity.Tag;
 
-class CommonTag implements Tag {
+public class CommonTag implements Tag {
 
-    @Override
-    public void create(String title) {
+    private String attribute;
 
+    public CommonTag(String attribute) {
+        this.attribute = attribute;
     }
 
     @Override
-    public String getName() {
-        return null;
+    public String getAttribute() {
+        return this.attribute;
+    }
+
+    @Override
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 }
