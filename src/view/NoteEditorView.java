@@ -21,7 +21,7 @@ public class NoteEditorView extends JPanel implements ActionListener, PropertyCh
         this.editViewModel.addPropertyChangeListener(this);
 
         JPanel buttons = new JPanel();
-        saveNote = new JButton(editViewModel.LOGOUT_BUTTON_LABEL);
+        saveNote = new JButton(EditViewModel.SAVE_NOTE_LABEL);
         buttons.add(saveNote);
 
         saveNote.addActionListener(this);

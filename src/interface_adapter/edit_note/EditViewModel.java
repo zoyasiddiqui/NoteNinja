@@ -9,7 +9,7 @@ public class EditViewModel extends ViewModel {
 
     private EditState state = new EditState();
 
-    public static final String LOGOUT_BUTTON_LABEL = "Save";
+    public static final String SAVE_NOTE_LABEL = "Save";
     private String noteTitle;
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
