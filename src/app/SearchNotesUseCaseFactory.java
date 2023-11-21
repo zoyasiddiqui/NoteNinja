@@ -7,7 +7,7 @@ import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteController;
 import interface_adapter.edit_note.EditPresenter;
-import interface_adapter.edit_note.EditViewModel;
+import interface_adapter.edit_note.NoteEditViewModel;
 import interface_adapter.search_notes.SearchController;
 import interface_adapter.search_notes.SearchPresenter;
 import interface_adapter.search_notes.SearchViewModel;
@@ -29,7 +29,7 @@ public class SearchNotesUseCaseFactory {
 
     private SearchNotesUseCaseFactory() {}
 
-    public static SearchNotesView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, EditViewModel editViewModel) throws IOException {
+    public static SearchNotesView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, NoteEditViewModel editViewModel) throws IOException {
 
         NoteFactory noteFactory = new CommonNoteFactory();
         EditNoteDataAccessObject dataAccessObject = new EditNoteDataAccessObject("./notes/note"+noteNum+".csv",
@@ -51,7 +51,7 @@ public class SearchNotesUseCaseFactory {
         return new SearchController(searchNoteInteractor);
     }
 
-    private static CreateNoteController createCreateNoteController(SearchViewModel searchViewModel, EditViewModel editViewModel, ViewManagerModel viewManagerModel,
+    private static CreateNoteController createCreateNoteController(SearchViewModel searchViewModel, NoteEditViewModel editViewModel, ViewManagerModel viewManagerModel,
                                                                    NoteFactory noteFactory, EditNoteDataAccessObject dataAccessObject) {
 
         EditNoteOutputBoundary editNotePresenter = new EditPresenter(searchViewModel, editViewModel, viewManagerModel);

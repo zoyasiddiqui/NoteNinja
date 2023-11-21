@@ -5,7 +5,7 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class EditViewModel extends ViewModel {
+public class NoteEditViewModel extends ViewModel {
 
     private EditState state = new EditState();
 
@@ -14,7 +14,7 @@ public class EditViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public EditViewModel() {
+    public NoteEditViewModel() {
         super("edit view");
     }
     // note that the constructor doesn't take in a Note object

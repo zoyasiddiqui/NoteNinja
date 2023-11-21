@@ -3,10 +3,9 @@ package app;
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.create_note.CreateNoteViewModel;
-import interface_adapter.edit_note.EditViewModel;
+import interface_adapter.edit_note.NoteEditViewModel;
 import interface_adapter.search_notes.SearchViewModel;
-import view.EditorView;
+import view.NoteEditView;
 import view.SearchNotesView;
 import view.ViewManager;
 
@@ -33,7 +32,7 @@ public class Main {
 
         // Create view models and views to add to list of accessible views
         SearchViewModel searchViewModel = new SearchViewModel();
-        EditViewModel editViewModel = new EditViewModel();
+        NoteEditViewModel editViewModel = new NoteEditViewModel();
 
         NoteFactory noteFactory = new CommonNoteFactory();
 
@@ -42,7 +41,7 @@ public class Main {
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        EditorView noteEditorView = new EditorView(editViewModel);
+        NoteEditView noteEditorView = new NoteEditView(editViewModel);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);

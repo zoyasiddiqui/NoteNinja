@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.edit_note.EditViewModel;
+import interface_adapter.edit_note.NoteEditViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +9,13 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class EditorView extends JPanel implements ActionListener, PropertyChangeListener {
+public class NoteEditView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "editing";
-    private EditViewModel editViewModel;
+    private NoteEditViewModel editViewModel;
     final JButton saveNote;
     private JTextArea noteTextArea;
 
-    public EditorView(EditViewModel editViewModel) {
+    public NoteEditView(NoteEditViewModel editViewModel) {
         this.editViewModel = editViewModel;
         this.editViewModel.addPropertyChangeListener(this);
 
@@ -29,7 +29,7 @@ public class EditorView extends JPanel implements ActionListener, PropertyChange
 
         // create a JPanel for buttons
         JPanel buttons = new JPanel();
-        saveNote = new JButton(EditViewModel.SAVE_NOTE_LABEL);
+        saveNote = new JButton(NoteEditViewModel.SAVE_NOTE_LABEL);
         buttons.add(saveNote);
 
         // Add an ActionListener to the button (if needed)
