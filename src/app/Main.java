@@ -6,7 +6,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.edit_note.EditViewModel;
 import interface_adapter.search_notes.SearchViewModel;
-import view.NoteEditorView;
+import view.EditorView;
 import view.SearchNotesView;
 import view.ViewManager;
 
@@ -42,7 +42,7 @@ public class Main {
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        NoteEditorView noteEditorView = new NoteEditorView(editViewModel);
+        EditorView noteEditorView = new EditorView(editViewModel);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);
