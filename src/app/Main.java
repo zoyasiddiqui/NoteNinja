@@ -47,7 +47,9 @@ public class Main {
         viewManagerModel.setActiveView(searchNotesView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.pack();
+        // Start the application maximized
+        application.setExtendedState(JFrame.MAXIMIZED_BOTH);
         application.setVisible(true);
+
     }
 }
