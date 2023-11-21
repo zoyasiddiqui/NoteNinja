@@ -7,22 +7,26 @@ import use_case.edit_note.EditNoteOutputData;
 
 public class EditNotePresenter implements EditNoteOutputBoundary {
     private final SearchViewModel searchViewModel;
-    private final EditNoteViewModel editViewModel;
+    private final EditNoteViewModel editNoteViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public EditNotePresenter(SearchViewModel searchViewModel, EditNoteViewModel editViewModel, ViewManagerModel viewManagerModel) {
+    public EditNotePresenter(SearchViewModel searchViewModel, EditNoteViewModel editNoteViewModel, ViewManagerModel viewManagerModel) {
         this.searchViewModel = searchViewModel;
-        this.editViewModel = editViewModel;
+        this.editNoteViewModel = editNoteViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(EditNoteOutputData note) {
-        EditNoteState noteState = editViewModel.getState();
-        this.editViewModel.setState(noteState);
-        this.editViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(editViewModel.getViewName());
+        EditNoteState noteState = editNoteViewModel.getState();
+        noteState.setNoteTitle(note.getTitle());
+        this.editNoteViewModel.setState(noteState);
+        this.editNoteViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(editNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+
+        // print message to show view changed (can remove later if u want)
         System.out.println(viewManagerModel.getActiveView());
     }
 }

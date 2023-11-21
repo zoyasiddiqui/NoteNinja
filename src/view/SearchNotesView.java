@@ -39,7 +39,7 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
         buttons.setLayout(null);
 
         // Main title label
-        this.homeTitle = new JLabel("Note Ninja");
+        this.homeTitle = new JLabel("NoteNinja");
         homeTitle.setBounds(30, 0, 200, 100);
         Font largerFont = homeTitle.getFont().deriveFont(Font.PLAIN, 24); // Change 24 to the desired font size
         homeTitle.setFont(largerFont);
