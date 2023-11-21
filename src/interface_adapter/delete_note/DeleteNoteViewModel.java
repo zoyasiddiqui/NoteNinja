@@ -3,12 +3,11 @@ package interface_adapter.delete_note;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 
-public class DeleteViewModel extends ViewModel {
+public class DeleteNoteViewModel extends ViewModel {
 
     //TODO: modify constructor as needed
-    public DeleteViewModel(String viewName) {
+    public DeleteNoteViewModel(String viewName) {
         super(viewName);
     }
 
