@@ -1,14 +1,14 @@
 package interface_adapter.edit_note;
 
-public class EditState {
+public class EditNoteState {
     private String noteTitle = "";
 
-    public EditState(EditState copy) {
+    public EditNoteState(EditNoteState copy) {
         noteTitle = copy.noteTitle;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
-    public EditState() {}
+    public EditNoteState() {}
 
     public String getNoteTitle() {
         return noteTitle;

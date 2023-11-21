@@ -5,16 +5,16 @@ import interface_adapter.ViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class NoteEditViewModel extends ViewModel {
+public class EditNoteViewModel extends ViewModel {
 
-    private EditState state = new EditState();
+    private EditNoteState state = new EditNoteState();
 
     public static final String SAVE_NOTE_LABEL = "Save";
     private String noteTitle;
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public NoteEditViewModel() {
+    public EditNoteViewModel() {
         super("edit view");
     }
     // note that the constructor doesn't take in a Note object
@@ -30,7 +30,7 @@ public class NoteEditViewModel extends ViewModel {
         return noteTitle;
     }
 
-    public EditState getState() {
+    public EditNoteState getState() {
         return this.state;
     }
 
@@ -43,7 +43,7 @@ public class NoteEditViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public void setState(EditState noteState) {
+    public void setState(EditNoteState noteState) {
         this.state = noteState;
     }
 }

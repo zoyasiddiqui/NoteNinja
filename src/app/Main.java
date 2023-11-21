@@ -3,9 +3,9 @@ package app;
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.edit_note.NoteEditViewModel;
+import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
-import view.NoteEditView;
+import view.EditNoteView;
 import view.SearchNotesView;
 import view.ViewManager;
 
@@ -32,16 +32,16 @@ public class Main {
 
         // Create view models and views to add to list of accessible views
         SearchViewModel searchViewModel = new SearchViewModel();
-        NoteEditViewModel editViewModel = new NoteEditViewModel();
+        EditNoteViewModel editViewModel = new EditNoteViewModel();
 
         NoteFactory noteFactory = new CommonNoteFactory();
 
-        //note: when you click create note and edit a note and then you want to go back to searchnotesview,
-        //you should create a new searchnotesview.
+        //note: when you click create note and edit a note, and then you want to go back to SearchNotesView,
+        //you should create a new SearchNotesView.
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        NoteEditView noteEditorView = new NoteEditView(editViewModel);
+        EditNoteView noteEditorView = new EditNoteView(editViewModel);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);

@@ -5,12 +5,12 @@ import interface_adapter.search_notes.SearchViewModel;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 
-public class EditPresenter implements EditNoteOutputBoundary {
+public class EditNotePresenter implements EditNoteOutputBoundary {
     private final SearchViewModel searchViewModel;
-    private final NoteEditViewModel editViewModel;
+    private final EditNoteViewModel editViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public EditPresenter(SearchViewModel searchViewModel, NoteEditViewModel editViewModel, ViewManagerModel viewManagerModel) {
+    public EditNotePresenter(SearchViewModel searchViewModel, EditNoteViewModel editViewModel, ViewManagerModel viewManagerModel) {
         this.searchViewModel = searchViewModel;
         this.editViewModel = editViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -18,7 +18,7 @@ public class EditPresenter implements EditNoteOutputBoundary {
 
     @Override
     public void prepareSuccessView(EditNoteOutputData note) {
-        EditState noteState = editViewModel.getState();
+        EditNoteState noteState = editViewModel.getState();
         this.editViewModel.setState(noteState);
         this.editViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(editViewModel.getViewName());

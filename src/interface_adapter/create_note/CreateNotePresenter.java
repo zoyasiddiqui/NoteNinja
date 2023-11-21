@@ -1,7 +1,7 @@
 package interface_adapter.create_note;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.edit_note.NoteEditViewModel;
+import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_note.CreateNoteOutputBoundary;
 import use_case.create_note.CreateNoteOutputData;
@@ -9,10 +9,10 @@ import use_case.create_note.CreateNoteOutputData;
 public class CreateNotePresenter implements CreateNoteOutputBoundary {
 
     private final SearchViewModel searchViewModel;
-    private final NoteEditViewModel editViewModel;
+    private final EditNoteViewModel editViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public CreateNotePresenter(SearchViewModel searchViewModel, NoteEditViewModel editViewModel, ViewManagerModel viewManagerModel) {
+    public CreateNotePresenter(SearchViewModel searchViewModel, EditNoteViewModel editViewModel, ViewManagerModel viewManagerModel) {
         this.searchViewModel = searchViewModel;
         this.editViewModel = editViewModel;
         this.viewManagerModel = viewManagerModel;
