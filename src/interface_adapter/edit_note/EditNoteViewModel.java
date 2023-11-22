@@ -11,6 +11,7 @@ public class EditNoteViewModel extends ViewModel {
 
     public static final String SAVE_NOTE_LABEL = "Save";
     private String noteTitle;
+    private final String viewName = "editing";
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -45,5 +46,9 @@ public class EditNoteViewModel extends ViewModel {
 
     public void setState(EditNoteState noteState) {
         this.state = noteState;
+    }
+
+    public String getViewName() {
+        return this.viewName;
     }
 }

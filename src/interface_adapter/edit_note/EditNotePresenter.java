@@ -25,8 +25,5 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
 
         viewManagerModel.setActiveView(editNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-
-        // print message to show view changed (can remove later if u want)
-        System.out.println(viewManagerModel.getActiveView());
     }
 }
