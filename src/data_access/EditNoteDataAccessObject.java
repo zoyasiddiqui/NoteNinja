@@ -10,12 +10,19 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
-    String url = "https://api.apispreadsheets.com/data/9pYIi0HNV5wCWDYX/";
+    private static List<Note> notes = new ArrayList<Note>();
+    private String url = "https://api.apispreadsheets.com/data/9pYIi0HNV5wCWDYX/";
 
     public EditNoteDataAccessObject() {}
+
+    public List<Note> getNotes() {
+        return this.notes;
+    }
 
     @Override
     public void save(Note note) throws IOException {
@@ -23,6 +30,7 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("Content-type", "application/json");
+        //FIGURE OUT HOW TO WRITE CORRECT QUERY!
         String query = "select * from 9pYIi0HNV5wCWDYX where Note Name='Note Content'";
         String body = "{\"data\": {\"Name\": \"\", \"ID\":\"\", \"Content\":\"New note content\"} \"query\":"+query+"}";
         connection.setDoOutput(true);
@@ -30,6 +38,11 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
         writer.write(body);
         writer.flush();
         writer.close();
+
+        notes.add(note);
+        for (Note n: notes) {
+            System.out.println(n);
+        }
     }
 
     @Override
