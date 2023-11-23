@@ -2,7 +2,6 @@ package use_case.create_note;
 
 import entity.Note.Note;
 import entity.Note.NoteFactory;
-import entity.Tag.Tag;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 
@@ -24,12 +23,11 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary{
 
     @Override
     public void execute(String name) throws IOException {
-        List<Tag> tags = new ArrayList<Tag>();
         String text = "";
-        Note note = noteFactory.create(name, tags, text);
+        Note note = noteFactory.create(name, text);
         noteDataAccessObject.save(note);
 
-        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note, name, tags, text);
+        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note, name, text);
         editNotePresenter.prepareNote(editNoteOutputData);
     }
 }
