@@ -16,9 +16,8 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
         this.editNotePresenter = editNotePresenter;
     }
 
-
     @Override
-    public void execute() throws IOException {
+    public void execute(String noteId) throws IOException {
 
     }
 }
