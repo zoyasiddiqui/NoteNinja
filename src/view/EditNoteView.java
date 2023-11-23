@@ -13,27 +13,33 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "editing";
     private EditNoteViewModel editViewModel;
     final JButton saveNote;
+    final JButton deleteNote; // Added the deleteNote button
     private JTextArea noteTextArea;
 
     public EditNoteView(EditNoteViewModel editViewModel) {
         this.editViewModel = editViewModel;
         this.editViewModel.addPropertyChangeListener(this);
 
-        // create a JTextArea for note-taking
+        // Create a JTextArea for note-taking
         noteTextArea = new JTextArea();
         noteTextArea.setLineWrap(true);
         noteTextArea.setWrapStyleWord(true);
 
-        // create a JScrollPane to allow scrolling if the text is too long
+        // Create a JScrollPane to allow scrolling if the text is too long
         JScrollPane scrollPane = new JScrollPane(noteTextArea);
 
-        // create a JPanel for buttons
+        // Create a JPanel for buttons
         JPanel buttons = new JPanel();
         saveNote = new JButton(EditNoteViewModel.SAVE_NOTE_LABEL);
         buttons.add(saveNote);
 
-        // Add an ActionListener to the button (if needed)
+        // Add an ActionListener to the saveNote button (if needed)
         saveNote.addActionListener(this);
+
+        // Add the deleteNote button
+        deleteNote = new JButton("Delete");
+        buttons.add(deleteNote);
+        deleteNote.addActionListener(this);
 
         // Set the layout manager for this JPanel
         setLayout(new BorderLayout());
@@ -47,7 +53,13 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Handle button clicks or perform any necessary actions
+        if (e.getSource() == saveNote) {
+            // Handle saveNote button click
+            // You might want to invoke methods in editViewModel to handle the save action
+        } else if (e.getSource() == deleteNote) {
+            // Handle deleteNote button click
+            // You might want to invoke methods in editViewModel to handle the delete action
+        }
     }
 
     @Override
