@@ -1,5 +1,6 @@
 package view;
 
+import data_access.EditNoteDataAccessObject;
 import interface_adapter.create_note.CreateNoteController;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchController;
@@ -7,8 +8,6 @@ import interface_adapter.search_notes.SearchViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.border.*;
-import javax.swing.plaf.basic.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -21,17 +20,18 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
     private final SearchController searchController;
     private final EditNoteViewModel editViewModel;
     private final CreateNoteController createNoteController;
+    private final EditNoteDataAccessObject editNoteDataAccessObject;
     private final JButton createNote;
     private final JLabel homeTitle;
 
-    public SearchNotesView(SearchViewModel searchViewModel, SearchController searchController, EditNoteViewModel editViewModel, CreateNoteController createNoteController) {
+    public SearchNotesView(SearchViewModel searchViewModel, SearchController searchController, EditNoteViewModel editViewModel, CreateNoteController createNoteController, EditNoteDataAccessObject editNoteDataAccessObject) {
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
         this.editViewModel = editViewModel;
         this.createNoteController = createNoteController;
+        this.editNoteDataAccessObject = editNoteDataAccessObject;
         searchViewModel.addPropertyChangeListener(this);
         editViewModel.addPropertyChangeListener(this);
-
 
         // ==== MAKING BUTTONS/ LABELS ====
 
@@ -50,8 +50,8 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
         createNote.setBounds(30, 90, 140, 30);
         buttons.add(createNote);
 
-        // ================================
 
+        // === ADD ACTION LISTENERS ===
 
         createNote.addActionListener(
                 new ActionListener() {

@@ -42,7 +42,7 @@ public class Main {
 
         //note: when you click create note and edit a note, and then you want to go back to SearchNotesView,
         //you should create a new SearchNotesView.
-        SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
+        SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel, editNoteDataAccessObject);
         views.add(searchNotesView, searchNotesView.viewName);
 
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject);

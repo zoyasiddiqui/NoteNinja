@@ -1,4 +1,5 @@
 package interface_adapter.create_note;
+import entity.Note.Note;
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
 import use_case.create_note.CreateNoteInputBoundary;
 import use_case.create_note.CreateNoteInteractor;

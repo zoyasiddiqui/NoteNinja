@@ -12,6 +12,7 @@ import interface_adapter.search_notes.SearchPresenter;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_note.CreateNoteInputBoundary;
 import use_case.create_note.CreateNoteInteractor;
+import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.search_notes.SearchInputBoundary;
 import use_case.search_notes.SearchInteractor;
@@ -21,20 +22,19 @@ import view.SearchNotesView;
 import java.io.IOException;
 
 public class SearchNotesUseCaseFactory {
-    private static Integer noteNum = 0;
 
     private SearchNotesUseCaseFactory() {}
 
-    public static SearchNotesView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, EditNoteViewModel editViewModel) throws IOException {
+    public static SearchNotesView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, EditNoteViewModel editViewModel,
+                                         EditNoteDataAccessObject editNoteDataAccessObject) throws IOException {
 
         NoteFactory noteFactory = new CommonNoteFactory();
         EditNoteDataAccessObject dataAccessObject = new EditNoteDataAccessObject();
-        noteNum += 1;
 
         SearchController searchController = createSearchController(dataAccessObject);
         CreateNoteController createNoteController = createCreateNoteController(searchViewModel, editViewModel, viewManagerModel, noteFactory, dataAccessObject);
 
-        return new SearchNotesView(searchViewModel, searchController, editViewModel, createNoteController);
+        return new SearchNotesView(searchViewModel, searchController, editViewModel, createNoteController, editNoteDataAccessObject);
     }
 
     private static SearchController createSearchController(EditNoteDataAccessObject dataAccessObject) {

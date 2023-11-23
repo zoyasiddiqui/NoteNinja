@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class EditNoteViewModel extends ViewModel {
 
+    public static final String DELETE_NOTE_LABEL = "Delete";
     private EditNoteState state = new EditNoteState();
 
     public static final String SAVE_NOTE_LABEL = "Save";

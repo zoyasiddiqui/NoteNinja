@@ -1,7 +1,10 @@
 package interface_adapter.edit_note;
 
+import entity.Note.Note;
+
 public class EditNoteState {
     private String noteTitle = "";
+    private Note note;
 
     public EditNoteState(EditNoteState copy) {
         noteTitle = copy.noteTitle;
@@ -15,5 +18,11 @@ public class EditNoteState {
     }
     public void setNoteTitle(String noteTitle) {
         this.noteTitle = noteTitle;
+    }
+    public Note getNote() {
+        return this.note;
+    }
+    public void setNote(Note note) {
+        this.note = note;
     }
 }

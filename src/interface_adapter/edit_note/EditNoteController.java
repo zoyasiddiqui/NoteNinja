@@ -4,7 +4,7 @@ import use_case.edit_note.EditNoteInputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 
 public class EditNoteController {
-    final EditNoteInputBoundary editNoteInteractor;
+    private final EditNoteInputBoundary editNoteInteractor;
 
     public EditNoteController (EditNoteInputBoundary editNoteInteractor) {
         this.editNoteInteractor = editNoteInteractor;

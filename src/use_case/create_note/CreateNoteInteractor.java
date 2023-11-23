@@ -29,7 +29,7 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary{
         Note note = noteFactory.create(name, tags, text);
         noteDataAccessObject.save(note);
 
-        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(name, tags, text);
+        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note, name, tags, text);
         editNotePresenter.prepareNote(editNoteOutputData);
     }
 }
