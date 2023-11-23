@@ -20,23 +20,23 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         this.editViewModel = editViewModel;
         this.editViewModel.addPropertyChangeListener(this);
 
-        // Create a JTextArea for note-taking
+        // create a JTextArea for note-taking
         noteTextArea = new JTextArea();
         noteTextArea.setLineWrap(true);
         noteTextArea.setWrapStyleWord(true);
 
-        // Create a JScrollPane to allow scrolling if the text is too long
+        // create a JScrollPane to allow scrolling if the text is too long
         JScrollPane scrollPane = new JScrollPane(noteTextArea);
 
-        // Create a JPanel for buttons
+        // create a JPanel for buttons
         JPanel buttons = new JPanel();
         saveNote = new JButton(EditNoteViewModel.SAVE_NOTE_LABEL);
         buttons.add(saveNote);
 
-        // Add an ActionListener to the saveNote button (if needed)
+        // add an ActionListener to the saveNote button (if needed)
         saveNote.addActionListener(this);
 
-        // Add the deleteNote button
+        // add the deleteNote button
         deleteNote = new JButton("Delete");
         buttons.add(deleteNote);
         deleteNote.addActionListener(this);
@@ -54,9 +54,15 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveNote) {
+            System.out.println("clicked save"); // for debugging delete later
             // Handle saveNote button click
+            String noteText = noteTextArea.getText();
+            System.out.println(noteText);
+
             // You might want to invoke methods in editViewModel to handle the save action
+
         } else if (e.getSource() == deleteNote) {
+            System.out.println("clicked delete"); // for debugging deleted later
             // Handle deleteNote button click
             // You might want to invoke methods in editViewModel to handle the delete action
         }
