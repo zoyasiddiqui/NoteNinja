@@ -25,7 +25,7 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary{
     @Override
     public void execute(String name) throws IOException {
         List<Tag> tags = new ArrayList<Tag>();
-        List<String> text = new ArrayList<String>();
+        String text = "";
         Note note = noteFactory.create(name, tags, text);
         noteDataAccessObject.save(note);
 

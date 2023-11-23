@@ -7,9 +7,9 @@ import java.util.List;
 class CommonNote implements Note {
     private String name;
     private List<Tag> tags;
-    private List<String> text;
+    private String text;
 
-    public CommonNote(String name, List<Tag> tags, List<String> text) {
+    public CommonNote(String name, List<Tag> tags, String text) {
         this.name = name;
         this.tags = tags;
         this.text = text;
@@ -27,7 +27,7 @@ class CommonNote implements Note {
 
 
     @Override
-    public void setText(List<String> text) {
+    public void setText(String text) {
         this.text = text;
     }
 
@@ -52,7 +52,7 @@ class CommonNote implements Note {
     }
 
     @Override
-    public List<String> getText() {
+    public String getText() {
         return this.text;
     }
 }
