@@ -72,6 +72,10 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
         } else if (e.getSource() == noteTitleButton) {
             System.out.println("bars...?");
+            String newTitle = JOptionPane.showInputDialog(this, "Enter a new title");
+            if (newTitle != null) {
+                System.out.println(newTitle);
+            }
         }
     }
 
@@ -81,6 +85,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
 
         // === Creating Title Button ===
+        // we do this in propertyChange to update the title after loading in the note
         EditNoteState editState = this.editViewModel.getState();
         String noteTitle = editState.getNoteTitle();
 
