@@ -17,6 +17,6 @@ public class RenameNoteInteractor implements RenameNoteInputBoundary {
     public void execute(RenameNoteInputData renameNoteInputData) throws IOException {
         String noteTitle = renameNoteInputData.getNoteTitle();
         RenameNoteOutputData renameNoteOutputData = new RenameNoteOutputData(noteTitle);
-        // editNotePresenter.p
+        editNotePresenter.prepareTitleChange(renameNoteOutputData);
     }
 }

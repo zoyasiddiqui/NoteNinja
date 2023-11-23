@@ -1,7 +1,9 @@
 package view;
 
+import interface_adapter.edit_note.EditNoteController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
+import interface_adapter.edit_note.RenameNoteController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,18 +13,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class EditNoteView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "editing";
-    private EditNoteViewModel editViewModel;
+    private final EditNoteViewModel editViewModel;
+    private EditNoteController editNoteController;
+    private final RenameNoteController renameNoteController;
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
     private final JTextArea noteTextArea;
     private JButton noteTitleButton;
 
-    public EditNoteView(EditNoteViewModel editViewModel) {
+    public EditNoteView(EditNoteViewModel editViewModel, EditNoteController editNoteController, RenameNoteController renameNoteController) {
         this.editViewModel = editViewModel;
         this.editViewModel.addPropertyChangeListener(this);
+        this.editNoteController = editNoteController;
+        this.renameNoteController = renameNoteController;
 
         // create a JTextArea for note-taking
         noteTextArea = new JTextArea();
@@ -71,10 +78,13 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
             // You might want to invoke methods in editViewModel to handle the delete action
 
         } else if (e.getSource() == noteTitleButton) {
-            System.out.println("bars...?");
             String newTitle = JOptionPane.showInputDialog(this, "Enter a new title");
             if (newTitle != null) {
-                System.out.println(newTitle);
+                try {
+                    renameNoteController.execute(newTitle);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

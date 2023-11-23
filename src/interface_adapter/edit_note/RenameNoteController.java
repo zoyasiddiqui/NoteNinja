@@ -14,7 +14,6 @@ public class RenameNoteController {
 
     public void execute(String noteTitle) throws IOException {
         RenameNoteInputData renameNoteInputData = new RenameNoteInputData(noteTitle);
-
         renameInteractor.execute(renameNoteInputData);
     }
 }

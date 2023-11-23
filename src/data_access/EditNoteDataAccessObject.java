@@ -5,6 +5,7 @@ import entity.Note.NoteFactory;
 import entity.Tag.CommonTag;
 import entity.Tag.Tag;
 import use_case.create_note.CreateNoteDataAccessInterface;
+import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.search_notes.SearchNotesAccessInterface;
 
 import java.io.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, SearchNotesAccessInterface {
+public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, SearchNotesAccessInterface, EditNoteDataAccessInterface {
     private final File noteFile;
     private String noteName;
     private Map<String, Tag> tags = new HashMap<>();

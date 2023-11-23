@@ -1,5 +1,6 @@
 package app;
 
+import data_access.EditNoteDataAccessObject;
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
@@ -34,6 +35,9 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         EditNoteViewModel editViewModel = new EditNoteViewModel();
 
+        EditNoteDataAccessObject editNoteDataAccessObject = new EditNoteDataAccessObject("./current_note.json", new CommonNoteFactory(), "dummy");
+        // TODO: Change or remove noteName attribute. Note sure yet, right now it's set to "dummy"
+
         NoteFactory noteFactory = new CommonNoteFactory();
 
         //note: when you click create note and edit a note, and then you want to go back to SearchNotesView,
@@ -41,7 +45,7 @@ public class Main {
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        EditNoteView noteEditorView = new EditNoteView(editViewModel);
+        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);
