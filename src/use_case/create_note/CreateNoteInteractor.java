@@ -23,6 +23,12 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary{
 
     @Override
     public void execute(String name) throws IOException {
+
+        //doing three main things:
+        //1. preparing any objects we'll need
+        //2. using our DAO to do any persistence
+        //3. preparing success view or fail view
+
         String text = "";
         Note note = noteFactory.create(name, text);
         noteDataAccessObject.save(note);
