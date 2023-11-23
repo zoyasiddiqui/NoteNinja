@@ -1,6 +1,6 @@
 package use_case.delete_note;
 
-import use_case.create_note.DeleteNoteOutputData;
+
 
 public interface DeleteNoteOutputBoundary {
 
