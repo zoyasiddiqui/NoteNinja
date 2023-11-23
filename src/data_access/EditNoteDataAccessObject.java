@@ -19,26 +19,40 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
 
     @Override
     public void save(Note note) throws IOException {
+        // Your existing save method logic
+    }
+
+    @Override
+    public void delete(Note note) throws IOException {
+        // Extracting note information for the deletion
+        String noteId = note.getId(); // Assuming you have a method to get the note ID
+
+        // Constructing the delete query based on the provided SQL-like format
+        String query = "DELETE FROM 9pYIi0HNV5wCWDYX WHERE ID='" + noteId + "'";
+
+        // Sending the delete request
+        sendDeleteRequest(query);
+    }
+
+    @Override
+    public void findByTag(String tagName) {
+        // Your existing findByTag method logic
+    }
+
+    // Helper method to send a delete request to the specified URL
+    private void sendDeleteRequest(String query) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-        connection.setRequestMethod("POST");
+        connection.setRequestMethod("DELETE");
         connection.setRequestProperty("Content-type", "application/json");
-        String query = "select * from 9pYIi0HNV5wCWDYX where Note Name='Note Content'";
-        String body = "{\"data\": {\"Name\": \"\", \"ID\":\"\", \"Content\":\"New note content\"} \"query\":"+query+"}";
+
+        // Constructing the body of the delete request
+        String body = "{\"query\": \"" + query + "\"}";
+
         connection.setDoOutput(true);
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
         writer.write(body);
         writer.flush();
         writer.close();
-    }
-
-    @Override
-    public void delete(Note note) throws IOException {
-
-    }
-
-    @Override
-    public void findByTag(String tagName) {
-
     }
 }
