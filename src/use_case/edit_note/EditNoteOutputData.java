@@ -8,9 +8,9 @@ public class EditNoteOutputData {
 
     private String title;
     private List<Tag> tags;
-    private List<String> text;
+    private String text;
 
-    public EditNoteOutputData(String title, List<Tag> tags, List<String> text) {
+    public EditNoteOutputData(String title, List<Tag> tags, String text) {
         this.title = title;
         this.tags = tags;
         this.text = text;
@@ -24,8 +24,6 @@ public class EditNoteOutputData {
         return this.tags;
     }
 
-    public List<String> getText() {
-        return this.text;
-    }
+    public String getText() {return this.text;}
 
 }

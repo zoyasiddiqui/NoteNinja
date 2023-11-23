@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface NoteFactory {
 
-    Note create(String name, List<Tag> tags, List<String> text);
+    Note create(String name, List<Tag> tags, String text);
 
 }
