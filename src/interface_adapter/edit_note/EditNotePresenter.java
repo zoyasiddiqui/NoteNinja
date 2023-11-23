@@ -35,4 +35,9 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
     }
+
+    @Override
+    public void noteDeletedSuccessfully() {
+
+    }
 }
