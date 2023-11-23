@@ -20,7 +20,7 @@ public class DeleteNotePresenter implements DeleteNoteOutputBoundary {
 
     @Override
     public void prepareSuccessView(DeleteNoteOutputData response) {
-        viewManagerModel.setActiveView(editViewModel.getViewName());
+        viewManagerModel.setActiveView(searchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
