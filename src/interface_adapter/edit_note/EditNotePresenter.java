@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
+import use_case.rename_note.RenameNoteOutputData;
 
 public class EditNotePresenter implements EditNoteOutputBoundary {
     private final SearchViewModel searchViewModel;
@@ -17,7 +18,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(EditNoteOutputData note) {
+    public void prepareNote(EditNoteOutputData note) {
         EditNoteState noteState = editNoteViewModel.getState();
         noteState.setNoteTitle(note.getTitle());
         this.editNoteViewModel.setState(noteState);
@@ -25,5 +26,10 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
 
         viewManagerModel.setActiveView(editNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareTitleChange(RenameNoteOutputData title) {
+
     }
 }
