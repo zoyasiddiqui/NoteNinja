@@ -1,32 +1,37 @@
 package view;
 
+import entity.Note.Note;
 import interface_adapter.edit_note.EditNoteController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
+import interface_adapter.save_note.SaveController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 public class EditNoteView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "editing";
+    private final Note note;
     private final EditNoteViewModel editViewModel;
     private EditNoteController editNoteController;
     private final RenameNoteController renameNoteController;
+    private final SaveController saveNoteController;
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
     private final JTextArea noteTextArea;
     private JButton noteTitleButton;
 
-    public EditNoteView(EditNoteViewModel editViewModel, EditNoteController editNoteController, RenameNoteController renameNoteController) {
+    public EditNoteView(Note note, EditNoteViewModel editViewModel, EditNoteController editNoteController,
+                        RenameNoteController renameNoteController, SaveController saveNoteController) {
+        this.note = note;
         this.editViewModel = editViewModel;
+        this.saveNoteController = saveNoteController;
         this.editViewModel.addPropertyChangeListener(this);
         this.editNoteController = editNoteController;
         this.renameNoteController = renameNoteController;
@@ -43,13 +48,26 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         JPanel buttons = new JPanel();
         saveNote = new JButton(EditNoteViewModel.SAVE_NOTE_LABEL);
         buttons.add(saveNote);
+        deleteNote = new JButton(EditNoteViewModel.DELETE_NOTE_LABEL);
+        buttons.add(deleteNote);
 
-        // add an ActionListener to the saveNote button (if needed)
+        saveNote.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(saveNote)) {
+                            try {
+                                EditNoteView.this.saveNoteController.execute();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    }
+                }
+        );
         saveNote.addActionListener(this);
 
         // add the deleteNote button
-        deleteNote = new JButton("Delete");
-        buttons.add(deleteNote);
         deleteNote.addActionListener(this);
 
         // Set the layout manager for this JPanel
@@ -59,7 +77,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         add(scrollPane, BorderLayout.CENTER);
 
         // Add the buttons JPanel to the south of this JPanel
-        add(buttons, BorderLayout.SOUTH);
+        this.add(buttons, BorderLayout.SOUTH);
     }
 
     @Override
