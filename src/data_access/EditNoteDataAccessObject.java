@@ -45,21 +45,24 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
         }
     }
 
+
     @Override
     public void delete(Note note) throws IOException {
-        // Extracting note information for the deletion
         String noteId = note.getId(); // Assuming you have a method to get the note ID
-
-        // Constructing the delete query based on the provided SQL-like format
         String query = "DELETE FROM 9pYIi0HNV5wCWDYX WHERE ID='" + noteId + "'";
-
-        // Sending the delete request
         sendDeleteRequest(query);
     }
 
     @Override
     public void findByTag(String tagName) {
         // Your existing findByTag method logic
+    }
+
+    @Override
+    public Note getNoteById(String noteId) {
+        // Assuming you have a method to retrieve a Note object by its ID
+        // Implement the logic to retrieve a Note object by its ID
+        return null;
     }
 
     // Helper method to send a delete request to the specified URL
@@ -73,9 +76,8 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
         String body = "{\"query\": \"" + query + "\"}";
 
         connection.setDoOutput(true);
-        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-        writer.write(body);
-        writer.flush();
-        writer.close();
+        try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
+            writer.write(body);
+        }
     }
 }

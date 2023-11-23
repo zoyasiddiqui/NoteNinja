@@ -16,8 +16,15 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
         this.editNotePresenter = editNotePresenter;
     }
 
-    @Override
     public void execute(String noteId) throws IOException {
+        // Assuming you have a method to retrieve a Note object by its ID
+        Note note = editNoteDataAccessInterface.getNoteById(noteId);
 
+        // Call the delete method from the data access object
+        editNoteDataAccessInterface.delete(note);
+
+        // You may want to notify the presenter or handle the result in some way
+        // For example:
+        editNotePresenter.noteDeletedSuccessfully(); // Assuming you have a method like this in your presenter
     }
 }
