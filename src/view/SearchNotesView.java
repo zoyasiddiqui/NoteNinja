@@ -32,7 +32,6 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
         searchViewModel.addPropertyChangeListener(this);
         editViewModel.addPropertyChangeListener(this);
 
-
         // ==== MAKING BUTTONS/ LABELS ====
 
         JPanel buttons = new JPanel();
@@ -50,8 +49,7 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
         createNote.setBounds(30, 90, 140, 30);
         buttons.add(createNote);
 
-        // ================================
-
+        // === ADD ACTION LISTENERS ===
 
         createNote.addActionListener(
                 new ActionListener() {
