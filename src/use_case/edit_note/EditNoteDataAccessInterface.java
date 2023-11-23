@@ -6,4 +6,8 @@ import java.io.IOException;
 
 public interface EditNoteDataAccessInterface {
     void save (Note note) throws IOException;
+
+    Note getNoteById(String noteId);
+
+    void delete(Note note) throws IOException;
 }

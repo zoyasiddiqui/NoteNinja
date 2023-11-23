@@ -15,4 +15,6 @@ public interface Note {
     String getName();
     List<Tag> getTags();
     String getText();
+
+    String getId();
 }
