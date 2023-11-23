@@ -1,4 +1,8 @@
 package use_case.rename_note;
 
-public class RenameNoteInputBoundary {
+import java.io.IOException;
+
+public interface RenameNoteInputBoundary {
+    void execute() throws IOException;
 }
+
