@@ -35,7 +35,7 @@ public class Main {
         SearchViewModel searchViewModel = new SearchViewModel();
         EditNoteViewModel editViewModel = new EditNoteViewModel();
 
-        EditNoteDataAccessObject editNoteDataAccessObject = new EditNoteDataAccessObject("./current_note.json", new CommonNoteFactory(), "dummy");
+        EditNoteDataAccessObject editNoteDataAccessObject = new EditNoteDataAccessObject();
         // TODO: Change or remove noteName attribute. Note sure yet, right now it's set to "dummy"
 
         NoteFactory noteFactory = new CommonNoteFactory();

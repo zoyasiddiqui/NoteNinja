@@ -28,8 +28,7 @@ public class SearchNotesUseCaseFactory {
     public static SearchNotesView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, EditNoteViewModel editViewModel) throws IOException {
 
         NoteFactory noteFactory = new CommonNoteFactory();
-        EditNoteDataAccessObject dataAccessObject = new EditNoteDataAccessObject("./notes/note"+noteNum+".csv",
-                noteFactory, "untitled");
+        EditNoteDataAccessObject dataAccessObject = new EditNoteDataAccessObject();
         noteNum += 1;
 
         SearchController searchController = createSearchController(dataAccessObject);
