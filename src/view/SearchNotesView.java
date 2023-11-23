@@ -59,7 +59,7 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(createNote)) {
                             try {
-                                createNoteController.execute("untitled");
+                                createNoteController.execute("Untitled");
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
