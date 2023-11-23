@@ -12,7 +12,7 @@ public class EditNoteOutputData {
     private List<Tag> tags;
     private String text;
 
-    public EditNoteOutputData(Note note, String title, List<Tag> tags, String text) {
+    public EditNoteOutputData(Note note, String title, String text) {
         this.note = note;
         this.title = title;
         this.tags = tags;
