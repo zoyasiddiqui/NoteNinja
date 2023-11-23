@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 
 import javax.swing.*;
@@ -17,8 +18,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
     private final JTextArea noteTextArea;
-
-    private final JLabel noteTitle;
+    private JButton noteTitleButton;
 
     public EditNoteView(EditNoteViewModel editViewModel) {
         this.editViewModel = editViewModel;
@@ -53,19 +53,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
         // Add the buttons JPanel to the south of this JPanel
         add(buttons, BorderLayout.SOUTH);
-
-        // Create a JLabel for the title
-        noteTitle = new JLabel("Untitled");
-        noteTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        noteTitle.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // When clicked, should prompt actionPerformed e.getSource() == noteTitle
-            }
-        });
-
-        // Add the title label to the north of this JPanel
-        add(noteTitle, BorderLayout.NORTH);
     }
 
     @Override
@@ -83,7 +70,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
             // Handle deleteNote button click
             // You might want to invoke methods in editViewModel to handle the delete action
 
-        } else if (e.getSource() == noteTitle) {
+        } else if (e.getSource() == noteTitleButton) {
             System.out.println("bars...?");
         }
     }
@@ -91,5 +78,25 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Handle property changes if needed
+
+
+        // === Creating Title Button ===
+        EditNoteState editState = this.editViewModel.getState();
+        String noteTitle = editState.getNoteTitle();
+
+        noteTitleButton = new JButton(noteTitle);
+        noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
+        noteTitleButton.setBorderPainted(false);
+        noteTitleButton.setContentAreaFilled(false);
+        noteTitleButton.setFocusPainted(false);
+        noteTitleButton.addActionListener(this);
+
+        // add the title button to the north of this JPanel
+        add(noteTitleButton, BorderLayout.NORTH);
+
+        // add the title label to the north of this JPanel
+        add(noteTitleButton, BorderLayout.NORTH);
+        // == Created Title Button ===
+
     }
 }

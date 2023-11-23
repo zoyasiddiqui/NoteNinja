@@ -27,10 +27,6 @@ public class EditNoteViewModel extends ViewModel {
         this.noteTitle = noteTitle;
     }
 
-    public String getNoteTitle() {
-        return noteTitle;
-    }
-
     public EditNoteState getState() {
         return this.state;
     }
