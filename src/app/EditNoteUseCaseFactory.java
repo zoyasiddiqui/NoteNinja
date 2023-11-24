@@ -38,12 +38,10 @@ public class EditNoteUseCaseFactory {
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
         DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, editNoteDataAccessInterface);
 
-        Note note = editNoteViewModel.getState().getNote();
-
 
         // feel free to add more controllers and view models as necessary
 
-        return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase);
+        return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase);
 
     }
 

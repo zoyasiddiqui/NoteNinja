@@ -13,7 +13,7 @@ public class EditNoteState {
         noteID = copy.noteID;
     }
 
-    // Because of the previous copy constructor, the default constructor must be explicit.
+    // make default constructor explicit bc of copy instructor
     public EditNoteState() {}
 
     public String getNoteTitle() {
