@@ -18,7 +18,6 @@ import java.io.IOException;
 
 public class EditNoteView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "editing";
-    private final Note note;
     private final EditNoteViewModel editViewModel;
     private final RenameNoteController renameNoteController;
     private final SaveController saveNoteController;
@@ -30,12 +29,11 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final JTextArea noteTextArea;
     private JButton noteTitleButton;
 
-    public EditNoteView(Note note, EditNoteViewModel editViewModel,
+    public EditNoteView(EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
                         SaveController saveNoteController,
                         BackMenuController backMenuController,
                         DeleteNoteController deleteNoteController) {
-        this.note = note;
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.deleteNoteController = deleteNoteController;
@@ -73,7 +71,15 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(saveNote)) {
-//                            EditNoteView.this.saveNoteController.execute();
+                            String noteText = noteTextArea.getText();
+                            EditNoteState editNoteState = editViewModel.getState();
+                            try {
+                                EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
+                                                                             editNoteState.getNoteText(),
+                                                                             editNoteState.getNoteID());
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
                             System.out.println("clicked save!!");
                         }
                     }
@@ -127,7 +133,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (e.getSource().equals(deleteNote)) {
                             System.out.println("Deleted Note");
                             EditNoteState editState = editViewModel.getState();
-                            String noteID = editState.getNote().getId();
+                            String noteID = editState.getNoteID();
                             try {
                                 deleteNoteController.execute(noteID);
                             } catch (IOException ex) {
