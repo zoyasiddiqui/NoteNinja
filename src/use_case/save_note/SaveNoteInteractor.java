@@ -23,5 +23,7 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
         // create a note entity using the InputData
         Note note = noteFactory.create(saveNoteInputData.getNoteTitle(), saveNoteInputData.getNoteText());
         editNoteDAO.save(note);
+
+        //TODO: prepare success view if necessary
     }
 }
