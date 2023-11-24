@@ -1,7 +1,6 @@
 package view;
 
 import entity.Note.Note;
-import interface_adapter.edit_note.EditNoteController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
@@ -19,7 +18,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "editing";
     private final Note note;
     private final EditNoteViewModel editViewModel;
-    private EditNoteController editNoteController;
     private final RenameNoteController renameNoteController;
     private final SaveController saveNoteController;
     final JButton saveNote;
@@ -27,13 +25,13 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final JTextArea noteTextArea;
     private JButton noteTitleButton;
 
-    public EditNoteView(Note note, EditNoteViewModel editViewModel, EditNoteController editNoteController,
-                        RenameNoteController renameNoteController, SaveController saveNoteController) {
+    public EditNoteView(Note note, EditNoteViewModel editViewModel,
+                        RenameNoteController renameNoteController,
+                        SaveController saveNoteController) {
         this.note = note;
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.editViewModel.addPropertyChangeListener(this);
-        this.editNoteController = editNoteController;
         this.renameNoteController = renameNoteController;
 
         // create a JTextArea for note-taking

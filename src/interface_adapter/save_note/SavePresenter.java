@@ -28,3 +28,5 @@ public class SavePresenter implements SaveNoteOutputBoundary{
 
     }
 }
+
+// i think we can totally delete this presenter, no need for it
