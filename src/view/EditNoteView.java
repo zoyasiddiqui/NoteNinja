@@ -141,6 +141,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         // Handle property changes if needed
         System.out.println("*pChange EditView"); // for debugging, delete later
+        noteTitleButton.setText(editViewModel.getState().getNoteTitle());
 
     }
 }
