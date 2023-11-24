@@ -1,16 +1,15 @@
 package app;
 
+import entity.Note.CommonNoteFactory;
 import entity.Note.Note;
+import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
 import interface_adapter.save_note.SaveController;
-import interface_adapter.save_note.SavePresenter;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.edit_note.EditNoteDataAccessInterface;
-import use_case.edit_note.EditNoteInputBoundary;
-import use_case.edit_note.EditNoteInteractor;
 import use_case.rename_note.RenameNoteInputBoundary;
 import use_case.rename_note.RenameNoteInteractor;
 import use_case.save_note.SaveNoteInteractor;
@@ -30,8 +29,7 @@ public class EditNoteUseCaseFactory {
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
 
         Note note = editNoteViewModel.getState().getNote();
-        SaveController saveNoteUseCase = createSaveUseCase(note, searchViewModel, editNoteViewModel,
-                viewManagerModel, editNoteDataAccessInterface);
+        SaveController saveNoteUseCase = createSaveUseCase(editNotePresenter, editNoteDataAccessInterface);
 
         // feel free to add more controllers and view models as necessary
         return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase);
@@ -52,13 +50,12 @@ public class EditNoteUseCaseFactory {
     }
 
 
-    private static SaveController createSaveUseCase(Note note,
-                                                    SearchViewModel searchViewModel,
-                                                    EditNoteViewModel editNoteViewModel,
-                                                    ViewManagerModel viewManagerModel,
+    private static SaveController createSaveUseCase(EditNotePresenter editNotePresenter,
                                                     EditNoteDataAccessInterface editNoteDataAccessInterface) {
-        SavePresenter savePresenter = new SavePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
-        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(note, editNoteDataAccessInterface, savePresenter);
+
+        // we need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
+        NoteFactory noteFactory = new CommonNoteFactory();
+        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, editNotePresenter, noteFactory);
         return new SaveController(saveNoteInteractor);
     }
 }
