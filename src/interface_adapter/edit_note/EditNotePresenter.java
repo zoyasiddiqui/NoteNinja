@@ -11,7 +11,9 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     private final EditNoteViewModel editNoteViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public EditNotePresenter(SearchViewModel searchViewModel, EditNoteViewModel editNoteViewModel, ViewManagerModel viewManagerModel) {
+    public EditNotePresenter(SearchViewModel searchViewModel,
+                             EditNoteViewModel editNoteViewModel,
+                             ViewManagerModel viewManagerModel) {
         this.searchViewModel = searchViewModel;
         this.editNoteViewModel = editNoteViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -39,5 +41,11 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     @Override
     public void noteDeletedSuccessfully() {
 
+    }
+
+    @Override
+    public void prepareBackMenu() {
+        viewManagerModel.setActiveView(searchViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }
