@@ -61,10 +61,10 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         buttons.add(saveNote);
         deleteNote = new JButton(EditNoteViewModel.DELETE_NOTE_LABEL);
         buttons.add(deleteNote);
-        backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
-        buttons.add(backMenu);
         createAISnippet = new JButton(EditNoteViewModel.AI_SNIPPET_LABEL);
         buttons.add(createAISnippet);
+        backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
+        buttons.add(backMenu);
 
         noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
         noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));

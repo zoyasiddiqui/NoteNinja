@@ -29,7 +29,7 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
             editNoteDAO.updateNote(noteID, noteText, noteTitle);
 
         } else { // else create a new note
-            Note note = noteFactory.create(noteTitle, noteText, noteID);
+            Note note = noteFactory.create(noteTitle, noteText);
             editNoteDAO.save(note);
         }
     }
