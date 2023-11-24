@@ -7,10 +7,9 @@ class CommonNote implements Note {
     private String text;
     private String ID;
 
-    public CommonNote(String name, String text, String ID) {
+    public CommonNote(String name, String text) {
         this.name = name;
         this.text = text;
-        this.ID = ID;
     }
 
     @Override

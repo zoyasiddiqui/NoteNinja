@@ -61,10 +61,10 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         buttons.add(saveNote);
         deleteNote = new JButton(EditNoteViewModel.DELETE_NOTE_LABEL);
         buttons.add(deleteNote);
-        backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
-        buttons.add(backMenu);
         createAISnippet = new JButton(EditNoteViewModel.AI_SNIPPET_LABEL);
         buttons.add(createAISnippet);
+        backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
+        buttons.add(backMenu);
 
         noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
         noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
@@ -72,6 +72,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         noteTitleButton.setContentAreaFilled(false);
         noteTitleButton.setFocusPainted(false);
         noteTitleButton.addActionListener(this);
+
 
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
@@ -120,12 +121,15 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (prompt != null) {
                             try {
                                 createAISnippetController.execute(prompt);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
                             }
                         }
                     }
                 }
         );
         // ==============================
+
 
         // ====== RENAME LISTENER =======
         noteTitleButton.addActionListener(
@@ -149,6 +153,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ==== DELETE NOTE LISTENER ====
         deleteNote.addActionListener(
                 new ActionListener() {
@@ -168,7 +173,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-                              
        // ==============================
       
 

@@ -1,13 +1,13 @@
 package use_case.delete_note;
 
 public class DeleteNoteInputData {
-    private final String noteId;
+    private final String noteID;
 
-    public DeleteNoteInputData(String noteId) {
-        this.noteId = noteId;
+    public DeleteNoteInputData(String noteID) {
+        this.noteID = noteID;
     }
 
-    public String getNoteId() {
-        return noteId;
+    public String getNoteID() {
+        return noteID;
     }
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateNoteInteractor implements CreateNoteInputBoundary{
+public class CreateNoteInteractor implements CreateNoteInputBoundary {
 
     final NoteFactory noteFactory;
     final CreateNoteDataAccessInterface noteDataAccessObject;
@@ -22,18 +22,19 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary{
     }
 
     @Override
-    public void execute(String name) throws IOException {
+    public void execute(CreateNoteInputData createNoteInputData) throws IOException {
 
         //doing three main things:
         //1. preparing any objects we'll need
         //2. using our DAO to do any persistence
         //3. preparing success view or fail view
 
-        String text = "";
-        Note note = noteFactory.create(name, text);
+        String noteText = "";
+        String noteTitle = createNoteInputData.getNoteTitle();
+        Note note = noteFactory.create(noteTitle, noteText);
         noteDataAccessObject.save(note);
 
-        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note, name, text);
+        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note, noteTitle, noteText);
         editNotePresenter.prepareNote(editNoteOutputData);
     }
 }
