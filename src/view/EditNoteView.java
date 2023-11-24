@@ -1,6 +1,7 @@
 package view;
 
 import entity.Note.Note;
+import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
@@ -20,19 +21,23 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final EditNoteViewModel editViewModel;
     private final RenameNoteController renameNoteController;
     private final SaveController saveNoteController;
+    private final BackMenuController backMenuController;
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
+    final JButton backMenu;
     private final JTextArea noteTextArea;
     private JButton noteTitleButton;
 
     public EditNoteView(Note note, EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
-                        SaveController saveNoteController) {
+                        SaveController saveNoteController,
+                        BackMenuController backMenuController) {
         this.note = note;
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.editViewModel.addPropertyChangeListener(this);
         this.renameNoteController = renameNoteController;
+        this.backMenuController = backMenuController;
 
         // create a JTextArea for note-taking
         noteTextArea = new JTextArea();
@@ -48,24 +53,42 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         buttons.add(saveNote);
         deleteNote = new JButton(EditNoteViewModel.DELETE_NOTE_LABEL);
         buttons.add(deleteNote);
+        backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
+        buttons.add(backMenu);
 
+
+        // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-//                        if (e.getSource().equals(saveNote)) {
-//                            try {
-//                                EditNoteView.this.saveNoteController.execute();
-//                            } catch (IOException ex) {
-//                                throw new RuntimeException(ex);
-//                            }
-//                        }
+                        if (e.getSource().equals(saveNote)) {
+//                            EditNoteView.this.saveNoteController.execute();
+                            System.out.println("clicked save!!");
+                        }
                     }
                 }
         );
-        saveNote.addActionListener(this);
+        // ==============================
 
-        // add the deleteNote button
+
+        // ======== BACK LISTENER =======
+        backMenu.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(backMenu)) {
+                            System.out.println("pressed back");
+
+                        }
+                    }
+                }
+        );
+        // ==============================
+
+
+        saveNote.addActionListener(this);
+        backMenu.addActionListener(this);
         deleteNote.addActionListener(this);
 
         // Set the layout manager for this JPanel
@@ -78,10 +101,11 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         this.add(buttons, BorderLayout.SOUTH);
     }
 
+//    TODO: figure out if we want the code below or not.
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == saveNote) {
-            System.out.println("clicked save"); // for debugging delete later
+//            System.out.println("clicked save"); // for debugging delete later
             String noteText = noteTextArea.getText();
             System.out.println(noteText); // for debugging delete later
 
