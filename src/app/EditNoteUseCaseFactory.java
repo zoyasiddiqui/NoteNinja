@@ -5,6 +5,7 @@ import entity.Note.Note;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
+import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
@@ -12,6 +13,9 @@ import interface_adapter.save_note.SaveController;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.back_menu.BackMenuInputBoundary;
 import use_case.back_menu.BackMenuInteractor;
+import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
+import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
+import use_case.create_AI_snippet.CreateAISnippetInteractor;
 import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.rename_note.RenameNoteInputBoundary;
@@ -27,18 +31,21 @@ public class EditNoteUseCaseFactory {
             ViewManagerModel viewManagerModel,
             EditNoteViewModel editNoteViewModel,
             SearchViewModel searchViewModel,
-            EditNoteDataAccessInterface editNoteDataAccessInterface) {
+            EditNoteDataAccessInterface editNoteDataAccessInterface,
+            CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface) {
 
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface);
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
+        CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
+                editNoteDataAccessInterface, viewManagerModel, editNoteViewModel, searchViewModel);
 
         Note note = editNoteViewModel.getState().getNote();
 
 
         // feel free to add more controllers and view models as necessary
-        return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, createAISnippetController);
+        return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, createAISnippetUseCase);
 
     }
 
@@ -67,5 +74,15 @@ public class EditNoteUseCaseFactory {
         NoteFactory noteFactory = new CommonNoteFactory();
         SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory);
         return new SaveController(saveNoteInteractor);
+    }
+
+    private static CreateAISnippetController createAISnippetUseCase(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
+                                                                    EditNoteDataAccessInterface editNoteDAO,
+                                                                    ViewManagerModel viewManagerModel,
+                                                                    EditNoteViewModel editNoteViewModel,
+                                                                    SearchViewModel searchViewModel) {
+        EditNoteOutputBoundary editNotePresenter = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, editNotePresenter);
+        return new CreateAISnippetController(createAISnippetInteractor);
     }
 }
