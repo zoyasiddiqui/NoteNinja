@@ -20,6 +20,8 @@ public class CreateAISnippetInteractor implements CreateAISnippetInputBoundary{
         StringBuilder response = createAISnippetDataAccessObject.getResponse(prompt);
         String text = editNoteDAO.getCurrentText() + new String(response);
         // create a note entity using the InputData
+
+        System.out.println(text);
         editNoteDAO.setCurrentText(text);
 
         CreateAISnippetOutputData createAISnippetOutputData = new CreateAISnippetOutputData(text);

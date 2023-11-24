@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public interface CreateNoteInputBoundary {
 
-    void execute(String name) throws IOException;
+    void execute(CreateNoteInputData createNoteInputData) throws IOException;
 
 }
