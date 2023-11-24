@@ -11,4 +11,7 @@ public interface EditNoteDataAccessInterface {
     Note getNoteById(List<Note> notes, String noteId);
 
     void delete(Note note) throws IOException;
+
+    String getCurrentText();
+    void setCurrentText(String text);
 }
