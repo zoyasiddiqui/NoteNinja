@@ -55,13 +55,13 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(saveNote)) {
-                            try {
-                                EditNoteView.this.saveNoteController.execute();
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
-                        }
+//                        if (e.getSource().equals(saveNote)) {
+//                            try {
+//                                EditNoteView.this.saveNoteController.execute();
+//                            } catch (IOException ex) {
+//                                throw new RuntimeException(ex);
+//                            }
+//                        }
                     }
                 }
         );
