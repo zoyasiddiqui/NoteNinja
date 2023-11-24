@@ -2,6 +2,7 @@ package view;
 
 import entity.Note.Note;
 import interface_adapter.back_menu.BackMenuController;
+import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
@@ -22,6 +23,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final RenameNoteController renameNoteController;
     private final SaveController saveNoteController;
     private final BackMenuController backMenuController;
+    private final DeleteNoteController deleteNoteController;
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
     final JButton backMenu;
@@ -31,10 +33,11 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     public EditNoteView(Note note, EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
                         SaveController saveNoteController,
-                        BackMenuController backMenuController) {
+                        BackMenuController backMenuController, DeleteNoteController deleteNoteController) {
         this.note = note;
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
+        this.deleteNoteController = deleteNoteController;
         this.editViewModel.addPropertyChangeListener(this);
         this.renameNoteController = renameNoteController;
         this.backMenuController = backMenuController;
@@ -80,6 +83,24 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (e.getSource().equals(backMenu)) {
                             System.out.println("pressed back");
                             backMenuController.execute();
+                        }
+                    }
+                }
+        );
+
+        deleteNote.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(deleteNote)) {
+                            System.out.println("Deleted Note");
+                            EditNoteState editState = editViewModel.getState();
+                            String noteID = editState.getNote().getId();
+                            try {
+                                deleteNoteController.execute(noteID);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                     }
                 }
