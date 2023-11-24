@@ -33,7 +33,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     public EditNoteView(Note note, EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
                         SaveController saveNoteController,
-                        BackMenuController backMenuController, DeleteNoteController deleteNoteController) {
+                        BackMenuController backMenuController,
+                        DeleteNoteController deleteNoteController) {
         this.note = note;
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
