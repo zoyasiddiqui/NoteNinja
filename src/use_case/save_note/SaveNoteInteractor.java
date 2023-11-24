@@ -21,9 +21,16 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
     @Override
     public void execute(SaveNoteInputData saveNoteInputData) throws IOException {
         // create a note entity using the InputData
-        Note note = noteFactory.create(saveNoteInputData.getNoteTitle(), saveNoteInputData.getNoteText());
-        editNoteDAO.save(note);
+        String noteID = saveNoteInputData.getNoteID();
+        String noteText = saveNoteInputData.getNoteText();
+        String noteTitle = saveNoteInputData.getNoteTitle();
 
-        //TODO: prepare success view if necessary
+        if (editNoteDAO.existsByID(noteID)) { // note already exists
+            editNoteDAO.updateNote(noteID, noteText, noteTitle);
+
+        } else { // else create a new note
+            Note note = noteFactory.create(noteTitle, noteText, noteID);
+            editNoteDAO.save(note);
+        }
     }
 }

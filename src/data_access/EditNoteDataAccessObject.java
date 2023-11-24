@@ -62,17 +62,29 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
 
     @Override
     public void delete(Note note) throws IOException {
-        String noteId = note.getId(); // Assuming you have a method to get the note ID
+        String noteId = note.getID(); // Assuming you have a method to get the note ID
         String query = "DELETE FROM 9pYIi0HNV5wCWDYX WHERE ID='" + noteId + "'";
         sendDeleteRequest(query);
 
         //REMOVE FROM LIST OF NOTES!
     }
 
+    // TODO: figure out how to do this
+    @Override
+    public boolean existsByID(String noteID) {
+        return false;
+    }
+
+    // TODO: figure out how to do this
+    @Override
+    public void updateNote(String noteID, String noteText, String noteTitle) {
+
+    }
+
     @Override
     public Note getNoteById(List<Note> notes, String noteId) {
         for (Note note : notes) {
-            if (note.getId().equals(noteId)) {
+            if (note.getID().equals(noteId)) {
                 return note;
             }
         }
