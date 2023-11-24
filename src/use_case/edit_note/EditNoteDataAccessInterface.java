@@ -15,4 +15,9 @@ public interface EditNoteDataAccessInterface {
     boolean existsByID(String noteID);
 
     void updateNote(String noteID, String noteText, String noteTitle);
+
+    String getCurrentText();
+  
+    void setCurrentText(String text);
+
 }

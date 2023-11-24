@@ -1,11 +1,13 @@
 package app;
 
+import data_access.CreateAISnippetDataAccessObject;
 import data_access.EditNoteDataAccessObject;
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
+import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import view.EditNoteView;
 import view.SearchNotesView;
 import view.ViewManager;
@@ -36,6 +38,7 @@ public class Main {
         EditNoteViewModel editViewModel = new EditNoteViewModel();
 
         EditNoteDataAccessObject editNoteDataAccessObject = new EditNoteDataAccessObject();
+        CreateAISnippetDataAccessInterface createAISnippetDataAccessObject = new CreateAISnippetDataAccessObject();
         // TODO: Change or remove noteName attribute. Note sure yet, right now it's set to "dummy"
 
         NoteFactory noteFactory = new CommonNoteFactory();
@@ -45,7 +48,7 @@ public class Main {
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel, editNoteDataAccessObject);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject);
+        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject, createAISnippetDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);

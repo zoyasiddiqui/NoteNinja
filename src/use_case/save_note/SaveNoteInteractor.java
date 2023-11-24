@@ -32,6 +32,5 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
             Note note = noteFactory.create(noteTitle, noteText, noteID);
             editNoteDAO.save(note);
         }
-
     }
 }

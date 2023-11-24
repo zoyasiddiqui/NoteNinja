@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.Note.Note;
+import entity.Note.NoteFactory;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.edit_note.EditNoteDataAccessInterface;
@@ -16,6 +17,8 @@ import java.util.List;
 public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
     private static List<Note> notes = new ArrayList<Note>();
+    private String currentText;
+    private NoteFactory noteFactory;
     private String url = "https://api.apispreadsheets.com/data/9pYIi0HNV5wCWDYX/";
 
     public EditNoteDataAccessObject() {}
@@ -23,11 +26,19 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
     public List<Note> getNotes() {
         return this.notes;
     }
+    @Override
+    public String getCurrentText() {return this.currentText;}
+
+    @Override
+    public void setCurrentText(String text) {
+        this.currentText = text;
+    }
 
     @Override
     public void save(Note note) throws IOException {
 
         // create a new note object + save it to my list of notes
+        currentText = note.getText();
 
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
