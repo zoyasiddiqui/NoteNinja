@@ -9,6 +9,7 @@ public class EditNoteViewModel extends ViewModel {
 
     public static final String DELETE_NOTE_LABEL = "Delete";
     public static final String BACK_MENU_LABEL = "Back";
+    public static final String DEFAULT_NOTE_TITLE = "Untitled";
     private EditNoteState state = new EditNoteState();
 
     public static final String SAVE_NOTE_LABEL = "Save";
