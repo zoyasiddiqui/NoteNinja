@@ -80,4 +80,9 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
             writer.write(body);
         }
     }
+
+    @Override
+    public void findByTitle(String noteTitle) {
+        
+    }
 }
