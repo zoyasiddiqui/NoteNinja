@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface NoteFactory {
 
-    Note create(String name, String text);
+    Note create(String name, String text, String ID);
 
 }
