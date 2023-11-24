@@ -4,6 +4,7 @@ import entity.Note.Note;
 
 public class EditNoteState {
     private String noteTitle = "";
+    private String text = "";
     private Note note;
 
     public EditNoteState(EditNoteState copy) {
@@ -19,6 +20,8 @@ public class EditNoteState {
     public void setNoteTitle(String noteTitle) {
         this.noteTitle = noteTitle;
     }
+    public String getText() {return this.text; }
+    public void setText(String text) { this.text = text;}
     public Note getNote() {
         return this.note;
     }

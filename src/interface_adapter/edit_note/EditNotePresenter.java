@@ -2,6 +2,7 @@ package interface_adapter.edit_note;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_notes.SearchViewModel;
+import use_case.create_AI_snippet.CreateAISnippetOutputData;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 import use_case.rename_note.RenameNoteOutputData;
@@ -36,6 +37,17 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         noteState.setNoteTitle(title.getTitle());
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareSnippetAdded(CreateAISnippetOutputData text) {
+        EditNoteState noteState = editNoteViewModel.getState();
+        noteState.setText(text.getText());
+        this.editNoteViewModel.setState(noteState);
+        this.editNoteViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(editNoteViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
