@@ -10,14 +10,11 @@ import java.io.IOException;
 public class SaveNoteInteractor implements SaveNoteInputBoundary{
 
     private final EditNoteDataAccessInterface editNoteDAO;
-    private final EditNotePresenter editNotePresenter;
     private final NoteFactory noteFactory;
 
     public SaveNoteInteractor(EditNoteDataAccessInterface editNoteDAO,
-                              EditNotePresenter editNotePresenter,
                               NoteFactory noteFactory) {
         this.editNoteDAO = editNoteDAO;
-        this.editNotePresenter = editNotePresenter;
         this.noteFactory = noteFactory;
     }
 
