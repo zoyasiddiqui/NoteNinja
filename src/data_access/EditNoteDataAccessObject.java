@@ -59,10 +59,13 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
     }
 
     @Override
-    public Note getNoteById(String noteId) {
-        // Assuming you have a method to retrieve a Note object by its ID
-        // Implement the logic to retrieve a Note object by its ID
-        return null;
+    public Note getNoteById(List<Note> notes, String noteId) {
+        for (Note note : notes) {
+            if (note.getId().equals(noteId)) {
+                return note;
+            }
+        }
+        return null; // Return null if no note with the specified ID is found
     }
 
     // Helper method to send a delete request to the specified URL
