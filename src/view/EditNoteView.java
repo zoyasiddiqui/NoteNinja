@@ -120,6 +120,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (prompt != null) {
                             try {
                                 createAISnippetController.execute(prompt);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
                             }
                         }
                     }
