@@ -8,4 +8,6 @@ public interface EditNoteOutputBoundary {
     void prepareTitleChange(RenameNoteOutputData title);
 
     void noteDeletedSuccessfully();
+
+    void prepareBackMenu();
 }

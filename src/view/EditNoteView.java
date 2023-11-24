@@ -79,7 +79,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(backMenu)) {
                             System.out.println("pressed back");
-
+                            backMenuController.execute();
                         }
                     }
                 }

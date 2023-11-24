@@ -12,6 +12,6 @@ public class BackMenuInteractor implements BackMenuInputBoundary {
 
     @Override
     public void execute() {
-
+        editNotePresenter.prepareBackMenu();
     }
 }
