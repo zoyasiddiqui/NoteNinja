@@ -26,6 +26,9 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
 
     @Override
     public void save(Note note) throws IOException {
+
+        // create a new note object + save it to my list of notes
+
         URL obj = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
         connection.setRequestMethod("POST");
@@ -51,11 +54,8 @@ public class EditNoteDataAccessObject implements CreateNoteDataAccessInterface, 
         String noteId = note.getId(); // Assuming you have a method to get the note ID
         String query = "DELETE FROM 9pYIi0HNV5wCWDYX WHERE ID='" + noteId + "'";
         sendDeleteRequest(query);
-    }
 
-    @Override
-    public void findByTag(String tagName) {
-        // Your existing findByTag method logic
+        //REMOVE FROM LIST OF NOTES!
     }
 
     @Override
