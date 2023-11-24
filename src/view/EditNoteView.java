@@ -60,6 +60,12 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
         buttons.add(backMenu);
 
+        noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
+        noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
+        noteTitleButton.setBorderPainted(false);
+        noteTitleButton.setContentAreaFilled(false);
+        noteTitleButton.setFocusPainted(false);
+        noteTitleButton.addActionListener(this);
 
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
@@ -88,7 +94,32 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+        // ==============================
 
+
+        // ====== RENAME LISTENER =======
+        noteTitleButton.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(noteTitleButton)) {
+                            System.out.println("pressed title");
+
+                            String newTitle = JOptionPane.showInputDialog("Enter a new title");
+                            if (newTitle != null) {
+                                try {
+                                    renameNoteController.execute(newTitle);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        }
+                    }
+                }
+        );
+        // ==============================
+
+        // ==== DELETE NOTE LISTENER ====
         deleteNote.addActionListener(
                 new ActionListener() {
                     @Override
@@ -106,7 +137,10 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+       // ==============================
+      
 
+        noteTitleButton.addActionListener(this);
         saveNote.addActionListener(this);
         backMenu.addActionListener(this);
         deleteNote.addActionListener(this);
@@ -119,59 +153,20 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
         // Add the buttons JPanel to the south of this JPanel
         this.add(buttons, BorderLayout.SOUTH);
+        add(noteTitleButton, BorderLayout.NORTH);// add the title button to the north of this JPanel
     }
 
-//    TODO: figure out if we want the code below or not.
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == saveNote) {
-//            System.out.println("clicked save"); // for debugging delete later
-            String noteText = noteTextArea.getText();
-            System.out.println(noteText); // for debugging delete later
-
-
-            // You might want to invoke methods in editViewModel to handle the save action
-
-        } else if (e.getSource() == deleteNote) {
-            System.out.println("clicked delete"); // for debugging deleted later
-            // Handle deleteNote button click
-            // You might want to invoke methods in editViewModel to handle the delete action
-
-        } else if (e.getSource() == noteTitleButton) {
-            String newTitle = JOptionPane.showInputDialog(this, "Enter a new title");
-            if (newTitle != null) {
-                try {
-                    renameNoteController.execute(newTitle);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        }
+//        need this empty method here because we must override our interfaces
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Handle property changes if needed
-
-
-        // === Creating Title Button ===
-        // we do this in propertyChange to update the title after loading in the note
-        EditNoteState editState = this.editViewModel.getState();
-        String noteTitle = editState.getNoteTitle();
-
-        noteTitleButton = new JButton(noteTitle);
-        noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
-        noteTitleButton.setBorderPainted(false);
-        noteTitleButton.setContentAreaFilled(false);
-        noteTitleButton.setFocusPainted(false);
-        noteTitleButton.addActionListener(this);
-
-        // add the title button to the north of this JPanel
-        add(noteTitleButton, BorderLayout.NORTH);
-
-        // add the title label to the north of this JPanel
-        add(noteTitleButton, BorderLayout.NORTH);
-        // == Created Title Button ===
+        System.out.println("*pChange EditView"); // for debugging, delete later
+        noteTitleButton.setText(editViewModel.getState().getNoteTitle());
 
     }
 }
