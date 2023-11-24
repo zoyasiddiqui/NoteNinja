@@ -6,6 +6,7 @@ import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
+import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.edit_note.RenameNoteController;
@@ -16,6 +17,8 @@ import use_case.back_menu.BackMenuInteractor;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
 import use_case.create_AI_snippet.CreateAISnippetInteractor;
+import use_case.delete_note.DeleteNoteInputBoundary;
+import use_case.delete_note.DeleteNoteInteractor;
 import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.rename_note.RenameNoteInputBoundary;
@@ -33,19 +36,21 @@ public class EditNoteUseCaseFactory {
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface) {
-
+        
+        // feel free to add more controllers and view models as necessary
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface);
-        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
+        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);        
+        DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, editNoteDataAccessInterface);
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
-                editNoteDataAccessInterface, viewManagerModel, editNoteViewModel, searchViewModel);
+                                                                                  editNoteDataAccessInterface, 
+                                                                                  viewManagerModel, 
+                                                                                  editNoteViewModel, 
+                                                                                  searchViewModel);
 
-        Note note = editNoteViewModel.getState().getNote();
 
-
-        // feel free to add more controllers and view models as necessary
-        return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, createAISnippetUseCase);
+        return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase, createAISnippetUseCase);
 
     }
 
@@ -59,6 +64,12 @@ public class EditNoteUseCaseFactory {
         BackMenuInputBoundary backMenuInteractor = new BackMenuInteractor(editNotePresenter);
         return new BackMenuController(backMenuInteractor);
     }
+
+    private static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter, EditNoteDataAccessInterface editNoteDataAccessInterface) {
+        DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNotePresenter, editNoteDataAccessInterface);
+        return new DeleteNoteController(deleteNoteInteractor);
+    }
+
 
     // note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
     // RenameUseCase only updates the note's state and fires the property change in view model
