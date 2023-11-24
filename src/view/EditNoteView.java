@@ -73,6 +73,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(saveNote)) {
+                            String noteText = noteTextArea.getText();
+                            editViewModel.getState();
 //                            EditNoteView.this.saveNoteController.execute();
                             System.out.println("clicked save!!");
                         }
