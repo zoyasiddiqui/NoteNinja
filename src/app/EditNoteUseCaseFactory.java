@@ -38,7 +38,7 @@ public class EditNoteUseCaseFactory {
 
 
         // feel free to add more controllers and view models as necessary
-        return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase);
+        return new EditNoteView(note, editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, createAISnippetController);
 
     }
 

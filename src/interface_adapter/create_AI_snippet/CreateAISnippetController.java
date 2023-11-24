@@ -12,7 +12,7 @@ public class CreateAISnippetController {
         this.createAISnippetInteractor = createAISnippetInteractor;
     }
 
-    public void execute(String request, String prompt) throws IOException {
-        this.createAISnippetInteractor.execute(request, prompt);
+    public void execute(String prompt) throws IOException {
+        this.createAISnippetInteractor.execute(prompt);
     }
 }
