@@ -3,6 +3,7 @@ package interface_adapter.edit_note;
 import entity.Note.Note;
 
 public class EditNoteState {
+
     private String noteTitle;
     private String noteText;
     private String noteID;

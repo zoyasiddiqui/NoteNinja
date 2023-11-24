@@ -1,6 +1,7 @@
 package interface_adapter.create_AI_snippet;
 
 import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
+import use_case.save_note.SaveNoteInputData;
 
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ public class CreateAISnippetController {
         this.createAISnippetInteractor = createAISnippetInteractor;
     }
 
-    public void execute(String request, String prompt) throws IOException {
-        this.createAISnippetInteractor.execute(request, prompt);
+    public void execute(String prompt) throws IOException {
+        this.createAISnippetInteractor.execute(prompt);
     }
 }

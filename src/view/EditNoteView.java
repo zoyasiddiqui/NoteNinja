@@ -2,6 +2,7 @@ package view;
 
 import entity.Note.Note;
 import interface_adapter.back_menu.BackMenuController;
+import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
@@ -22,10 +23,13 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final RenameNoteController renameNoteController;
     private final SaveController saveNoteController;
     private final BackMenuController backMenuController;
+    private final CreateAISnippetController createAISnippetController;
+
     private final DeleteNoteController deleteNoteController;
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
     final JButton backMenu;
+    final JButton createAISnippet;
     private final JTextArea noteTextArea;
     private JButton noteTitleButton;
 
@@ -33,10 +37,12 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         RenameNoteController renameNoteController,
                         SaveController saveNoteController,
                         BackMenuController backMenuController,
-                        DeleteNoteController deleteNoteController) {
+                        DeleteNoteController deleteNoteController,
+                        CreateAISnippetController createAISnippetController) {
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.deleteNoteController = deleteNoteController;
+        this.createAISnippetController = createAISnippetController;
         this.editViewModel.addPropertyChangeListener(this);
         this.renameNoteController = renameNoteController;
         this.backMenuController = backMenuController;
@@ -57,6 +63,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         buttons.add(deleteNote);
         backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
         buttons.add(backMenu);
+        createAISnippet = new JButton(EditNoteViewModel.AI_SNIPPET_LABEL);
+        buttons.add(createAISnippet);
 
         noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
         noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
@@ -103,6 +111,22 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         // ==============================
 
 
+        // ====== AI SNIPPET LISTENER =======
+        createAISnippet.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String prompt = JOptionPane.showInputDialog(this, "Enter AI prompt");
+                        if (prompt != null) {
+                            try {
+                                createAISnippetController.execute(prompt);
+                            }
+                        }
+                    }
+                }
+        );
+        // ==============================
+
         // ====== RENAME LISTENER =======
         noteTitleButton.addActionListener(
                 new ActionListener() {
@@ -136,6 +160,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                             String noteID = editState.getNoteID();
                             try {
                                 deleteNoteController.execute(noteID);
+                              
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -143,6 +168,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+                              
        // ==============================
       
 
@@ -150,6 +176,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         saveNote.addActionListener(this);
         backMenu.addActionListener(this);
         deleteNote.addActionListener(this);
+        createAISnippet.addActionListener(this);
 
         // Set the layout manager for this JPanel
         setLayout(new BorderLayout());

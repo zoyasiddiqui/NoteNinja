@@ -5,6 +5,7 @@ import entity.Note.Note;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
+import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
@@ -13,6 +14,9 @@ import interface_adapter.save_note.SaveController;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.back_menu.BackMenuInputBoundary;
 import use_case.back_menu.BackMenuInteractor;
+import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
+import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
+import use_case.create_AI_snippet.CreateAISnippetInteractor;
 import use_case.delete_note.DeleteNoteInputBoundary;
 import use_case.delete_note.DeleteNoteInteractor;
 import use_case.edit_note.EditNoteDataAccessInterface;
@@ -30,18 +34,23 @@ public class EditNoteUseCaseFactory {
             ViewManagerModel viewManagerModel,
             EditNoteViewModel editNoteViewModel,
             SearchViewModel searchViewModel,
-            EditNoteDataAccessInterface editNoteDataAccessInterface) {
-
+            EditNoteDataAccessInterface editNoteDataAccessInterface,
+            CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface) {
+        
+        // feel free to add more controllers and view models as necessary
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface);
-        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
+        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);        
         DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, editNoteDataAccessInterface);
+        CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
+                                                                                  editNoteDataAccessInterface, 
+                                                                                  viewManagerModel, 
+                                                                                  editNoteViewModel, 
+                                                                                  searchViewModel);
 
 
-        // feel free to add more controllers and view models as necessary
-
-        return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase);
+        return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase, createAISnippetUseCase);
 
     }
 
@@ -76,5 +85,15 @@ public class EditNoteUseCaseFactory {
         NoteFactory noteFactory = new CommonNoteFactory();
         SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory);
         return new SaveController(saveNoteInteractor);
+    }
+
+    private static CreateAISnippetController createAISnippetUseCase(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
+                                                                    EditNoteDataAccessInterface editNoteDAO,
+                                                                    ViewManagerModel viewManagerModel,
+                                                                    EditNoteViewModel editNoteViewModel,
+                                                                    SearchViewModel searchViewModel) {
+        EditNoteOutputBoundary editNotePresenter = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, editNotePresenter);
+        return new CreateAISnippetController(createAISnippetInteractor);
     }
 }
