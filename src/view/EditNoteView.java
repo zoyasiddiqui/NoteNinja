@@ -84,8 +84,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-        // ==============================
-
 
         saveNote.addActionListener(this);
         backMenu.addActionListener(this);

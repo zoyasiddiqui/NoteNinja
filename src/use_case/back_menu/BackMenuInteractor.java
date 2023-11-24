@@ -7,7 +7,6 @@ public class BackMenuInteractor implements BackMenuInputBoundary {
 
     public BackMenuInteractor (EditNoteOutputBoundary editNotePresenter) {
         this.editNotePresenter = editNotePresenter;
-
     }
 
     @Override
@@ -15,3 +14,4 @@ public class BackMenuInteractor implements BackMenuInputBoundary {
         editNotePresenter.prepareBackMenu();
     }
 }
+
