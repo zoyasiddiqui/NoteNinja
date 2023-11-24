@@ -73,6 +73,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         noteTitleButton.setFocusPainted(false);
         noteTitleButton.addActionListener(this);
 
+
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
                 new ActionListener() {
@@ -129,6 +130,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ====== RENAME LISTENER =======
         noteTitleButton.addActionListener(
                 new ActionListener() {
@@ -151,6 +153,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ==== DELETE NOTE LISTENER ====
         deleteNote.addActionListener(
                 new ActionListener() {
@@ -170,7 +173,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-                              
        // ==============================
       
 
