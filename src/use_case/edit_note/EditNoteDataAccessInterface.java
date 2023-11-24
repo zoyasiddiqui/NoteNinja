@@ -11,4 +11,8 @@ public interface EditNoteDataAccessInterface {
     Note getNoteById(List<Note> notes, String noteId);
 
     void delete(Note note) throws IOException;
+
+    boolean existsByID(String noteID);
+
+    void updateNote(String noteID, String noteText, String noteTitle);
 }
