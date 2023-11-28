@@ -6,18 +6,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAccessInterface {
 
     @Override
     public StringBuilder getResponse(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
-        String myKey = "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";
+        String myKey = readApiKey();
         String model = "gpt-3.5-turbo";
 
         try {
@@ -43,7 +41,6 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
                 response.append(inputLine);
             }
             in.close();
-
 
             //figuring out how to parse string
             String[] templist = response.toString().split("\"content\":\"")[0].split("\"");
@@ -75,4 +72,17 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
             throw new RuntimeException(e);
         }
     }
+
+    private static String readApiKey() {
+        Properties properties = new Properties();
+        try (FileInputStream input = new FileInputStream("C:\\Users\\Zoya\\IdeaProjectsUltimate\\NoteNinja\\src\\config.properties")) {
+            properties.load(input);
+            return properties.getProperty("api.key");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
+
+
