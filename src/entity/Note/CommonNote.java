@@ -25,17 +25,6 @@ class CommonNote implements Note {
     public void setID(String ID) {
         this.ID = ID;
     }
-
-    @Override
-    public void save() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
     @Override
     public String getName() {
         return this.name;
