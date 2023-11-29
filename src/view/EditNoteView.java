@@ -1,8 +1,8 @@
 package view;
 
-import entity.Note.Note;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
+import interface_adapter.create_code_snippet.CreateCodeSnippetController;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
@@ -31,18 +31,22 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     final JButton backMenu;
     final JButton createAISnippet;
     private final JTextArea noteTextArea;
+    private final CreateCodeSnippetController createCodeSnippetController;
     private JButton noteTitleButton;
+
+    final JButton createCodeSnippet;
 
     public EditNoteView(EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
                         SaveController saveNoteController,
                         BackMenuController backMenuController,
                         DeleteNoteController deleteNoteController,
-                        CreateAISnippetController createAISnippetController) {
+                        CreateAISnippetController createAISnippetController, CreateCodeSnippetController createCodeSnippetController) {
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.deleteNoteController = deleteNoteController;
         this.createAISnippetController = createAISnippetController;
+        this.createCodeSnippetController = createCodeSnippetController;
         this.editViewModel.addPropertyChangeListener(this);
         this.renameNoteController = renameNoteController;
         this.backMenuController = backMenuController;
@@ -65,6 +69,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         buttons.add(createAISnippet);
         backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
         buttons.add(backMenu);
+        createCodeSnippet = new JButton(EditNoteViewModel.CODE_SNIPPET_LABEL);
 
         noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
         noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));

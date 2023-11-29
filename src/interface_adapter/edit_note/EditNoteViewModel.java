@@ -12,6 +12,7 @@ public class EditNoteViewModel extends ViewModel {
 
     public static final String AI_SNIPPET_LABEL = "Create AI Snippet!";
     public static final String DEFAULT_NOTE_TITLE = "Untitled";
+    public static final String CODE_SNIPPET_LABEL = "Create Code Snippet!";
 
     private EditNoteState state = new EditNoteState();
 

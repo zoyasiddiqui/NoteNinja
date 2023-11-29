@@ -3,6 +3,7 @@ package interface_adapter.edit_note;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetOutputData;
+import use_case.create_code_snippet.CreateCodeSnippetOutputData;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 import use_case.rename_note.RenameNoteOutputData;
@@ -59,5 +60,10 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     public void prepareBackMenu() {
         viewManagerModel.setActiveView(searchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareSuccessView(CreateCodeSnippetOutputData createCodeSnippetOutputData) {
+
     }
 }
