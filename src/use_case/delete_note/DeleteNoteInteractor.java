@@ -24,12 +24,14 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
 
         // Assuming you have a method to retrieve a Note object by its ID
         Note note = editNoteDataAccessInterface.getNoteById(noteId);
+        System.out.println("Looking for "+noteId+" and found "+note.getID());
 
         // Call the delete method from the data access object
+
         deleteNoteDataAccessInterface.delete(note);
 
         // You may want to notify the presenter or handle the result in some way
         // For example:
-        editNotePresenter.noteDeletedSuccessfully(); // Assuming you have a method like this in your presenter
+        editNotePresenter.prepareBackMenu(); // Assuming you have a method like this in your presenter
     }
 }
