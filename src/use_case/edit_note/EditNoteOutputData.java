@@ -10,10 +10,10 @@ public class EditNoteOutputData {
     private String title;
     private String text;
 
-    public EditNoteOutputData(Note note, String title, String text) {
+    public EditNoteOutputData(Note note) {
         this.note = note;
-        this.title = title;
-        this.text = text;
+        this.title = note.getName();
+        this.text = note.getText();
     }
 
     public String getTitle() {
