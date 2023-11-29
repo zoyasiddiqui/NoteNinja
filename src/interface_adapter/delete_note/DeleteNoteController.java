@@ -12,7 +12,7 @@ public class DeleteNoteController {
         this.deleteNoteInteractor = deleteNoteInteractor;
     }
 
-    public void execute(String noteId) throws IOException {
+    public void execute(int noteId) throws IOException {
         DeleteNoteInputData deleteNoteInputData = new DeleteNoteInputData(noteId);
         this.deleteNoteInteractor.execute(String.valueOf(deleteNoteInputData));
     }
