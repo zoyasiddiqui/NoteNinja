@@ -70,6 +70,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
         buttons.add(backMenu);
         createCodeSnippet = new JButton(EditNoteViewModel.CODE_SNIPPET_LABEL);
+        buttons.add(createCodeSnippet);
 
         noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
         noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
@@ -139,6 +140,25 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+        // ====== CODE SNIPPET LISTENER =======
+        createCodeSnippet.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String code = JOptionPane.showInputDialog(this, "Enter code snippet");
+                        if (code != null) {
+                            try {
+                                // Assuming createCodeSnippetController is your controller for code snippets
+                                createCodeSnippetController.execute(code);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    }
+                }
+        );
+// ==============================
+
 
         // ====== RENAME LISTENER =======
         noteTitleButton.addActionListener(
@@ -190,6 +210,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         backMenu.addActionListener(this);
         deleteNote.addActionListener(this);
         createAISnippet.addActionListener(this);
+        createCodeSnippet.addActionListener(this);
 
         // Set the layout manager for this JPanel
         setLayout(new BorderLayout());
