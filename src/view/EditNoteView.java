@@ -61,16 +61,17 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
         // create a JPanel for buttons
         JPanel buttons = new JPanel();
+
+        createAISnippet = new JButton(EditNoteViewModel.AI_SNIPPET_LABEL);
+        buttons.add(createAISnippet);
+        createCodeSnippet = new JButton(EditNoteViewModel.CODE_SNIPPET_LABEL);
+        buttons.add(createCodeSnippet);
         saveNote = new JButton(EditNoteViewModel.SAVE_NOTE_LABEL);
         buttons.add(saveNote);
         deleteNote = new JButton(EditNoteViewModel.DELETE_NOTE_LABEL);
         buttons.add(deleteNote);
-        createAISnippet = new JButton(EditNoteViewModel.AI_SNIPPET_LABEL);
-        buttons.add(createAISnippet);
         backMenu = new JButton(EditNoteViewModel.BACK_MENU_LABEL);
         buttons.add(backMenu);
-        createCodeSnippet = new JButton(EditNoteViewModel.CODE_SNIPPET_LABEL);
-        buttons.add(createCodeSnippet);
 
         noteTitleButton = new JButton(EditNoteViewModel.DEFAULT_NOTE_TITLE);
         noteTitleButton.setFont(new Font("Arial", Font.BOLD, 18));
