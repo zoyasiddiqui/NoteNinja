@@ -146,7 +146,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String code = JOptionPane.showInputDialog(this, "Enter code snippet");
+                        String code = JOptionPane.showInputDialog(this, "Paste Code Here");
                         if (code != null) {
                             try {
                                 // Assuming createCodeSnippetController is your controller for code snippets
