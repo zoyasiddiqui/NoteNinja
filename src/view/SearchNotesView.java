@@ -1,6 +1,6 @@
 package view;
 
-import data_access.EditNoteDataAccessObject;
+import data_access.NoteDataAccessObject;
 import interface_adapter.create_note.CreateNoteController;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchController;
@@ -20,11 +20,15 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
     private final SearchController searchController;
     private final EditNoteViewModel editViewModel;
     private final CreateNoteController createNoteController;
-    private final EditNoteDataAccessObject editNoteDataAccessObject;
+    private final NoteDataAccessObject editNoteDataAccessObject;
     private final JButton createNote;
     private final JLabel homeTitle;
 
-    public SearchNotesView(SearchViewModel searchViewModel, SearchController searchController, EditNoteViewModel editViewModel, CreateNoteController createNoteController, EditNoteDataAccessObject editNoteDataAccessObject) {
+    public SearchNotesView(SearchViewModel searchViewModel,
+                           SearchController searchController,
+                           EditNoteViewModel editViewModel,
+                           CreateNoteController createNoteController,
+                           NoteDataAccessObject editNoteDataAccessObject) {
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
         this.editViewModel = editViewModel;
