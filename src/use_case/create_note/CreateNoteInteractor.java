@@ -32,7 +32,6 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary {
         String noteText = "";
         String noteTitle = createNoteInputData.getNoteTitle();
         Note note = noteFactory.create(noteTitle, noteText);
-        noteDataAccessObject.create(note);
 
         EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note);
         editNotePresenter.prepareNote(editNoteOutputData);

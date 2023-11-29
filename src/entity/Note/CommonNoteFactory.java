@@ -10,6 +10,7 @@ public class CommonNoteFactory implements NoteFactory{
     @Override
     public Note create(String name, String text) {
         noteID += 1;
+        System.out.println(noteID);
         return new CommonNote(name, text, noteID);
     }
 

@@ -25,6 +25,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     public void prepareNote(EditNoteOutputData note) {
         EditNoteState noteState = editNoteViewModel.getState();
         noteState.setNoteTitle(note.getTitle());
+        noteState.setNoteID(note.getID());
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
 
@@ -49,11 +50,6 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
 
         viewManagerModel.setActiveView(editNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
-    public void noteDeletedSuccessfully() {
-
     }
 
     @Override

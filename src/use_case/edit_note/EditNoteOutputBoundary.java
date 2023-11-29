@@ -11,8 +11,6 @@ public interface EditNoteOutputBoundary {
 
     void prepareSnippetAdded(CreateAISnippetOutputData text);
 
-    void noteDeletedSuccessfully();
-
     void prepareBackMenu();
 
     void prepareSuccessView(CreateCodeSnippetOutputData createCodeSnippetOutputData);
