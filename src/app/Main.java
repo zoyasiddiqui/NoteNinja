@@ -1,7 +1,7 @@
 package app;
 
 import data_access.CreateAISnippetDataAccessObject;
-import data_access.EditNoteDataAccessObject;
+import data_access.NoteDataAccessObject;
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
@@ -36,19 +36,15 @@ public class Main {
         // Create view models and views to add to list of accessible views
         SearchViewModel searchViewModel = new SearchViewModel();
         EditNoteViewModel editViewModel = new EditNoteViewModel();
-
-        EditNoteDataAccessObject editNoteDataAccessObject = new EditNoteDataAccessObject();
+        // Create DAOs
+        NoteDataAccessObject editNoteDataAccessObject = new NoteDataAccessObject();
         CreateAISnippetDataAccessInterface createAISnippetDataAccessObject = new CreateAISnippetDataAccessObject();
-        // TODO: Change or remove noteName attribute. Note sure yet, right now it's set to "dummy"
 
-        NoteFactory noteFactory = new CommonNoteFactory();
-
-        //note: when you click create note and edit a note, and then you want to go back to SearchNotesView,
-        //you should create a new SearchNotesView.
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel, editNoteDataAccessObject);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject, createAISnippetDataAccessObject);
+        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject,
+                editNoteDataAccessObject, createAISnippetDataAccessObject, editNoteDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);

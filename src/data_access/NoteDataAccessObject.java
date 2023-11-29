@@ -4,6 +4,7 @@ import entity.Note.Note;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.edit_note.EditNoteDataAccessInterface;
+import use_case.search_notes.SearchNotesAccessInterface;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
-        EditNoteDataAccessInterface, DeleteNoteDataAccessInterface {
+        EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
     private final Map<Note, File> allNotes = new HashMap<>();
     private int noteNumber = 0;
@@ -26,9 +27,9 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         // setting the ID of note most recently accessed
         this.noteNumber = note.getID();
 
-        File noteFile = new File("notes\\note"+noteNumber);
+        File noteFile = new File("notes/note"+noteNumber+".csv");
         //TODO: delete once done testing
-        System.out.println("notes\\note"+noteNumber);
+        System.out.println("notes/note"+noteNumber+".csv");
 
         // updating variables so we can more easily edit the note
         this.currentNote = note;
@@ -105,5 +106,10 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
     @Override
     public void setCurrentText(String text) {
         this.currentNote.setText(text);
+    }
+
+    @Override
+    public void findByTitle(String noteTitle) {
+        // TODO: implement this if we choose to implement the search notes use case
     }
 }

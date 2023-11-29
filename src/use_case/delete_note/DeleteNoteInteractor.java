@@ -21,6 +21,7 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
     }
 
     public void execute(int noteId) throws IOException {
+
         // Assuming you have a method to retrieve a Note object by its ID
         Note note = editNoteDataAccessInterface.getNoteById(noteId);
 

@@ -4,18 +4,22 @@ import data_access.NoteDataAccessObject;
 import entity.Note.Note;
 import entity.Note.NoteFactory;
 import interface_adapter.edit_note.EditNotePresenter;
+import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.edit_note.EditNoteDataAccessInterface;
 
 import java.io.IOException;
 
 public class SaveNoteInteractor implements SaveNoteInputBoundary{
 
-    private final NoteDataAccessObject editNoteDAO;
+    private final EditNoteDataAccessInterface editNoteDataAccessInterface;
+    private final CreateNoteDataAccessInterface createNoteDataAccessInterface;
     private final NoteFactory noteFactory;
 
-    public SaveNoteInteractor(NoteDataAccessObject editNoteDAO,
+    public SaveNoteInteractor(EditNoteDataAccessInterface editNoteDataAccessInterface,
+                              CreateNoteDataAccessInterface createNoteDataAccessInterface,
                               NoteFactory noteFactory) {
-        this.editNoteDAO = editNoteDAO;
+        this.editNoteDataAccessInterface = editNoteDataAccessInterface;
+        this.createNoteDataAccessInterface = createNoteDataAccessInterface;
         this.noteFactory = noteFactory;
     }
 
@@ -26,12 +30,24 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
         String noteText = saveNoteInputData.getNoteText();
         String noteTitle = saveNoteInputData.getNoteTitle();
 
-        if (editNoteDAO.existsByID(noteID)) { // note already exists
-            editNoteDAO.updateNote(noteID, noteText, noteTitle);
+        if (editNoteDataAccessInterface.existsByID(noteID)) { // note already exists
+            //TODO: delete once done testing!
+            System.out.println("got note with id "+noteID);
+
+            editNoteDataAccessInterface.updateNote(noteID, noteText, noteTitle);
+
+            //TODO: delete once done testing!
+            Note curNote = editNoteDataAccessInterface.getNoteById(noteID);
+            System.out.println(curNote.getText());
 
         } else { // else create a new note
             Note note = noteFactory.create(noteTitle, noteText);
-            editNoteDAO.create(note);
+            createNoteDataAccessInterface.create(note);
+            editNoteDataAccessInterface.updateNote(note.getID(), noteText, note.getName());
+
+            //TODO: delete once done testing!
+            System.out.println(note.getText());
         }
+
     }
 }

@@ -1,7 +1,7 @@
 package app;
 
+import data_access.NoteDataAccessObject;
 import entity.Note.CommonNoteFactory;
-import entity.Note.Note;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
@@ -17,6 +17,8 @@ import use_case.back_menu.BackMenuInteractor;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
 import use_case.create_AI_snippet.CreateAISnippetInteractor;
+import use_case.create_note.CreateNoteDataAccessInterface;
+import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteInputBoundary;
 import use_case.delete_note.DeleteNoteInteractor;
 import use_case.edit_note.EditNoteDataAccessInterface;
@@ -35,14 +37,18 @@ public class EditNoteUseCaseFactory {
             EditNoteViewModel editNoteViewModel,
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
-            CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface) {
+            CreateNoteDataAccessInterface createNoteDataAccessInterface,
+            CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
+            DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
         
         // feel free to add more controllers and view models as necessary
-        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel,
+                editNoteViewModel, viewManagerModel);
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
-        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface);
+        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface, createNoteDataAccessInterface);
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);        
-        DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, editNoteDataAccessInterface);
+        DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter,
+                editNoteDataAccessInterface, deleteNoteDataAccessInterface);
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
                                                                                   editNoteDataAccessInterface, 
                                                                                   viewManagerModel, 
@@ -65,8 +71,10 @@ public class EditNoteUseCaseFactory {
         return new BackMenuController(backMenuInteractor);
     }
 
-    private static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter, EditNoteDataAccessInterface editNoteDataAccessInterface) {
-        DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNotePresenter, editNoteDataAccessInterface);
+    private static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                                EditNoteDataAccessInterface editNoteDataAccessInterface,
+                                                                DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
+        DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNoteDataAccessInterface, editNotePresenter, deleteNoteDataAccessInterface);
         return new DeleteNoteController(deleteNoteInteractor);
     }
 
@@ -79,11 +87,13 @@ public class EditNoteUseCaseFactory {
     }
 
 
-    private static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface) {
+    private static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
+                                                    CreateNoteDataAccessInterface createNoteDataAccessInterface) {
 
         // we need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
         NoteFactory noteFactory = new CommonNoteFactory();
-        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory);
+        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface,
+                createNoteDataAccessInterface, noteFactory);
         return new SaveController(saveNoteInteractor);
     }
 
