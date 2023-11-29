@@ -1,12 +1,10 @@
 package interface_adapter.edit_note;
 
-import entity.Note.Note;
-
 public class EditNoteState {
 
     private String noteTitle;
     private String noteText;
-    private String noteID;
+    private int noteID;
 
     public EditNoteState(EditNoteState copy) {
         noteTitle = copy.noteTitle;
@@ -24,7 +22,7 @@ public class EditNoteState {
         return noteText;
     }
 
-    public String getNoteID() {
+    public int getNoteID() {
         return noteID;
     }
 
@@ -36,7 +34,7 @@ public class EditNoteState {
         this.noteText = noteText;
     }
 
-    public void setNoteID(String noteID) {
+    public void setNoteID(int noteID) {
         this.noteID = noteID;
     }
 }
