@@ -9,27 +9,24 @@ import java.util.List;
 
 public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
     private final EditNoteDataAccessInterface editNoteDataAccessInterface;
+    private final DeleteNoteDataAccessInterface deleteNoteDataAccessInterface;
     private final EditNoteOutputBoundary editNotePresenter;
-    private List<Note> notes;
 
     public DeleteNoteInteractor(EditNoteDataAccessInterface editNoteDataAccessInterface,
-                                EditNoteOutputBoundary editNotePresenter, List<Note> notes) {
+                                EditNoteOutputBoundary editNotePresenter,
+                                DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
         this.editNoteDataAccessInterface = editNoteDataAccessInterface;
-        this.editNotePresenter = editNotePresenter;
-        this.notes = notes;
-    }
-
-    public DeleteNoteInteractor(EditNoteOutputBoundary editNotePresenter, EditNoteDataAccessInterface editNoteDataAccessInterface) {
-        this.editNoteDataAccessInterface = editNoteDataAccessInterface;
+        this.deleteNoteDataAccessInterface = deleteNoteDataAccessInterface;
         this.editNotePresenter = editNotePresenter;
     }
 
-    public void execute(String noteId) throws IOException {
+    public void execute(int noteId) throws IOException {
+
         // Assuming you have a method to retrieve a Note object by its ID
-        Note note = editNoteDataAccessInterface.getNoteById(notes, noteId);
+        Note note = editNoteDataAccessInterface.getNoteById(noteId);
 
         // Call the delete method from the data access object
-        editNoteDataAccessInterface.delete(note);
+        deleteNoteDataAccessInterface.delete(note);
 
         // You may want to notify the presenter or handle the result in some way
         // For example:

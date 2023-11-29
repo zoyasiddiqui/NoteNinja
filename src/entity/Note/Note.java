@@ -6,11 +6,8 @@ public interface Note {
 
     void setName(String title);
     void setText(String text);
-    void setID(String text);
-    void save();
-    void delete();
-
+    void setID(int num);
     String getName();
     String getText();
-    String getID();
+    int getID();
 }

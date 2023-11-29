@@ -6,15 +6,12 @@ import java.io.IOException;
 import java.util.List;
 
 public interface EditNoteDataAccessInterface {
-    void save (Note note) throws IOException;
 
-    Note getNoteById(List<Note> notes, String noteId);
+    Note getNoteById(int noteId);
 
-    void delete(Note note) throws IOException;
+    boolean existsByID(int noteID);
 
-    boolean existsByID(String noteID);
-
-    void updateNote(String noteID, String noteText, String noteTitle);
+    void updateNote(int noteID, String noteText, String noteTitle) throws IOException;
 
     String getCurrentText();
   

@@ -5,11 +5,12 @@ import java.util.List;
 class CommonNote implements Note {
     private String name;
     private String text;
-    private String ID;
+    private int ID;
 
-    public CommonNote(String name, String text) {
+    public CommonNote(String name, String text, int ID) {
         this.name = name;
         this.text = text;
+        this.ID = ID;
     }
 
     @Override
@@ -22,20 +23,9 @@ class CommonNote implements Note {
         this.text = text;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
-
-    @Override
-    public void save() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
-
     @Override
     public String getName() {
         return this.name;
@@ -46,7 +36,7 @@ class CommonNote implements Note {
         return this.text;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 }

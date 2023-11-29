@@ -81,10 +81,14 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(saveNote)) {
                             String noteText = noteTextArea.getText();
+
+                            //TODO: delete once done testing
+                            System.out.println("Here: "+noteText);
+
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
                                 EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
-                                                                             editNoteState.getNoteText(),
+                                                                             noteText,
                                                                              editNoteState.getNoteID());
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
@@ -162,7 +166,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (e.getSource().equals(deleteNote)) {
                             System.out.println("Deleted Note");
                             EditNoteState editState = editViewModel.getState();
-                            String noteID = editState.getNoteID();
+                            int noteID = editState.getNoteID();
                             try {
                                 deleteNoteController.execute(noteID);
                               
