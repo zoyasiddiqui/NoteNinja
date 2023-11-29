@@ -1,5 +1,6 @@
 package use_case.save_note;
 
+import data_access.NoteDataAccessObject;
 import entity.Note.Note;
 import entity.Note.NoteFactory;
 import interface_adapter.edit_note.EditNotePresenter;
@@ -9,10 +10,10 @@ import java.io.IOException;
 
 public class SaveNoteInteractor implements SaveNoteInputBoundary{
 
-    private final EditNoteDataAccessInterface editNoteDAO;
+    private final NoteDataAccessObject editNoteDAO;
     private final NoteFactory noteFactory;
 
-    public SaveNoteInteractor(EditNoteDataAccessInterface editNoteDAO,
+    public SaveNoteInteractor(NoteDataAccessObject editNoteDAO,
                               NoteFactory noteFactory) {
         this.editNoteDAO = editNoteDAO;
         this.noteFactory = noteFactory;
@@ -21,7 +22,7 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
     @Override
     public void execute(SaveNoteInputData saveNoteInputData) throws IOException {
         // create a note entity using the InputData
-        String noteID = saveNoteInputData.getNoteID();
+        int noteID = saveNoteInputData.getNoteID();
         String noteText = saveNoteInputData.getNoteText();
         String noteTitle = saveNoteInputData.getNoteTitle();
 
@@ -30,7 +31,7 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
 
         } else { // else create a new note
             Note note = noteFactory.create(noteTitle, noteText);
-            editNoteDAO.save(note);
+            editNoteDAO.create(note);
         }
     }
 }

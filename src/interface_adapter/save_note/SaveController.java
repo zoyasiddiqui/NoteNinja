@@ -14,7 +14,7 @@ public class SaveController {
         this.saveNoteInteractor = saveNoteInteractor;
     }
 
-    public void execute(String noteTitle, String noteText, String noteID) throws IOException {
+    public void execute(String noteTitle, String noteText, int noteID) throws IOException {
         SaveNoteInputData saveNoteInputData = new SaveNoteInputData(noteTitle, noteText, noteID);
         this.saveNoteInteractor.execute(saveNoteInputData);
 
