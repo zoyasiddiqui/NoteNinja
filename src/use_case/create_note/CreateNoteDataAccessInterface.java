@@ -6,6 +6,6 @@ import java.io.IOException;
 
 public interface CreateNoteDataAccessInterface {
 
-    void save(Note note) throws IOException;
+    void create(Note note) throws IOException;
 
 }
