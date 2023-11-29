@@ -1,5 +1,7 @@
 package data_access;
 
+import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +12,9 @@ import java.util.Objects;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-public class CreateCodeSnippetDataAccessObject {
+public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataAccessInterface {
 
-    public StringBuilder runCode(String code) {
+    public StringBuilder executeCode(String code) {
         String url = "https://glot.io/api/run/python/latest";
         String myKey = readApiKey();
 
