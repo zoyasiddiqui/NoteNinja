@@ -1,5 +1,6 @@
 package view;
 
+import entity.Note.Note;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
@@ -24,7 +25,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final SaveController saveNoteController;
     private final BackMenuController backMenuController;
     private final CreateAISnippetController createAISnippetController;
-
     private final DeleteNoteController deleteNoteController;
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
@@ -33,7 +33,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     private final JTextArea noteTextArea;
     private final CreateCodeSnippetController createCodeSnippetController;
     private JButton noteTitleButton;
-
     final JButton createCodeSnippet;
 
     public EditNoteView(EditNoteViewModel editViewModel,
@@ -89,9 +88,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (e.getSource().equals(saveNote)) {
                             String noteText = noteTextArea.getText();
 
-                            //TODO: delete once done testing
-                            System.out.println("Here: "+noteText);
-
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
                                 EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
@@ -100,6 +96,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
+                            //TODO: delete later
                             System.out.println("clicked save!!");
                         }
                     }

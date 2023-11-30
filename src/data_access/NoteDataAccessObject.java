@@ -28,8 +28,6 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         this.noteNumber = note.getID();
 
         File noteFile = new File("notes/note"+noteNumber+".csv");
-        //TODO: delete once done testing
-        System.out.println("notes/note"+noteNumber+".csv");
 
         // updating variables so we can more easily edit the note
         this.currentNote = note;
@@ -38,18 +36,21 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
 
     @Override
     public void delete(Note note) throws IOException {
-        //TODO: delete once done testing
-        System.out.println(allNotes);
 
-        Set<Note> noteSet = allNotes.keySet();
-        for (Note curNote : noteSet) {
-            if (note.getID() == curNote.getID()) {
-                allNotes.remove(curNote);
+        try {
+            Set<Note> noteSet = allNotes.keySet();
+            for (Note curNote : noteSet) {
+                if (note.getID() == curNote.getID()) {
+                    //emptying the file
+                    this.updateNote(note.getID(), "", note.getName());
+
+                    // removing from list of notes
+                    allNotes.remove(curNote);
+                }
             }
+        } catch (NullPointerException e) {
+            return;
         }
-
-        //TODO: delete once done testing
-        System.out.println(allNotes);
     }
 
     @Override
@@ -65,6 +66,7 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
 
     @Override
     public boolean existsByID(int noteID) {
+
         Set<Note> noteSet = allNotes.keySet();
         for (Note curNote: noteSet) {
             if (curNote.getID() == noteID) {

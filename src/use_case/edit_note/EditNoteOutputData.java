@@ -22,4 +22,8 @@ public class EditNoteOutputData {
 
     public String getText() {return this.text;}
 
+    public int getID() {
+        return this.note.getID();
+    }
+
 }

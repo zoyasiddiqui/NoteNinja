@@ -48,7 +48,8 @@ public class EditNoteUseCaseFactory {
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel,
                 editNoteViewModel, viewManagerModel);
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
-        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface, createNoteDataAccessInterface);
+        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
+                createNoteDataAccessInterface, editNotePresenter);
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);        
         DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter,
                 editNoteDataAccessInterface, deleteNoteDataAccessInterface);
@@ -98,12 +99,13 @@ public class EditNoteUseCaseFactory {
 
 
     private static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
-                                                    CreateNoteDataAccessInterface createNoteDataAccessInterface) {
+                                                    CreateNoteDataAccessInterface createNoteDataAccessInterface,
+                                                    EditNoteOutputBoundary editNotePresenter) {
 
         // we need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
         NoteFactory noteFactory = new CommonNoteFactory();
         SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface,
-                createNoteDataAccessInterface, noteFactory);
+                createNoteDataAccessInterface, noteFactory, editNotePresenter);
         return new SaveController(saveNoteInteractor);
     }
 
