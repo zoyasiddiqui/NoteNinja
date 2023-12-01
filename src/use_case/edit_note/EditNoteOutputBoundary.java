@@ -9,8 +9,6 @@ public interface EditNoteOutputBoundary {
 
     void prepareTitleChange(RenameNoteOutputData title);
 
-    void prepareTextChange(String text);
-
     void prepareBackMenu();
 
 
