@@ -43,7 +43,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     }
 
     @Override
-    public void prepareSnippetAdded(CreateAISnippetOutputData text) {
+    public void prepareAISnippetAdded(CreateAISnippetOutputData text) {
         EditNoteState noteState = editNoteViewModel.getState();
         noteState.setNoteText(text.getText());
         this.editNoteViewModel.setState(noteState);
