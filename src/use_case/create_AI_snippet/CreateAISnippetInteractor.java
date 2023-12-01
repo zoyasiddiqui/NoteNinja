@@ -15,14 +15,11 @@ public class CreateAISnippetInteractor implements CreateAISnippetInputBoundary{
     }
 
     @Override
-    public void execute(String prompt) {
+    public void execute(String prompt, String noteText) {
         //use the DAO to use the API to give us back the AI response
         StringBuilder response = createAISnippetDataAccessObject.getResponse(prompt);
-        String text = editNoteDAO.getCurrentText() + new String(response);
+        String text = noteText + new String(response);
         // create a note entity using the InputData
-
-        System.out.println(text);
-        editNoteDAO.setCurrentText(text);
 
         CreateAISnippetOutputData createAISnippetOutputData = new CreateAISnippetOutputData(text);
         editNotePresenter.prepareSnippetAdded(createAISnippetOutputData);
