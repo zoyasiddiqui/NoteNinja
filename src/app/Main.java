@@ -17,6 +17,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Main {
+    // comment
     public static void main(String[] args) throws IOException {
 
         // The main application window.
