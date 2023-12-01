@@ -25,7 +25,6 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     public void prepareNote(EditNoteOutputData note) {
         EditNoteState noteState = editNoteViewModel.getState();
         noteState.setNoteTitle(note.getTitle());
-        noteState.setNoteID(note.getID());
         noteState.setNoteText(note.getText());
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
@@ -43,24 +42,8 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     }
 
     @Override
-    public void prepareSnippetAdded(CreateAISnippetOutputData text) {
-        EditNoteState noteState = editNoteViewModel.getState();
-        noteState.setNoteText(text.getText());
-        this.editNoteViewModel.setState(noteState);
-        this.editNoteViewModel.firePropertyChanged();
-
-        viewManagerModel.setActiveView(editNoteViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
     public void prepareBackMenu() {
         viewManagerModel.setActiveView(searchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-    }
-
-    @Override
-    public void prepareSuccessView(CreateCodeSnippetOutputData createCodeSnippetOutputData) {
-
     }
 }

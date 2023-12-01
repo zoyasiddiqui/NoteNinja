@@ -39,32 +39,33 @@ public class EditNoteUseCaseFactory {
             EditNoteViewModel editNoteViewModel,
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
-            CreateNoteDataAccessInterface createNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
-            DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
+            CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
         
         // feel free to add more controllers and view models as necessary
+
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel,
-                editNoteViewModel, viewManagerModel);
+                                                                           editNoteViewModel,
+                                                                           viewManagerModel);
+
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
+
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
-                createNoteDataAccessInterface, editNotePresenter);
-        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);        
+                                                           (CreateNoteDataAccessInterface) editNoteDataAccessInterface,
+                                                           editNotePresenter);
+
+        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
+
         DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter,
-                editNoteDataAccessInterface, deleteNoteDataAccessInterface);
-        CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
-                                                                                  editNoteDataAccessInterface, 
-                                                                                  viewManagerModel, 
-                                                                                  editNoteViewModel,
-                searchViewModel);
-        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = null;
-        CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(createCodeSnippetDataAccessInterface,
-                editNoteDataAccessInterface,
-                viewManagerModel,
-                editNoteViewModel,
-                searchViewModel);
+                                                                        (DeleteNoteDataAccessInterface) editNoteDataAccessInterface);
 
+        CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(editNotePresenter,
+                                                                                  createAISnippetDataAccessInterface,
+                                                                                  editNoteDataAccessInterface);
 
+        CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(editNotePresenter,
+                                                                                        createCodeSnippetDataAccessInterface,
+                                                                                        editNoteDataAccessInterface);
 
         return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase, createAISnippetUseCase, createCodeSnippetUseCase);
 
@@ -83,9 +84,8 @@ public class EditNoteUseCaseFactory {
     }
 
     private static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                EditNoteDataAccessInterface editNoteDataAccessInterface,
                                                                 DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
-        DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNoteDataAccessInterface, editNotePresenter, deleteNoteDataAccessInterface);
+        DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNotePresenter, deleteNoteDataAccessInterface);
         return new DeleteNoteController(deleteNoteInteractor);
     }
 
@@ -109,23 +109,18 @@ public class EditNoteUseCaseFactory {
         return new SaveController(saveNoteInteractor);
     }
 
-    private static CreateAISnippetController createAISnippetUseCase(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
-                                                                    EditNoteDataAccessInterface editNoteDAO,
-                                                                    ViewManagerModel viewManagerModel,
-                                                                    EditNoteViewModel editNoteViewModel,
-                                                                    SearchViewModel searchViewModel) {
-        EditNoteOutputBoundary editNotePresenter = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+    private static CreateAISnippetController createAISnippetUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                                    CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
+                                                                    EditNoteDataAccessInterface editNoteDAO) {
 
         CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, editNotePresenter);
         return new CreateAISnippetController(createAISnippetInteractor);
     }
 
-    private static CreateCodeSnippetController createCodeSnippetUseCase(CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject,
-                                                                        EditNoteDataAccessInterface editNoteDAO,
-                                                                        ViewManagerModel viewManagerModel,
-                                                                        EditNoteViewModel editNoteViewModel,
-                                                                        SearchViewModel searchViewModel) {
-        EditNoteOutputBoundary editNotePresenter = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+    private static CreateCodeSnippetController createCodeSnippetUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                                        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject,
+                                                                        EditNoteDataAccessInterface editNoteDAO) {
+
         CreateCodeSnippetInputBoundary createCodeSnippetInteractor = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessObject, editNoteDAO, editNotePresenter);
         return new CreateCodeSnippetController(createCodeSnippetInteractor);
     }

@@ -4,6 +4,6 @@ import java.io.IOException;
 
 public interface CreateCodeSnippetInputBoundary {
 
-    void execute(String code) throws IOException;
+    void execute(CreateCodeSnippetInputData createCodeSnippetInputData) throws IOException;
 
 }

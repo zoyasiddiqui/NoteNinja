@@ -19,7 +19,8 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
         String parsedCode = parseCode(code);
 
         String url = "https://glot.io/api/run/python/latest";
-        String myKey = readApiKey();
+//        String myKey = readApiKey();
+        String myKey = "cf7085cf-9a6b-4158-9e03-4570096f87c5";
 
         try {
             URL obj = new URL(url);
@@ -56,7 +57,7 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
 
     private String parseCode(String code) {
         //TODO: figure out how to implement this to take any inputted code and put it in the proper format
-        return "";
+        return code;
     }
 
     private static String readApiKey() {

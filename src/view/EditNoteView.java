@@ -40,7 +40,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         SaveController saveNoteController,
                         BackMenuController backMenuController,
                         DeleteNoteController deleteNoteController,
-                        CreateAISnippetController createAISnippetController, CreateCodeSnippetController createCodeSnippetController) {
+                        CreateAISnippetController createAISnippetController,
+                        CreateCodeSnippetController createCodeSnippetController) {
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.deleteNoteController = deleteNoteController;
@@ -79,6 +80,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         noteTitleButton.setFocusPainted(false);
         noteTitleButton.addActionListener(this);
 
+        // TODO: Add a general keyTyped event to the noteTextArea which always updates noteState in live
+        // TODO: this way we wont need to call noteTextArea.getText() every time, we just take from the NoteState
 
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
@@ -87,10 +90,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(saveNote)) {
                             String noteText = noteTextArea.getText();
-
-                            //TODO: delete later
-                            System.out.println(noteText);
-
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
                                 EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
@@ -140,16 +139,31 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ====== CODE SNIPPET LISTENER =======
         createCodeSnippet.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String code = JOptionPane.showInputDialog(this, "Paste Code Here");
-                        if (code != null) {
+                        // special input box for entering code
+                        JTextArea codeArea = new JTextArea(20, 40);
+                        JScrollPane scrollPane = new JScrollPane(codeArea);
+
+                        int result = JOptionPane.showConfirmDialog(
+                                EditNoteView.this,
+                                scrollPane,
+                                "Enter Code",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.PLAIN_MESSAGE
+                        );
+
+                        if (result == JOptionPane.OK_OPTION) {
+                            String code = codeArea.getText();
+                            String noteText = noteTextArea.getText();
+                            EditNoteState editNoteState = editViewModel.getState();
                             try {
-                                // Assuming createCodeSnippetController is your controller for code snippets
-                                createCodeSnippetController.execute(code);
+                                createCodeSnippetController.execute(code, noteText, editNoteState);
+                                System.out.println(code);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -157,7 +171,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-// ==============================
+        // ==============================
 
 
         // ====== RENAME LISTENER =======
@@ -166,8 +180,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(noteTitleButton)) {
-                            System.out.println("pressed title");
-
                             String newTitle = JOptionPane.showInputDialog("Enter a new title");
                             if (newTitle != null) {
                                 try {
@@ -232,9 +244,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Handle property changes if needed
-        System.out.println("*pChange EditView"); // for debugging, delete later
         noteTitleButton.setText(editViewModel.getState().getNoteTitle());
+        noteTextArea.setText(editViewModel.getState().getNoteText());
 
     }
 }
-// test
