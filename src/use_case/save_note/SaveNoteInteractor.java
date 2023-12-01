@@ -36,10 +36,14 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
         String noteTitle = saveNoteInputData.getNoteTitle();
 
         if (editNoteDataAccessInterface.existsByID(noteID)) { // note already exists
+            System.out.println("Note exists.");
 
             editNoteDataAccessInterface.updateNote(noteID, noteText, noteTitle);
+            System.out.println(editNoteDataAccessInterface.getCurrentText());
+
             EditNoteOutputData editNoteOutputData = new EditNoteOutputData(noteID, noteTitle, noteText);
             editNotePresenter.prepareNote(editNoteOutputData);
+
         }
     }
 }
