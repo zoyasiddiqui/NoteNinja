@@ -156,6 +156,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
                         if (result == JOptionPane.OK_OPTION) {
                             String code = codeArea.getText();
+                            System.out.println(code);
                             try {
                                 createCodeSnippetController.execute(code);
                             } catch (IOException ex) {
@@ -240,7 +241,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Handle property changes if needed
-        System.out.println("*pChange EditView"); // for debugging, delete later
         noteTitleButton.setText(editViewModel.getState().getNoteTitle());
 
     }
