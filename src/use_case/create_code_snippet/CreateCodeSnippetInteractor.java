@@ -30,6 +30,6 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
 
         // Prepare the output data and notify the presenter
         CreateCodeSnippetOutputData createCodeSnippetOutputData = new CreateCodeSnippetOutputData(text);
-        editNotePresenter.prepareSuccessView(createCodeSnippetOutputData);
+        editNotePresenter.prepareCodeSnippetAdded(createCodeSnippetOutputData);
     }
 }

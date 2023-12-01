@@ -13,6 +13,6 @@ public interface EditNoteOutputBoundary {
 
     void prepareBackMenu();
 
-    void prepareSuccessView(CreateCodeSnippetOutputData createCodeSnippetOutputData);
+    void prepareCodeSnippetAdded(CreateCodeSnippetOutputData createCodeSnippetOutputData);
 
 }

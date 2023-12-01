@@ -60,7 +60,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(CreateCodeSnippetOutputData createCodeSnippetOutputData) {
+    public void prepareCodeSnippetAdded(CreateCodeSnippetOutputData createCodeSnippetOutputData) {
 
     }
 }
