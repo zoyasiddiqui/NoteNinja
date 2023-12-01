@@ -50,7 +50,6 @@ public class Main {
                                                                     editViewModel,
                                                                     searchViewModel,
                                                                     editNoteDataAccessObject,
-                                                                    editNoteDataAccessObject,
                                                                     createAISnippetDataAccessObject,
                                                                     createCodeSnippetDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);

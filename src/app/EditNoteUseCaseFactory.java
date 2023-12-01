@@ -39,7 +39,6 @@ public class EditNoteUseCaseFactory {
             EditNoteViewModel editNoteViewModel,
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
-            CreateNoteDataAccessInterface createNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
             CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
         
@@ -52,7 +51,7 @@ public class EditNoteUseCaseFactory {
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
 
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
-                                                           createNoteDataAccessInterface,
+                                                           (CreateNoteDataAccessInterface) editNoteDataAccessInterface,
                                                            editNotePresenter);
 
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
