@@ -17,7 +17,10 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
     }
 
     @Override
-    public void execute(String code) throws IOException {
+    public void execute(CreateCodeSnippetInputData createCodeSnippetInputData) throws IOException {
+
+        String code = createCodeSnippetInputData.getCode();
+
         // Use the DAO to execute the code and get the response
         StringBuilder output = createCodeSnippetDataAccessObject.executeCode(code);
 

@@ -1,6 +1,7 @@
 package interface_adapter.create_code_snippet;
 
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
+import use_case.create_code_snippet.CreateCodeSnippetInputData;
 
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ public class CreateCodeSnippetController {
     }
 
     public void execute(String code) throws IOException {
-        this.createCodeSnippetInteractor.execute(code);
+        CreateCodeSnippetInputData createCodeSnippetInputData = new CreateCodeSnippetInputData(code);
+        this.createCodeSnippetInteractor.execute(createCodeSnippetInputData);
     }
 }
