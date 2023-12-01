@@ -15,10 +15,8 @@ public class SaveController {
     }
 
     public void execute(String noteTitle, String noteText, int noteID) throws IOException {
-        System.out.println("The current note id is "+noteID);
         SaveNoteInputData saveNoteInputData = new SaveNoteInputData(noteTitle, noteText, noteID);
         this.saveNoteInteractor.execute(saveNoteInputData);
-
     }
 
 }
