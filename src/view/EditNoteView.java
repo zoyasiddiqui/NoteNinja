@@ -127,9 +127,10 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         String prompt = JOptionPane.showInputDialog(this, "Enter AI prompt");
                         String noteText = noteTextArea.getText();
+                        EditNoteState editNoteState = editViewModel.getState();
                         if (prompt != null) {
                             try {
-                                createAISnippetController.execute(prompt, noteText);
+                                createAISnippetController.execute(prompt, noteText, editNoteState);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
