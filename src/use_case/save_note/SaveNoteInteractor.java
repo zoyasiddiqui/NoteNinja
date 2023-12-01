@@ -38,25 +38,8 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary{
         if (editNoteDataAccessInterface.existsByID(noteID)) { // note already exists
 
             editNoteDataAccessInterface.updateNote(noteID, noteText, noteTitle);
-
-        } else { // else create a new note
-
-            // creating note entity and saving it
-            Note note = noteFactory.create(noteTitle, noteText);
-            createNoteDataAccessInterface.create(note);
-            editNoteDataAccessInterface.updateNote(note.getID(), noteText, note.getName());
-
-            // updating the edit view model state
-            EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note);
-            EditNoteState noteState = new EditNoteState();
-            noteState.setNoteText(editNoteOutputData.getText());
-            noteState.setNoteTitle(editNoteOutputData.getTitle());
-            noteState.setNoteID(editNoteOutputData.getID());
+            EditNoteOutputData editNoteOutputData = new EditNoteOutputData(noteID, noteTitle, noteText);
             editNotePresenter.prepareNote(editNoteOutputData);
-
-            //TODO: delete once done testing!
-            System.out.println(note.getText());
         }
-
     }
 }

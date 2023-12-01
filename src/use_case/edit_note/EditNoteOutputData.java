@@ -6,14 +6,14 @@ import java.util.List;
 
 public class EditNoteOutputData {
 
-    private Note note;
+    private int noteId;
     private String title;
     private String text;
 
-    public EditNoteOutputData(Note note) {
-        this.note = note;
-        this.title = note.getName();
-        this.text = note.getText();
+    public EditNoteOutputData(int Id, String title, String text) {
+        this.noteId = Id;
+        this.title = title;
+        this.text = text;
     }
 
     public String getTitle() {
@@ -23,7 +23,7 @@ public class EditNoteOutputData {
     public String getText() {return this.text;}
 
     public int getID() {
-        return this.note.getID();
+        return this.noteId;
     }
 
 }
