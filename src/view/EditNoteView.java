@@ -237,3 +237,4 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
     }
 }
+// test
