@@ -18,12 +18,15 @@ import java.util.Set;
 public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
-    private final Map<Note, File> allNotes = new HashMap<>();
+    private static final Map<Note, File> allNotes = new HashMap<>();
+
+    //TODO: figure out if the below 2 should be static
     private int noteNumber = 0;
     private Note currentNote;
 
     @Override
     public void create(Note note) throws IOException {
+
         // setting the ID of note most recently accessed
         this.noteNumber = note.getID();
 
@@ -32,6 +35,8 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         // updating variables so we can more easily edit the note
         this.currentNote = note;
         this.allNotes.put(note, noteFile);
+
+        this.updateNote(note.getID(), "", note.getName());
     }
 
     @Override
@@ -68,6 +73,7 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
     public boolean existsByID(int noteID) {
 
         Set<Note> noteSet = allNotes.keySet();
+
         for (Note curNote: noteSet) {
             if (curNote.getID() == noteID) {
                 return true;
@@ -78,26 +84,28 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
 
     @Override
     public void updateNote(int noteID, String noteText, String noteTitle) throws IOException {
+
         //find the correct note and then find the correct file
         File fileToEdit = null;
         Set<Note> noteSet = allNotes.keySet();
         for (Note n : noteSet) {
             if (n.getID() == noteID) {
+                this.currentNote = n;
                 fileToEdit = allNotes.get(n);
             }
         }
 
         //write to the file
         if (fileToEdit == null) {
-            //TODO: create an exception class here?
+            return;
         }
         else {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileToEdit));
+            System.out.println(noteText);
             writer.write(noteText);
             writer.newLine();
             writer.close();
         }
-
     }
 
     @Override
