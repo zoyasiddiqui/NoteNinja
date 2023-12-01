@@ -15,6 +15,9 @@ import java.util.Properties;
 public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataAccessInterface {
 
     public StringBuilder executeCode(String code) {
+
+        String parsedCode = parseCode(code);
+
         String url = "https://glot.io/api/run/python/latest";
         String myKey = readApiKey();
 
@@ -26,7 +29,7 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
             connection.setRequestProperty("Content-type", "application/json");
 
             // Build the request body
-            String body = "{\"files\": [{\"name\": \"main.py\", \"content\": \"" + code + "\"}]}";
+            String body = "{\"files\": [{\"name\": \"main.py\", \"content\": \"" + parsedCode + "\"}]}";
             connection.setDoOutput(true);
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(body);
@@ -49,6 +52,11 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String parseCode(String code) {
+        //TODO: figure out how to implement this to take any inputted code and put it in the proper format
+        return "";
     }
 
     private static String readApiKey() {
