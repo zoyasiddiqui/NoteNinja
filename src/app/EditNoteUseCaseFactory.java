@@ -5,6 +5,7 @@ import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
+import interface_adapter.create_AI_snippet.CreateAISnippetPresenter;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNotePresenter;
@@ -14,9 +15,7 @@ import interface_adapter.save_note.SaveController;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.back_menu.BackMenuInputBoundary;
 import use_case.back_menu.BackMenuInteractor;
-import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
-import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
-import use_case.create_AI_snippet.CreateAISnippetInteractor;
+import use_case.create_AI_snippet.*;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
 import use_case.create_code_snippet.CreateCodeSnippetInteractor;
@@ -56,8 +55,7 @@ public class EditNoteUseCaseFactory {
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
                                                                                   editNoteDataAccessInterface, 
                                                                                   viewManagerModel, 
-                                                                                  editNoteViewModel, 
-                                                                                  searchViewModel);
+                                                                                  editNoteViewModel);
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = null;
         CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(createCodeSnippetDataAccessInterface,
                 editNoteDataAccessInterface,
@@ -76,6 +74,7 @@ public class EditNoteUseCaseFactory {
                                                              ViewManagerModel viewManagerModel) {
         return new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
     }
+
 
     private static BackMenuController createBackMenuUseCase(EditNoteOutputBoundary editNotePresenter) {
         BackMenuInputBoundary backMenuInteractor = new BackMenuInteractor(editNotePresenter);
@@ -112,10 +111,10 @@ public class EditNoteUseCaseFactory {
     private static CreateAISnippetController createAISnippetUseCase(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
                                                                     EditNoteDataAccessInterface editNoteDAO,
                                                                     ViewManagerModel viewManagerModel,
-                                                                    EditNoteViewModel editNoteViewModel,
-                                                                    SearchViewModel searchViewModel) {
-        EditNoteOutputBoundary editNotePresenter = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
-        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, editNotePresenter);
+                                                                    EditNoteViewModel editNoteViewModel) {
+        CreateAISnippetOutputBoundary createAISnippetPresenter = new CreateAISnippetPresenter(editNoteViewModel, viewManagerModel);
+
+        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, createAISnippetPresenter);
         return new CreateAISnippetController(createAISnippetInteractor);
     }
 
