@@ -140,6 +140,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ====== CODE SNIPPET LISTENER =======
         createCodeSnippet.addActionListener(
                 new ActionListener() {
@@ -157,7 +158,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-// ==============================
+        // ==============================
 
 
         // ====== RENAME LISTENER =======
@@ -237,4 +238,3 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
     }
 }
-// test
