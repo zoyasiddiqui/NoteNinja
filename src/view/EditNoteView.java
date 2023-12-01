@@ -87,10 +87,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(saveNote)) {
                             String noteText = noteTextArea.getText();
-
-                            //TODO: delete later
-                            System.out.println(noteText);
-
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
                                 EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
@@ -146,10 +142,21 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String code = JOptionPane.showInputDialog(this, "Paste Code Here");
-                        if (code != null) {
+                        // special input box for entering code
+                        JTextArea codeArea = new JTextArea(20, 40);
+                        JScrollPane scrollPane = new JScrollPane(codeArea);
+
+                        int result = JOptionPane.showConfirmDialog(
+                                EditNoteView.this,
+                                scrollPane,
+                                "Enter Code",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.PLAIN_MESSAGE
+                        );
+
+                        if (result == JOptionPane.OK_OPTION) {
+                            String code = codeArea.getText();
                             try {
-                                // Assuming createCodeSnippetController is your controller for code snippets
                                 createCodeSnippetController.execute(code);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
