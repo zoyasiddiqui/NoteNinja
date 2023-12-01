@@ -9,10 +9,9 @@ public interface EditNoteOutputBoundary {
 
     void prepareTitleChange(RenameNoteOutputData title);
 
-    void prepareAISnippetAdded(CreateAISnippetOutputData text);
+    void prepareTextChange(String text);
 
     void prepareBackMenu();
 
-    void prepareCodeSnippetAdded(CreateCodeSnippetOutputData createCodeSnippetOutputData);
 
 }
