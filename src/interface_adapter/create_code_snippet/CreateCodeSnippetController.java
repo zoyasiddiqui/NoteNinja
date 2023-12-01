@@ -13,8 +13,8 @@ public class CreateCodeSnippetController {
         this.createCodeSnippetInteractor = createCodeSnippetInteractor;
     }
 
-    public void execute(String code) throws IOException {
-        CreateCodeSnippetInputData createCodeSnippetInputData = new CreateCodeSnippetInputData(code);
+    public void execute(String code, String text) throws IOException {
+        CreateCodeSnippetInputData createCodeSnippetInputData = new CreateCodeSnippetInputData(code, text);
         this.createCodeSnippetInteractor.execute(createCodeSnippetInputData);
     }
 }

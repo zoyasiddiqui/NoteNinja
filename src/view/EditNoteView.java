@@ -80,6 +80,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         noteTitleButton.setFocusPainted(false);
         noteTitleButton.addActionListener(this);
 
+        // TODO: Add a general keyTyped event to the noteTextArea which always updates noteState in live
+        // TODO: this way we wont need to call noteTextArea.getText() every time, we just take from the NoteState
 
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
@@ -157,8 +159,9 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
                         if (result == JOptionPane.OK_OPTION) {
                             String code = codeArea.getText();
+                            String noteText = noteTextArea.getText();
                             try {
-                                createCodeSnippetController.execute(code);
+                                createCodeSnippetController.execute(code, noteText);
                                 System.out.println(code);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);

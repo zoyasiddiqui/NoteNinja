@@ -21,16 +21,16 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
     public void execute(CreateCodeSnippetInputData createCodeSnippetInputData) throws IOException {
 
         String code = createCodeSnippetInputData.getCode();
-
-        // Use the DAO to execute the code and get the response
+        String text = createCodeSnippetInputData.getText();
+        // use the DAO to execute the code and get the response
         StringBuilder output = createCodeSnippetDataAccessObject.executeCode(code);
 
-        // Update the text with the code snippet output
-        String text = editNoteDAO.getCurrentText() + new String(output);
-        editNoteDAO.setCurrentText(text);
+        // update current text with new text. note we do NOT retrieve the current text from our editNoteDAO, we get it from note state
 
-        // Prepare the output data and notify the presenter
-        CreateCodeSnippetOutputData createCodeSnippetOutputData = new CreateCodeSnippetOutputData(text);
+        String newText = text + new String(output);
+
+        // prepare the output data and notify the presenter
+        CreateCodeSnippetOutputData createCodeSnippetOutputData = new CreateCodeSnippetOutputData(newText);
         editNotePresenter.prepareCodeSnippetAdded(createCodeSnippetOutputData);
     }
 }

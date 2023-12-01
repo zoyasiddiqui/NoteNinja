@@ -61,6 +61,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
 
     @Override
     public void prepareCodeSnippetAdded(CreateCodeSnippetOutputData createCodeSnippetOutputData) {
+        System.out.println("got to prepareCode presenter!");
 
     }
 }
