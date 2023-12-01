@@ -180,8 +180,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(noteTitleButton)) {
-                            System.out.println("pressed title");
-
                             String newTitle = JOptionPane.showInputDialog("Enter a new title");
                             if (newTitle != null) {
                                 try {
@@ -247,6 +245,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         // Handle property changes if needed
         noteTitleButton.setText(editViewModel.getState().getNoteTitle());
+        noteTextArea.setText(editViewModel.getState().getNoteText());
 
     }
 }
