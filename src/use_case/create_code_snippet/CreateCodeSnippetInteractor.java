@@ -10,7 +10,8 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
     private final EditNoteDataAccessInterface editNoteDAO;
     private final EditNoteOutputBoundary editNotePresenter;
 
-    public CreateCodeSnippetInteractor(CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject, EditNoteDataAccessInterface editNoteDAO, EditNoteOutputBoundary editNotePresenter) {
+    public CreateCodeSnippetInteractor(CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject,
+                                       EditNoteDataAccessInterface editNoteDAO, EditNoteOutputBoundary editNotePresenter) {
         this.createCodeSnippetDataAccessObject = createCodeSnippetDataAccessObject;
         this.editNoteDAO = editNoteDAO;
         this.editNotePresenter = editNotePresenter;

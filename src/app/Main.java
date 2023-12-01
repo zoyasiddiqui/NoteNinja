@@ -1,6 +1,7 @@
 package app;
 
 import data_access.CreateAISnippetDataAccessObject;
+import data_access.CreateCodeSnippetDataAccessObject;
 import data_access.NoteDataAccessObject;
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
@@ -8,6 +9,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
+import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import view.EditNoteView;
 import view.SearchNotesView;
 import view.ViewManager;
@@ -39,12 +41,18 @@ public class Main {
         // Create DAOs
         NoteDataAccessObject editNoteDataAccessObject = new NoteDataAccessObject();
         CreateAISnippetDataAccessInterface createAISnippetDataAccessObject = new CreateAISnippetDataAccessObject();
+        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
         SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel, editNoteDataAccessObject);
         views.add(searchNotesView, searchNotesView.viewName);
 
-        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel, editNoteDataAccessObject,
-                editNoteDataAccessObject, createAISnippetDataAccessObject, editNoteDataAccessObject);
+        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel,
+                                                                    editViewModel,
+                                                                    searchViewModel,
+                                                                    editNoteDataAccessObject,
+                                                                    editNoteDataAccessObject,
+                                                                    createAISnippetDataAccessObject,
+                                                                    createCodeSnippetDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);
 
         viewManagerModel.setActiveView(searchNotesView.viewName);

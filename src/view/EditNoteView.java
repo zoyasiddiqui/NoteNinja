@@ -40,7 +40,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         SaveController saveNoteController,
                         BackMenuController backMenuController,
                         DeleteNoteController deleteNoteController,
-                        CreateAISnippetController createAISnippetController, CreateCodeSnippetController createCodeSnippetController) {
+                        CreateAISnippetController createAISnippetController,
+                        CreateCodeSnippetController createCodeSnippetController) {
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.deleteNoteController = deleteNoteController;
@@ -156,9 +157,9 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
                         if (result == JOptionPane.OK_OPTION) {
                             String code = codeArea.getText();
-                            System.out.println(code);
                             try {
                                 createCodeSnippetController.execute(code);
+                                System.out.println(code);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
