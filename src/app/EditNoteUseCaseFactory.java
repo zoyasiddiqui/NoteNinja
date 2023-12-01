@@ -55,7 +55,8 @@ public class EditNoteUseCaseFactory {
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(createAISnippetDataAccessInterface,
                                                                                   editNoteDataAccessInterface, 
                                                                                   viewManagerModel, 
-                                                                                  editNoteViewModel);
+                                                                                  editNoteViewModel,
+                searchViewModel);
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = null;
         CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(createCodeSnippetDataAccessInterface,
                 editNoteDataAccessInterface,
@@ -111,10 +112,11 @@ public class EditNoteUseCaseFactory {
     private static CreateAISnippetController createAISnippetUseCase(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
                                                                     EditNoteDataAccessInterface editNoteDAO,
                                                                     ViewManagerModel viewManagerModel,
-                                                                    EditNoteViewModel editNoteViewModel) {
-        CreateAISnippetOutputBoundary createAISnippetPresenter = new CreateAISnippetPresenter(editNoteViewModel, viewManagerModel);
+                                                                    EditNoteViewModel editNoteViewModel,
+                                                                    SearchViewModel searchViewModel) {
+        EditNoteOutputBoundary editNotePresenter = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
 
-        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, createAISnippetPresenter);
+        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, editNotePresenter);
         return new CreateAISnippetController(createAISnippetInteractor);
     }
 

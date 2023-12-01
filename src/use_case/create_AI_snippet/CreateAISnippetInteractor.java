@@ -1,20 +1,22 @@
 package use_case.create_AI_snippet;
 
+import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteState;
 import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.edit_note.EditNoteOutputBoundary;
+import use_case.edit_note.EditNoteOutputData;
 
 import java.io.IOException;
 
 public class CreateAISnippetInteractor implements CreateAISnippetInputBoundary{
     private final CreateAISnippetDataAccessInterface createAISnippetDataAccessObject;
     private final EditNoteDataAccessInterface editNoteDAO;
-    private final CreateAISnippetOutputBoundary createAISnippetPresenter;
+    private final EditNoteOutputBoundary editNotePresenter;
 
-    public CreateAISnippetInteractor(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject, EditNoteDataAccessInterface editNoteDAO, CreateAISnippetOutputBoundary createAISnippetPresenter) {
+    public CreateAISnippetInteractor(CreateAISnippetDataAccessInterface createAISnippetDataAccessObject, EditNoteDataAccessInterface editNoteDAO, EditNoteOutputBoundary editNotePresenter) {
         this.createAISnippetDataAccessObject = createAISnippetDataAccessObject;
         this.editNoteDAO = editNoteDAO;
-        this.createAISnippetPresenter = createAISnippetPresenter;
+        this.editNotePresenter = editNotePresenter;
     }
 
     @Override
@@ -23,9 +25,8 @@ public class CreateAISnippetInteractor implements CreateAISnippetInputBoundary{
         StringBuilder response = createAISnippetDataAccessObject.getResponse(prompt);
         String text = noteText + new String(response);
         editNoteDAO.updateNote(editNoteState.getNoteID(), noteText, editNoteState.getNoteTitle());
-        // create a note entity using the InputData
 
-        CreateAISnippetOutputData createAISnippetOutputData = new CreateAISnippetOutputData(text);
-        createAISnippetPresenter.prepareSuccessView(createAISnippetOutputData);
+        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(editNoteState.getNoteID(), editNoteState.getNoteTitle(), text);
+        editNotePresenter.prepareNote(editNoteOutputData);
     }
 }
