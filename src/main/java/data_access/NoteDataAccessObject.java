@@ -12,26 +12,47 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+// TODO: we currently rely on the root/notes folder already having been created by the user.
+// TODO: make it so that we first check if the folder exists and if it does not, the code creates one
+// TODO: this way our program will not rely on users having properly instantiated the folders by themselves
+// TODO: if u guys (zoro) dont have time, then ill just do it myself (dandelion)
+
 public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
     private static final Map<Note, File> allNotes = new HashMap<>();
-    private static int noteNumber = 0;
     private static Note currentNote;
+    private int tempNoteCount; // delete this after implementing getNoteCount() and incrementNoteCount()
 
     @Override
     public void create(Note note) throws IOException {
+        tempNoteCount++;
+//        this.incrementNoteCount(); // implement this!!
 
         // setting the ID of note most recently accessed
-        noteNumber = note.getID();
+        int noteNumber = note.getID();
 
-        File noteFile = new File("notes/note"+noteNumber+".csv");
+        File noteFile = new File("notes/note"+ noteNumber +".csv");
 
         // updating variables so we can more easily edit the note
         currentNote = note;
         allNotes.put(note, noteFile);
 
-        this.updateNote(note.getID(), "", note.getName());
+        this.updateNote(note.getID(), note.getText(), note.getName());
+    }
+
+    @Override
+    public int getNoteCount() {
+        // TODO: create a file in notes, notes/data.csv, which holds the number of notes created as an integer value
+        // TODO: the data.csv file will only contain 1 integer entry, representing the NoteCount
+        // TODO: if the file does not exist (it wont for first time), create it and set the integer value to 0, then return this 0 value
+        // TODO: if the file already exists, read the value from it and return it
+        return tempNoteCount; // temporary attribute value for one-run testing. we lose this value after stopping program; hence the entire reason we must add a data.csv file for persistence
+    }
+
+    @Override
+    public void incrementNoteCount() {
+        // TODO: see above todos. call getNoteCount() and add 1 to it then write the incremented value to the data.csv
     }
 
     @Override
