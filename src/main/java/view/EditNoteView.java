@@ -92,11 +92,10 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(saveNote)) {
-                            String noteText = noteTextArea.getText();
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
                                 EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
-                                                                             noteText,
+                                                                             editNoteState.getNoteText(),
                                                                              editNoteState.getNoteID());
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
@@ -128,11 +127,14 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String prompt = JOptionPane.showInputDialog(this, "Enter AI prompt");
-                        String noteText = noteTextArea.getText();
                         EditNoteState editNoteState = editViewModel.getState();
                         if (prompt != null) {
                             try {
-                                createAISnippetController.execute(prompt, noteText, editNoteState);
+                                createAISnippetController.execute(
+                                        prompt,
+                                        editNoteState.getNoteText(),
+                                        editNoteState.getNoteTitle(),
+                                        editNoteState.getNoteID());
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
