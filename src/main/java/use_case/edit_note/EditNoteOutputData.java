@@ -1,29 +1,26 @@
 package use_case.edit_note;
 
-import entity.Note.Note;
-
-import java.util.List;
-
 public class EditNoteOutputData {
 
-    private int noteId;
-    private String title;
-    private String text;
+    private String noteTitle;
+    private String noteText;
+    private int noteID;
 
-    public EditNoteOutputData(int Id, String title, String text) {
-        this.noteId = Id;
-        this.title = title;
-        this.text = text;
+    public EditNoteOutputData(int noteID, String noteTitle, String noteText) {
+        this.noteTitle = noteTitle;
+        this.noteText = noteText;
+        this.noteID = noteID;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getNoteTitle() {
+        return noteTitle;
     }
 
-    public String getText() {return this.text;}
-
-    public int getID() {
-        return this.noteId;
+    public String getNoteText() {
+        return noteText;
     }
 
+    public int getNoteID() {
+        return noteID;
+    }
 }
