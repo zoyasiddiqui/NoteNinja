@@ -44,8 +44,13 @@ public class Main {
         CreateAISnippetDataAccessInterface createAISnippetDataAccessObject = new CreateAISnippetDataAccessObject();
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
-        HomeView homeView = HomeViewUseCaseFactory.create(viewManagerModel, createNoteViewModel,
-                editViewModel, searchViewModel, editNoteDataAccessObject, editNoteDataAccessObject);
+        HomeView homeView = HomeViewUseCaseFactory.create(viewManagerModel,
+                                                          createNoteViewModel,
+                                                          editViewModel,
+                                                          searchViewModel,
+                                                          editNoteDataAccessObject,
+                                                          editNoteDataAccessObject);
+
         views.add(homeView, homeView.viewName);
 
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel,
@@ -60,9 +65,8 @@ public class Main {
         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        // Start the application maximized
+        // start the application maximized
         application.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        application.pack();
         application.setVisible(true);
 
     }
