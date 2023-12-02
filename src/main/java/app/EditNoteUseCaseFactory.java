@@ -1,11 +1,12 @@
+// Package declaration
 package app;
 
+// Import statements for various classes and interfaces
 import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
-import interface_adapter.create_AI_snippet.CreateAISnippetPresenter;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
 import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.delete_note.DeleteNoteController;
@@ -20,8 +21,6 @@ import use_case.create_AI_snippet.*;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
 import use_case.create_code_snippet.CreateCodeSnippetInteractor;
-import use_case.create_note.CreateNoteDataAccessInterface;
-import use_case.create_note.CreateNoteInteractor;
 import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteInputBoundary;
 import use_case.delete_note.DeleteNoteInteractor;
@@ -32,10 +31,13 @@ import use_case.rename_note.RenameNoteInteractor;
 import use_case.save_note.SaveNoteInteractor;
 import view.EditNoteView;
 
+// Class declaration
 public class EditNoteUseCaseFactory {
 
+    // Default constructor
     EditNoteUseCaseFactory() {}
 
+    // Factory method to create an EditNoteView
     public static EditNoteView create(
             ViewManagerModel viewManagerModel,
             EditNoteViewModel editNoteViewModel,
@@ -44,52 +46,55 @@ public class EditNoteUseCaseFactory {
             EditNoteDataAccessInterface editNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
             CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
-        
-        // feel free to add more controllers and view models as necessary
 
+        // Create an EditNoteOutputBoundary using a helper method
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel,
                 editNoteViewModel, viewManagerModel);
 
+        // Create various controllers for different use cases
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter, editNoteDataAccessInterface);
 
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
-                                                           editNotePresenter);
+                editNotePresenter);
 
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
 
         DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter,
-                                                                        (DeleteNoteDataAccessInterface) editNoteDataAccessInterface);
+                (DeleteNoteDataAccessInterface) editNoteDataAccessInterface);
 
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(editNotePresenter,
-                                                                                  createAISnippetDataAccessInterface);
+                createAISnippetDataAccessInterface);
 
         CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(editNotePresenter,
-                                                                                        createCodeSnippetDataAccessInterface);
+                createCodeSnippetDataAccessInterface);
 
+        // Return an instance of EditNoteView with the created controllers
         return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase, createAISnippetUseCase, createCodeSnippetUseCase);
 
     }
 
+    // Helper method to create an EditNotePresenter
     private static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
                                                              EditNoteViewModel editNoteViewModel,
                                                              ViewManagerModel viewManagerModel) {
         return new EditNotePresenter(createNoteViewModel, editNoteViewModel, viewManagerModel);
     }
 
-
+    // Helper method to create a BackMenuController
     private static BackMenuController createBackMenuUseCase(EditNoteOutputBoundary editNotePresenter) {
         BackMenuInputBoundary backMenuInteractor = new BackMenuInteractor(editNotePresenter);
         return new BackMenuController(backMenuInteractor);
     }
 
+    // Helper method to create a DeleteNoteController
     private static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter,
                                                                 DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
         DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNotePresenter, deleteNoteDataAccessInterface);
         return new DeleteNoteController(deleteNoteInteractor);
     }
 
-
-    // note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
+    // Helper method to create a RenameNoteController
+    // Note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
     // RenameUseCase only updates the note's state and fires the property change in view model
     private static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter,
                                                             EditNoteDataAccessInterface editNoteDataAccessInterface) {
@@ -97,16 +102,17 @@ public class EditNoteUseCaseFactory {
         return new RenameNoteController(renameNoteInteractor);
     }
 
-
+    // Helper method to create a SaveController
     private static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
                                                     EditNoteOutputBoundary editNotePresenter) {
 
-        // we need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
+        // We need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
         NoteFactory noteFactory = new CommonNoteFactory();
         SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory, editNotePresenter);
         return new SaveController(saveNoteInteractor);
     }
 
+    // Helper method to create a CreateAISnippetController
     private static CreateAISnippetController createAISnippetUseCase(EditNoteOutputBoundary editNotePresenter,
                                                                     CreateAISnippetDataAccessInterface createAISnippetDataAccessObject) {
 
@@ -114,11 +120,11 @@ public class EditNoteUseCaseFactory {
         return new CreateAISnippetController(createAISnippetInteractor);
     }
 
+    // Helper method to create a CreateCodeSnippetController
     private static CreateCodeSnippetController createCodeSnippetUseCase(EditNoteOutputBoundary editNotePresenter,
                                                                         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject) {
 
         CreateCodeSnippetInputBoundary createCodeSnippetInteractor = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessObject, editNotePresenter);
         return new CreateCodeSnippetController(createCodeSnippetInteractor);
     }
-
 }
