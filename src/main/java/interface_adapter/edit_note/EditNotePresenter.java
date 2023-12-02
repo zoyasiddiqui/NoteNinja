@@ -1,21 +1,22 @@
+// Package declaration
 package interface_adapter.edit_note;
 
+// Import statements for various classes and interfaces
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteViewModel;
-import interface_adapter.search_notes.SearchState;
-import interface_adapter.search_notes.SearchViewModel;
-import use_case.create_AI_snippet.CreateAISnippetOutputData;
-import use_case.create_code_snippet.CreateCodeSnippetOutputData;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 import use_case.rename_note.RenameNoteOutputData;
-import use_case.search_notes.SearchOutputData;
 
+// Class declaration for EditNotePresenter implementing EditNoteOutputBoundary
 public class EditNotePresenter implements EditNoteOutputBoundary {
+
+    // Instance variables for associated ViewModels and ViewManagerModel
     private final CreateNoteViewModel createNoteViewModel;
     private final EditNoteViewModel editNoteViewModel;
     private final ViewManagerModel viewManagerModel;
 
+    // Constructor for initializing the EditNotePresenter with ViewModels and ViewManagerModel
     public EditNotePresenter(CreateNoteViewModel createNoteViewModel,
                              EditNoteViewModel editNoteViewModel,
                              ViewManagerModel viewManagerModel) {
@@ -24,6 +25,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         this.viewManagerModel = viewManagerModel;
     }
 
+    // Method to prepare the note view
     @Override
     public void prepareNote(EditNoteOutputData note) {
         EditNoteState noteState = editNoteViewModel.getState();
@@ -37,6 +39,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    // Method to prepare the title change view
     @Override
     public void prepareTitleChange(RenameNoteOutputData title) {
         EditNoteState noteState = editNoteViewModel.getState();
@@ -45,10 +48,10 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         this.editNoteViewModel.firePropertyChanged();
     }
 
+    // Method to prepare the back to menu view
     @Override
     public void prepareBackMenu() {
         viewManagerModel.setActiveView(createNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
-
 }
