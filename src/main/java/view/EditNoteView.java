@@ -181,9 +181,12 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(noteTitleButton)) {
                             String newTitle = JOptionPane.showInputDialog("Enter a new title");
+                            String noteText = noteTextArea.getText();
+                            EditNoteState editNoteState = editViewModel.getState();
                             if (newTitle != null) {
                                 try {
-                                    renameNoteController.execute(newTitle);
+                                    renameNoteController.execute(editNoteState.getNoteID(),
+                                            newTitle, noteText);
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
                                 }

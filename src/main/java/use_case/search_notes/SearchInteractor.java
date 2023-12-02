@@ -4,6 +4,7 @@ import entity.Note.Note;
 import interface_adapter.edit_note.EditNotePresenter;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
+import java.util.List;
 
 import java.io.IOException;
 
@@ -21,7 +22,12 @@ public class SearchInteractor implements SearchInputBoundary{
     @Override
     public void execute(String search) throws IOException {
         Note note = this.searchNotesAccessInterface.findByTitle(search);
-        EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note.getID(), note.getName(), note.getText());
-        editNotePresenter.prepareNote(editNoteOutputData);
+
+        if(note != null) {
+            EditNoteOutputData editNoteOutputData = new EditNoteOutputData(note.getID(),
+                    note.getName(), note.getText());
+            editNotePresenter.prepareNote(editNoteOutputData);
+        }
+
     }
 }

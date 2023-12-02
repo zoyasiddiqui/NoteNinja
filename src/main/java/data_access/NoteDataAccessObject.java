@@ -10,31 +10,26 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
     private static final Map<Note, File> allNotes = new HashMap<>();
-
-    //TODO: figure out if the below 2 should be static
-    private int noteNumber = 0;
-    private Note currentNote;
+    private static int noteNumber = 0;
+    private static Note currentNote;
 
     @Override
     public void create(Note note) throws IOException {
 
         // setting the ID of note most recently accessed
-        this.noteNumber = note.getID();
+        noteNumber = note.getID();
 
         File noteFile = new File("notes/note"+noteNumber+".csv");
 
         // updating variables so we can more easily edit the note
-        this.currentNote = note;
-        this.allNotes.put(note, noteFile);
+        currentNote = note;
+        allNotes.put(note, noteFile);
 
         this.updateNote(note.getID(), "", note.getName());
     }
@@ -90,7 +85,7 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         Set<Note> noteSet = allNotes.keySet();
         for (Note n : noteSet) {
             if (n.getID() == noteID) {
-                this.currentNote = n;
+                currentNote = n;
                 fileToEdit = allNotes.get(n);
             }
         }
@@ -105,22 +100,33 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
             writer.write(noteText);
             writer.newLine();
             writer.close();
+
+            currentNote.setText(noteText);
+            currentNote.setID(noteID);
+            currentNote.setName(noteTitle);
         }
     }
 
     @Override
     public String getCurrentText() {
-        return this.currentNote.getText();
+        return currentNote.getText();
     }
 
     @Override
     public void setCurrentText(String text) {
-        this.currentNote.setText(text);
+        currentNote.setText(text);
     }
 
     @Override
     public Note findByTitle(String noteTitle) {
-        // TODO: implement this if we choose to implement the search notes use case
+        Set<Note> noteSet = allNotes.keySet();
+
+        for (Note n : noteSet) {
+            if (n.getName().equals(noteTitle)) {
+                return n;
+            }
+        }
+
         return null;
     }
 }
