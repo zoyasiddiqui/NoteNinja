@@ -5,8 +5,6 @@ import interface_adapter.create_note.CreateNoteViewModel;
 import use_case.search_notes.SearchOutputBoundary;
 import use_case.search_notes.SearchOutputData;
 
-import javax.swing.text.View;
-
 public class SearchPresenter implements SearchOutputBoundary{
 
     private final CreateNoteViewModel createNoteViewModel;
