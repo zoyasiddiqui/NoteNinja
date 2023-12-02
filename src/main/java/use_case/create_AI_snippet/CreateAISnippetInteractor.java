@@ -1,8 +1,5 @@
 package use_case.create_AI_snippet;
 
-import interface_adapter.edit_note.EditNotePresenter;
-import interface_adapter.edit_note.EditNoteState;
-import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 
