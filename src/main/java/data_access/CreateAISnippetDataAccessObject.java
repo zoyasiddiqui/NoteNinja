@@ -16,6 +16,7 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
     public StringBuilder getResponse(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
         String myKey = readApiKey();
+        System.out.println(myKey);
         String model = "gpt-3.5-turbo";
 
         try {
@@ -75,9 +76,9 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
 
     private static String readApiKey() {
         Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream("src/local.properties")) {
+        try (FileInputStream input = new FileInputStream("local.properties")) {
             properties.load(input);
-            return properties.getProperty("api.key");
+            return properties.getProperty("gpt.key");
         } catch (IOException e) {
             e.printStackTrace();
             return null;
