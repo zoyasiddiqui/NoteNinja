@@ -21,11 +21,19 @@ public class CreateAISnippetInteractor implements CreateAISnippetInputBoundary{
 
     @Override
     public void execute(String prompt, String noteText, EditNoteState editNoteState) throws IOException {
-        //use the DAO to use the API to give us back the AI response
+        // Use the DAO to use the API to give us back the AI response
         StringBuilder response = createAISnippetDataAccessObject.getResponse(prompt);
-        String text = noteText + new String(response);
+
+        // Convert the response to a string
+        String aiResponse = new String(response);
+
+        // Concatenate the AI response to the existing note text with proper formatting
+        String text = noteText + "\nAI Snippet Output:\n" + aiResponse;
+
+        // Update the note using the DAO
         editNoteDAO.updateNote(editNoteState.getNoteID(), text, editNoteState.getNoteTitle());
 
+        // Prepare the output data and notify the presenter
         EditNoteOutputData editNoteOutputData = new EditNoteOutputData(editNoteState.getNoteID(), editNoteState.getNoteTitle(), text);
         editNotePresenter.prepareNote(editNoteOutputData);
     }
