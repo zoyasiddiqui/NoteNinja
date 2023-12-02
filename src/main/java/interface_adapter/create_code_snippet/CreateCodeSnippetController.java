@@ -14,8 +14,8 @@ public class CreateCodeSnippetController {
         this.createCodeSnippetInteractor = createCodeSnippetInteractor;
     }
 
-    public void execute(String code, String text, EditNoteState editNoteState) throws IOException {
-        CreateCodeSnippetInputData createCodeSnippetInputData = new CreateCodeSnippetInputData(code, text, editNoteState);
+    public void execute(String code, String noteText, String noteTitle, int noteID) throws IOException {
+        CreateCodeSnippetInputData createCodeSnippetInputData = new CreateCodeSnippetInputData(code, noteText, noteTitle, noteID);
         this.createCodeSnippetInteractor.execute(createCodeSnippetInputData);
     }
 }
