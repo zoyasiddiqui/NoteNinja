@@ -201,7 +201,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(deleteNote)) {
-                            System.out.println("Deleted Note");
                             EditNoteState editState = editViewModel.getState();
                             int noteID = editState.getNoteID();
                             try {
