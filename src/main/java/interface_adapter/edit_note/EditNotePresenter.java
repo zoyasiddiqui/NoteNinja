@@ -27,8 +27,9 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     @Override
     public void prepareNote(EditNoteOutputData note) {
         EditNoteState noteState = editNoteViewModel.getState();
-        noteState.setNoteTitle(note.getTitle());
-        noteState.setNoteText(note.getText());
+        noteState.setNoteTitle(note.getNoteTitle());
+        noteState.setNoteText(note.getNoteText());
+        noteState.setNoteID(note.getNoteID()); // be careful that createNote is the only one that affects this
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
 
