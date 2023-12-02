@@ -10,7 +10,6 @@ import java.io.IOException;
 public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBoundary {
     private final CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject;
     private final EditNoteOutputBoundary editNotePresenter;
-    private final String dashes = "\n---\n";
 
     public CreateCodeSnippetInteractor(CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject,
                                        EditNoteOutputBoundary editNotePresenter) {
@@ -44,6 +43,7 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
             }
         }
 
+        String dashes = "\n---\n";
         newText = currentText + newText + "Ran code snippet:" + dashes + code + dashes + codeReturn;
 
         // prepare the output data and notify the presenter
