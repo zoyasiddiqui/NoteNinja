@@ -65,7 +65,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(createNote)) {
                             try {
-                                createNoteController.execute("Title Note");
+                                createNoteController.execute("Untitled", "");
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
