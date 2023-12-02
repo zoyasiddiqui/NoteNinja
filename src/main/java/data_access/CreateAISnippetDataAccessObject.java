@@ -3,6 +3,9 @@ package data_access;
 
 // Import statements for various classes and interfaces
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
+import entity.AISnippet.AISnippet;
+import entity.AISnippet.CommonAISnippet; // Importing the CommonAISnippet entity
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +22,12 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
     // Implementation of the getResponse method from the interface
     @Override
     public StringBuilder getResponse(String prompt) {
+        // Creating an instance of AISnippet
+        AISnippet aiSnippet = new CommonAISnippet();
+
+        // Set the snippet question using the provided prompt
+        aiSnippet.setSnippetQuestion(prompt);
+
         // API endpoint URL
         String url = "https://api.openai.com/v1/chat/completions";
 
@@ -38,8 +47,8 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
             connection.setRequestProperty("Authorization", "Bearer " + myKey);
             connection.setRequestProperty("Content-Type", "application/json");
 
-            // Build the request body
-            String body = "{\"model\" : \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}";
+            // Build the request body using entity methods
+            String body = "{\"model\" : \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + aiSnippet.getSnippetQuestion() + "\"}]}";
             connection.setDoOutput(true);
 
             // Write the request body to the connection's output stream
@@ -80,6 +89,9 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
                 output.append(templist[j]);
                 j += 1;
             }
+
+            // Set the snippet response using the obtained output
+            aiSnippet.setResponse(output.toString());
 
             return output;
 
