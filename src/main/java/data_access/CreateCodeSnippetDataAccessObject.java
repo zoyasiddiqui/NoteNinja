@@ -1,5 +1,7 @@
+// Package declaration
 package data_access;
 
+// Import statements for various classes and interfaces
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 
 import javax.json.*;
@@ -12,18 +14,27 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+// Class declaration for CreateCodeSnippetDataAccessObject implementing CreateCodeSnippetDataAccessInterface
 public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataAccessInterface {
 
+    // Method to execute code using the Glot.io API
     public StringBuilder executeCode(String code) {
 
+        // Parse double quotes to single quotes in the code
         String parsedCode = parseCode(code);
 
+        // API endpoint URL for running Python code on Glot.io
         String url = "https://glot.io/api/run/python/latest";
+
+        // Read Glot.io API key from a local properties file
         String myKey = readApiKey();
         System.out.println(myKey);
 
         try {
+            // Create a URL object
             URL obj = new URL(url);
+
+            // Open a connection to the Glot.io API endpoint
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Authorization", "Token " + myKey);
@@ -75,28 +86,30 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
                 throw new RuntimeException(e);
             }
         } catch (ProtocolException e) {
+            // Handle ProtocolException, MalformedURLException, and IOException by throwing a RuntimeException
             throw new RuntimeException(e);
         } catch (MalformedURLException e) {
+            // Handle ProtocolException, MalformedURLException, and IOException by throwing a RuntimeException
             throw new RuntimeException(e);
         } catch (IOException e) {
+            // Handle ProtocolException, MalformedURLException, and IOException by throwing a RuntimeException
             throw new RuntimeException(e);
         }
     }
 
-
+    // Helper method to replace double quotes with single quotes in the code
     private String parseCode(String code) {
-        // parse strings
         return code.replaceAll("\"", "'");
-
-
     }
 
+    // Helper method to read the Glot.io API key from a local properties file
     private static String readApiKey() {
         Properties properties = new Properties();
         try (FileInputStream input = new FileInputStream("local.properties")) {
             properties.load(input);
             return properties.getProperty("glot.key");
         } catch (IOException e) {
+            // Print stack trace and return null in case of IOException
             e.printStackTrace();
             return null;
         }

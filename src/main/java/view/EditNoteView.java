@@ -1,6 +1,7 @@
+// Package declaration
 package view;
 
-import entity.Note.Note;
+// Import statements for various classes and interfaces
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
@@ -20,23 +21,30 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
+// Class declaration for EditNoteView extending JPanel and implementing ActionListener and PropertyChangeListener
 public class EditNoteView extends JPanel implements ActionListener, PropertyChangeListener {
+    // Constants for viewName and button labels
     public final String viewName = "editing";
+
+    // Instance variables for controllers, models, and UI elements
     private final EditNoteViewModel editViewModel;
     private final RenameNoteController renameNoteController;
     private final SaveController saveNoteController;
     private final BackMenuController backMenuController;
     private final CreateAISnippetController createAISnippetController;
     private final DeleteNoteController deleteNoteController;
+
+    // Buttons for various actions
     final JButton saveNote;
     final JButton deleteNote; // Added the deleteNote button
     final JButton backMenu;
     final JButton createAISnippet;
+    final JButton createCodeSnippet;
     private final JTextArea noteTextArea;
     private final CreateCodeSnippetController createCodeSnippetController;
     private JButton noteTitleButton;
-    final JButton createCodeSnippet;
 
+    // Constructor for EditNoteView
     public EditNoteView(EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
                         SaveController saveNoteController,
@@ -44,6 +52,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         DeleteNoteController deleteNoteController,
                         CreateAISnippetController createAISnippetController,
                         CreateCodeSnippetController createCodeSnippetController) {
+        // Initialization of instance variables
         this.editViewModel = editViewModel;
         this.saveNoteController = saveNoteController;
         this.deleteNoteController = deleteNoteController;
@@ -85,7 +94,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         // TODO: Add a general keyTyped event to the noteTextArea which always updates noteState in live
         // TODO: this way we wont need to call noteTextArea.getText() every time, we just take from the NoteState
 
-
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
                 new ActionListener() {
@@ -95,8 +103,8 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
                                 EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
-                                                                             editNoteState.getNoteText(),
-                                                                             editNoteState.getNoteID());
+                                        editNoteState.getNoteText(),
+                                        editNoteState.getNoteID());
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -105,7 +113,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 }
         );
         // ==============================
-
 
         // ======== BACK LISTENER =======
         backMenu.addActionListener(
@@ -120,13 +127,12 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
-
         // ====== AI SNIPPET LISTENER =======
         createAISnippet.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        String prompt = JOptionPane.showInputDialog(this, "Enter AI prompt");
+                        String prompt = JOptionPane.showInputDialog(EditNoteView.this, "Enter AI prompt");
                         EditNoteState editNoteState = editViewModel.getState();
                         if (prompt != null) {
                             try {
@@ -143,7 +149,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 }
         );
         // ==============================
-
 
         // ====== CODE SNIPPET LISTENER =======
         createCodeSnippet.addActionListener(
@@ -180,7 +185,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
-
         // ====== RENAME LISTENER =======
         noteTitleButton.addActionListener(
                 new ActionListener() {
@@ -206,7 +210,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
-
         // ==== DELETE NOTE LISTENER ====
         deleteNote.addActionListener(
                 new ActionListener() {
@@ -217,7 +220,6 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                             int noteID = editState.getNoteID();
                             try {
                                 deleteNoteController.execute(noteID);
-                              
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -225,8 +227,9 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-       // ==============================
-      
+        // ==============================
+
+        // Additional listeners and setup code if needed
 
         noteTitleButton.addActionListener(this);
         saveNote.addActionListener(this);
@@ -267,15 +270,17 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         // ==============================
     }
 
-
+    // ActionListener method implementation
     @Override
     public void actionPerformed(ActionEvent e) {
-//        need this empty method here because we must override our interfaces
+        // Empty method required due to interface implementation
+        // Actual handling is done within individual button listeners
     }
 
+    // PropertyChangeListener method implementation
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Handle property changes if needed
+        // Handle property changes if needed, updating UI elements based on the editViewModel state
         noteTitleButton.setText(editViewModel.getState().getNoteTitle());
         noteTextArea.setText(editViewModel.getState().getNoteText());
     }
