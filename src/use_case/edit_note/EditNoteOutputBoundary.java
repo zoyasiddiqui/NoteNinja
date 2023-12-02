@@ -11,5 +11,7 @@ public interface EditNoteOutputBoundary {
 
     void prepareBackMenu();
 
+    void prepareSearchView();
+
 
 }

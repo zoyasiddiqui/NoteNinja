@@ -1,6 +1,7 @@
 package interface_adapter.edit_note;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetOutputData;
 import use_case.create_code_snippet.CreateCodeSnippetOutputData;
@@ -9,15 +10,18 @@ import use_case.edit_note.EditNoteOutputData;
 import use_case.rename_note.RenameNoteOutputData;
 
 public class EditNotePresenter implements EditNoteOutputBoundary {
-    private final SearchViewModel searchViewModel;
+    private final CreateNoteViewModel createNoteViewModel;
     private final EditNoteViewModel editNoteViewModel;
+    private final SearchViewModel searchViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public EditNotePresenter(SearchViewModel searchViewModel,
+    public EditNotePresenter(CreateNoteViewModel createNoteViewModel,
                              EditNoteViewModel editNoteViewModel,
+                             SearchViewModel searchViewModel,
                              ViewManagerModel viewManagerModel) {
-        this.searchViewModel = searchViewModel;
+        this.createNoteViewModel = createNoteViewModel;
         this.editNoteViewModel = editNoteViewModel;
+        this.searchViewModel = searchViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
@@ -43,6 +47,12 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
 
     @Override
     public void prepareBackMenu() {
+        viewManagerModel.setActiveView(createNoteViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareSearchView() {
         viewManagerModel.setActiveView(searchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -1,12 +1,12 @@
 package view;
 
-import data_access.NoteDataAccessObject;
-import interface_adapter.create_note.CreateNoteController;
-import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchController;
 import interface_adapter.search_notes.SearchViewModel;
+import interface_adapter.switch_to_search.SwitchToSearchController;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,55 +15,47 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 public class SearchNotesView extends JPanel implements ActionListener, PropertyChangeListener {
+
     public final String viewName = "search notes";
     private final SearchViewModel searchViewModel;
     private final SearchController searchController;
-    private final EditNoteViewModel editViewModel;
-    private final CreateNoteController createNoteController;
-    private final NoteDataAccessObject editNoteDataAccessObject;
-    private final JButton createNote;
-    private final JLabel homeTitle;
+    private final SwitchToSearchController switchToSearchController;
+    private final JTextField searchBar;
+    private final JLabel searchTitle;
+    private final JButton searchNote;
 
     public SearchNotesView(SearchViewModel searchViewModel,
                            SearchController searchController,
-                           EditNoteViewModel editViewModel,
-                           CreateNoteController createNoteController,
-                           NoteDataAccessObject editNoteDataAccessObject) {
+                           SwitchToSearchController switchToSearchController) {
         this.searchViewModel = searchViewModel;
         this.searchController = searchController;
-        this.editViewModel = editViewModel;
-        this.createNoteController = createNoteController;
-        this.editNoteDataAccessObject = editNoteDataAccessObject;
+        this.switchToSearchController = switchToSearchController;
         searchViewModel.addPropertyChangeListener(this);
-        editViewModel.addPropertyChangeListener(this);
 
-        // ==== MAKING BUTTONS/ LABELS ====
+        // === making buttons and labels ===
 
         JPanel buttons = new JPanel();
         buttons.setLayout(null);
 
-        // Main title label
-        this.homeTitle = new JLabel("NoteNinja");
-        homeTitle.setBounds(30, 0, 200, 100);
-        Font largerFont = homeTitle.getFont().deriveFont(Font.PLAIN, 24); // Change 24 to the desired font size
-        homeTitle.setFont(largerFont);
-        buttons.add(homeTitle);
+        //Main title label
+        this.searchTitle = new JLabel("Search for Notes");
+        searchTitle.setBounds(30, 0, 200, 100);
+        Font largerFont = searchTitle.getFont().deriveFont(Font.PLAIN, 30);
+        searchTitle.setFont(largerFont);
 
-        // Create Note button
-        this.createNote = new JButton(searchViewModel.CREATE_BUTTON);
-        createNote.setBounds(30, 90, 140, 30);
-        buttons.add(createNote);
+        //Text area and search note button
+        searchBar = new JTextField("Enter search here");
+        searchNote = new JButton("Search");
+        buttons.add(searchNote);
 
-
-        // === ADD ACTION LISTENERS ===
-
-        createNote.addActionListener(
+        searchNote.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (e.getSource().equals(createNote)) {
+                        if (e.getSource().equals(searchNote)) {
+                            String toSearch = searchBar.getText();
                             try {
-                                createNoteController.execute("Untitled");
+                                searchController.execute(toSearch);
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -71,9 +63,21 @@ public class SearchNotesView extends JPanel implements ActionListener, PropertyC
                     }
                 }
         );
+        searchNote.addActionListener(this);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane();
+        this.add(scrollPane);
+
         this.add(buttons);
+        buttons.setVisible(true);
+
+        this.add(searchBar);
+        Font searchFont = searchBar.getFont().deriveFont(Font.PLAIN, 20);
+        searchBar.setFont(searchFont);
+        searchBar.setBorder(new LineBorder(Color.black, 2));
+        searchBar.setBounds(50, 200, 500, 50);
+
+        this.setLayout(new BorderLayout());
     }
 
     @Override

@@ -119,7 +119,8 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
     }
 
     @Override
-    public void findByTitle(String noteTitle) {
+    public Note findByTitle(String noteTitle) {
         // TODO: implement this if we choose to implement the search notes use case
+        return null;
     }
 }

@@ -75,7 +75,7 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
 
     private static String readApiKey() {
         Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream("C:\\Users\\saadu\\Second Year\\CSC207\\NoteNinja1\\src\\config.properties")) {
+        try (FileInputStream input = new FileInputStream("C:\\Users\\Zoya\\IdeaProjectsUltimate\\NoteNinja\\src\\local.properties")) {
             properties.load(input);
             return properties.getProperty("api.key");
         } catch (IOException e) {

@@ -3,14 +3,14 @@ package app;
 import data_access.CreateAISnippetDataAccessObject;
 import data_access.CreateCodeSnippetDataAccessObject;
 import data_access.NoteDataAccessObject;
-import entity.Note.CommonNoteFactory;
-import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import view.EditNoteView;
+import view.HomeView;
 import view.SearchNotesView;
 import view.ViewManager;
 
@@ -38,23 +38,31 @@ public class Main {
         // Create view models and views to add to list of accessible views
         SearchViewModel searchViewModel = new SearchViewModel();
         EditNoteViewModel editViewModel = new EditNoteViewModel();
+        CreateNoteViewModel createNoteViewModel = new CreateNoteViewModel();
+
         // Create DAOs
         NoteDataAccessObject editNoteDataAccessObject = new NoteDataAccessObject();
         CreateAISnippetDataAccessInterface createAISnippetDataAccessObject = new CreateAISnippetDataAccessObject();
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
-        SearchNotesView searchNotesView = SearchNotesUseCaseFactory.create(viewManagerModel, searchViewModel, editViewModel, editNoteDataAccessObject);
-        views.add(searchNotesView, searchNotesView.viewName);
+        HomeView homeView = HomeViewUseCaseFactory.create(viewManagerModel, createNoteViewModel,
+                editViewModel, searchViewModel, editNoteDataAccessObject);
+        views.add(homeView, homeView.viewName);
 
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel,
                                                                     editViewModel,
+                                                                    createNoteViewModel,
                                                                     searchViewModel,
                                                                     editNoteDataAccessObject,
                                                                     createAISnippetDataAccessObject,
                                                                     createCodeSnippetDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);
 
-        viewManagerModel.setActiveView(searchNotesView.viewName);
+        SearchNotesView searchNotesView = SearchNotesUseCase.create(viewManagerModel, createNoteViewModel, editViewModel,
+                searchViewModel, editNoteDataAccessObject);
+        views.add(searchNotesView, searchNotesView.viewName);
+
+        viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         // Start the application maximized
