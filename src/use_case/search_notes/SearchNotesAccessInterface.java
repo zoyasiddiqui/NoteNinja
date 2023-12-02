@@ -1,7 +1,9 @@
 package use_case.search_notes;
 
+import entity.Note.Note;
+
 public interface SearchNotesAccessInterface {
 
-    void findByTitle(String noteTitle);
+    Note findByTitle(String noteTitle);
 
 }

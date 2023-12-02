@@ -10,10 +10,10 @@ public class SearchController {
     final SearchInputBoundary searchNotesInteractor;
 
     public SearchController(SearchInputBoundary searchNotesInteractor) {
-        this.searchNotesInteractor= searchNotesInteractor;
+        this.searchNotesInteractor = searchNotesInteractor;
     }
 
     public void execute(String search) throws IOException {
-        this.searchNotesInteractor.execute();
+        this.searchNotesInteractor.execute(search);
     }
 }
