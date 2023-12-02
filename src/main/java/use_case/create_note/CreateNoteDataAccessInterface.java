@@ -8,4 +8,5 @@ public interface CreateNoteDataAccessInterface {
 
     void create(Note note) throws IOException;
 
+    int getNoteCount();
 }
