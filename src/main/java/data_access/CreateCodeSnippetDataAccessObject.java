@@ -2,6 +2,8 @@
 package data_access;
 
 // Import statements for various classes and interfaces
+import entity.CodeSnippet.CodeSnippet;
+import entity.CodeSnippet.CommonCodeSnippet;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 
 import javax.json.*;
@@ -19,8 +21,13 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
 
     // Method to execute code using the Glot.io API
     public StringBuilder executeCode(String code) {
+        // Create an instance of the CodeSnippet entity
+        CodeSnippet codeSnippet = new CommonCodeSnippet();
 
-        // Parse double quotes to single quotes in the code
+        // Set the code in the CodeSnippet entity
+        codeSnippet.setCode(code);
+
+        // Get code and output from the CodeSnippet entity
         String parsedCode = parseCode(code);
 
         // API endpoint URL for running Python code on Glot.io
@@ -79,6 +86,9 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
             try (JsonReader jsonReader = Json.createReader(new StringReader(response.toString()))) {
                 JsonObject jsonResponse = jsonReader.readObject();
                 JsonValue output = jsonResponse.get("stdout");
+
+                // Set the output in the CodeSnippet entity
+                codeSnippet.setOutput(output.toString());
 
                 return new StringBuilder(output.toString());
 

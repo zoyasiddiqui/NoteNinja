@@ -6,10 +6,4 @@ public interface CodeSnippet {
 
     void setOutput(String output);
 
-    String getCode();
-
-    String getOutput();
-
-    // Additional method to execute the code and return the output
-    String executeCode();
 }
