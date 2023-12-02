@@ -95,12 +95,6 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } catch (ProtocolException e) {
-            // Handle ProtocolException, MalformedURLException, and IOException by throwing a RuntimeException
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            // Handle ProtocolException, MalformedURLException, and IOException by throwing a RuntimeException
-            throw new RuntimeException(e);
         } catch (IOException e) {
             // Handle ProtocolException, MalformedURLException, and IOException by throwing a RuntimeException
             throw new RuntimeException(e);
