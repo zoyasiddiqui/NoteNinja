@@ -2,14 +2,14 @@ package data_access;
 
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import javax.json.*;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
-import java.util.Objects;
-import java.io.FileInputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataAccessInterface {
@@ -19,7 +19,6 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
         String parsedCode = parseCode(code);
 
         String url = "https://glot.io/api/run/python/latest";
-//        String myKey = readApiKey();
         String myKey = "cf7085cf-9a6b-4158-9e03-4570096f87c5";
 
         try {
@@ -30,34 +29,67 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
             connection.setRequestProperty("Content-type", "application/json");
 
             // Build the request body
-            String body = "{\"files\": [{\"name\": \"main.py\", \"content\": \"" + parsedCode + "\"}]}";
+            // Split the code into lines
+            List<String> codeLines = Arrays.asList(code.split("\\r?\\n"));
+
+            // Build the request body using JsonObject
+            JsonArray filesArray = Json.createArrayBuilder()
+                    .add(Json.createObjectBuilder()
+                            .add("name", "main.py")
+                            .add("content", String.join("\n", codeLines)))
+                    .build();
+
+            JsonObject requestBody = Json.createObjectBuilder()
+                    .add("files", filesArray)
+                    .build();
+
+            // Write the JSON payload to the request body
             connection.setDoOutput(true);
-            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-            writer.write(body);
-            writer.flush();
-            writer.close();
+            try (OutputStream os = connection.getOutputStream();
+                 JsonWriter jsonWriter = Json.createWriter(new OutputStreamWriter(os))) {
+                jsonWriter.writeObject(requestBody);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             // Get the response
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
             StringBuilder response = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            in.close();
 
-            // Extract the output from the response
-            String output = response.toString().split(",")[0].split(":")[1];
-            return new StringBuilder(output);
+            // Extract the output from the response (you can modify this part based on the actual response structure)
+            try (JsonReader jsonReader = Json.createReader(new StringReader(response.toString()))) {
+                JsonObject jsonResponse = jsonReader.readObject();
+                JsonValue output = jsonResponse.get("stdout");
 
+                return new StringBuilder(output.toString());
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } catch (ProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private String parseCode(String code) {
-        //TODO: figure out how to implement this to take any inputted code and put it in the proper format
-        return code;
+
+        private String parseCode(String code) {
+            //TODO: figure out how to implement this to take any inputted code and put it in the proper format
+
+            // parse strings
+            return code.replaceAll("\"", "'");
+
+
     }
 
     private static String readApiKey() {
