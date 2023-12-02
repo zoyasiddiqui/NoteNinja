@@ -83,11 +83,11 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
     }
 
 
-        private String parseCode(String code) {
-            //TODO: figure out how to implement this to take any inputted code and put it in the proper format
+    private String parseCode(String code) {
+        //TODO: figure out how to implement this to take any inputted code and put it in the proper format
 
-            // parse strings
-            return code.replaceAll("\"", "'");
+        // parse strings
+        return code.replaceAll("\"", "'");
 
 
     }

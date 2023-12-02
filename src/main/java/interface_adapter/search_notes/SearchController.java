@@ -1,9 +1,11 @@
 package interface_adapter.search_notes;
 
+import entity.Note.Note;
 import use_case.create_AI_snippet.CreateAISnippetInputBoundary;
 import use_case.search_notes.SearchInputBoundary;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SearchController {
 

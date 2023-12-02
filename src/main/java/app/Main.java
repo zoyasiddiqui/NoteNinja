@@ -11,7 +11,6 @@ import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import view.EditNoteView;
 import view.HomeView;
-import view.SearchNotesView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -46,7 +45,7 @@ public class Main {
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
         HomeView homeView = HomeViewUseCaseFactory.create(viewManagerModel, createNoteViewModel,
-                editViewModel, searchViewModel, editNoteDataAccessObject);
+                editViewModel, searchViewModel, editNoteDataAccessObject, editNoteDataAccessObject);
         views.add(homeView, homeView.viewName);
 
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel,
@@ -58,15 +57,12 @@ public class Main {
                                                                     createCodeSnippetDataAccessObject);
         views.add(noteEditorView, noteEditorView.viewName);
 
-        SearchNotesView searchNotesView = SearchNotesUseCase.create(viewManagerModel, createNoteViewModel, editViewModel,
-                searchViewModel, editNoteDataAccessObject);
-        views.add(searchNotesView, searchNotesView.viewName);
-
         viewManagerModel.setActiveView(homeView.viewName);
         viewManagerModel.firePropertyChanged();
 
         // Start the application maximized
         application.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        application.pack();
         application.setVisible(true);
 
     }

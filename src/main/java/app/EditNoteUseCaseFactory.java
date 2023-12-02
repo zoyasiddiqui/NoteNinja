@@ -48,9 +48,9 @@ public class EditNoteUseCaseFactory {
         // feel free to add more controllers and view models as necessary
 
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel,
-                editNoteViewModel, searchViewModel, viewManagerModel);
+                editNoteViewModel, viewManagerModel);
 
-        RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
+        RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter, editNoteDataAccessInterface);
 
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
                                                            (CreateNoteDataAccessInterface) editNoteDataAccessInterface,
@@ -75,9 +75,8 @@ public class EditNoteUseCaseFactory {
 
     private static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
                                                              EditNoteViewModel editNoteViewModel,
-                                                             SearchViewModel searchViewModel,
                                                              ViewManagerModel viewManagerModel) {
-        return new EditNotePresenter(createNoteViewModel, editNoteViewModel, searchViewModel, viewManagerModel);
+        return new EditNotePresenter(createNoteViewModel, editNoteViewModel, viewManagerModel);
     }
 
 
@@ -95,8 +94,9 @@ public class EditNoteUseCaseFactory {
 
     // note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
     // RenameUseCase only updates the note's state and fires the property change in view model
-    private static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter) {
-        RenameNoteInputBoundary renameNoteInteractor = new RenameNoteInteractor(editNotePresenter);
+    private static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                            EditNoteDataAccessInterface editNoteDataAccessInterface) {
+        RenameNoteInputBoundary renameNoteInteractor = new RenameNoteInteractor(editNotePresenter, editNoteDataAccessInterface);
         return new RenameNoteController(renameNoteInteractor);
     }
 
