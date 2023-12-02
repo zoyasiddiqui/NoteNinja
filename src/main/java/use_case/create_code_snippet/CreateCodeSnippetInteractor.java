@@ -9,13 +9,11 @@ import java.io.IOException;
 
 public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBoundary {
     private final CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject;
-    private final EditNoteDataAccessInterface editNoteDAO;
     private final EditNoteOutputBoundary editNotePresenter;
 
     public CreateCodeSnippetInteractor(CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject,
-                                       EditNoteDataAccessInterface editNoteDAO, EditNoteOutputBoundary editNotePresenter) {
+                                       EditNoteOutputBoundary editNotePresenter) {
         this.createCodeSnippetDataAccessObject = createCodeSnippetDataAccessObject;
-        this.editNoteDAO = editNoteDAO;
         this.editNotePresenter = editNotePresenter;
     }
 

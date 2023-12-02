@@ -66,8 +66,7 @@ public class EditNoteUseCaseFactory {
                                                                                   editNoteDataAccessInterface);
 
         CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(editNotePresenter,
-                                                                                        createCodeSnippetDataAccessInterface,
-                                                                                        editNoteDataAccessInterface);
+                                                                                        createCodeSnippetDataAccessInterface);
 
         return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase, createAISnippetUseCase, createCodeSnippetUseCase);
 
@@ -121,10 +120,9 @@ public class EditNoteUseCaseFactory {
     }
 
     private static CreateCodeSnippetController createCodeSnippetUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject,
-                                                                        EditNoteDataAccessInterface editNoteDAO) {
+                                                                        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject) {
 
-        CreateCodeSnippetInputBoundary createCodeSnippetInteractor = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessObject, editNoteDAO, editNotePresenter);
+        CreateCodeSnippetInputBoundary createCodeSnippetInteractor = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessObject, editNotePresenter);
         return new CreateCodeSnippetController(createCodeSnippetInteractor);
     }
 
