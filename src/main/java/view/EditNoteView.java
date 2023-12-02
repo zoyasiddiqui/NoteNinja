@@ -247,6 +247,5 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         // Handle property changes if needed
         noteTitleButton.setText(editViewModel.getState().getNoteTitle());
         noteTextArea.setText(editViewModel.getState().getNoteText());
-
     }
 }
