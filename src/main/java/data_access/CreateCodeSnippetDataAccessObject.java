@@ -83,18 +83,18 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
     }
 
 
-        private String parseCode(String code) {
-            //TODO: figure out how to implement this to take any inputted code and put it in the proper format
+    private String parseCode(String code) {
+        //TODO: figure out how to implement this to take any inputted code and put it in the proper format
 
-            // parse strings
-            return code.replaceAll("\"", "'");
+        // parse strings
+        return code.replaceAll("\"", "'");
 
 
     }
 
     private static String readApiKey() {
         Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream("C:\\Users\\Zoya\\IdeaProjectsUltimate\\NoteNinja2\\src\\local.properties")) {
+        try (FileInputStream input = new FileInputStream("C:\\Users\\Zoya\\IdeaProjectsUltimate\\NoteNinja\\src\\local.properties")) {
             properties.load(input);
             return properties.getProperty("api.key");
         } catch (IOException e) {
