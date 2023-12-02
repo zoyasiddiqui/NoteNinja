@@ -30,7 +30,10 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
 
         // update current text with new text. note we do NOT retrieve the current text from our editNoteDAO, we get it from note state
         String codeReturn = new String(output);
-        String newText = text + codeReturn;
+        System.out.println(codeReturn);
+//        String resultString = codeReturn.endsWith("\n") ? codeReturn.substring(0, codeReturn.length() - 1) : codeReturn;
+
+        String newText = text + "Ran code snippet:\n" + code + "\n" + codeReturn;
 
         // prepare the output data and notify the presenter
         EditNoteOutputData editNoteOutputData = new EditNoteOutputData(editNoteState.getNoteID(), editNoteState.getNoteTitle(), newText);

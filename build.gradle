@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JSON API
+    implementation 'javax.json:javax.json-api:1.1.4'
+
+    // JSON Implementation (GlassFish)
+    implementation 'org.glassfish:javax.json:1.1.4'
+}
