@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface CreateAISnippetInputBoundary {
 
-    void execute(String prompt, String noteText, EditNoteState editNoteState) throws IOException;
+    void execute(CreateAISnippetInputData createAISnippetInputData) throws IOException;
 
 }

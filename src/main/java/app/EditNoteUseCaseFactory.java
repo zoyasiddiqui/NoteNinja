@@ -53,7 +53,6 @@ public class EditNoteUseCaseFactory {
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter, editNoteDataAccessInterface);
 
         SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
-                                                           (CreateNoteDataAccessInterface) editNoteDataAccessInterface,
                                                            editNotePresenter);
 
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
@@ -62,8 +61,7 @@ public class EditNoteUseCaseFactory {
                                                                         (DeleteNoteDataAccessInterface) editNoteDataAccessInterface);
 
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(editNotePresenter,
-                                                                                  createAISnippetDataAccessInterface,
-                                                                                  editNoteDataAccessInterface);
+                                                                                  createAISnippetDataAccessInterface);
 
         CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(editNotePresenter,
                                                                                         createCodeSnippetDataAccessInterface);
@@ -101,21 +99,18 @@ public class EditNoteUseCaseFactory {
 
 
     private static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
-                                                    CreateNoteDataAccessInterface createNoteDataAccessInterface,
                                                     EditNoteOutputBoundary editNotePresenter) {
 
         // we need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
         NoteFactory noteFactory = new CommonNoteFactory();
-        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface,
-                createNoteDataAccessInterface, noteFactory, editNotePresenter);
+        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory, editNotePresenter);
         return new SaveController(saveNoteInteractor);
     }
 
     private static CreateAISnippetController createAISnippetUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                    CreateAISnippetDataAccessInterface createAISnippetDataAccessObject,
-                                                                    EditNoteDataAccessInterface editNoteDAO) {
+                                                                    CreateAISnippetDataAccessInterface createAISnippetDataAccessObject) {
 
-        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNoteDAO, editNotePresenter);
+        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNotePresenter);
         return new CreateAISnippetController(createAISnippetInteractor);
     }
 

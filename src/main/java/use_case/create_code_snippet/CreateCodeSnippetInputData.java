@@ -5,24 +5,30 @@ import use_case.create_note.CreateNoteInputData;
 
 public class CreateCodeSnippetInputData {
     final private String code;
-    final private String text;
-    final private EditNoteState editNoteState;
+    final private String noteText;
+    final private String noteTitle;
+    final private int noteID;
 
-    public CreateCodeSnippetInputData(String code, String text, EditNoteState editNoteState) {
+    public CreateCodeSnippetInputData(String code, String noteText, String noteTitle, int noteID) {
         this.code = code;
-        this.text = text;
-        this.editNoteState = editNoteState;
+        this.noteText = noteText;
+        this.noteTitle = noteTitle;
+        this.noteID = noteID;
     }
 
     public String getCode() {
         return code;
     }
 
-    public String getText() {
-        return text;
+    public String getNoteText() {
+        return noteText;
     }
 
-    public EditNoteState getNoteState() {
-        return editNoteState;
+    public String getNoteTitle() {
+        return noteTitle;
+    }
+
+    public int getNoteID() {
+        return noteID;
     }
 }

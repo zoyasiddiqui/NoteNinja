@@ -17,4 +17,6 @@ public interface EditNoteDataAccessInterface {
   
     void setCurrentText(String text);
 
+    int getNoteCount();
+    void incrementNoteCount();
 }
