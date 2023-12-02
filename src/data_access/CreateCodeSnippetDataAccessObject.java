@@ -62,7 +62,7 @@ public class CreateCodeSnippetDataAccessObject implements CreateCodeSnippetDataA
 
     private static String readApiKey() {
         Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream("C:\\path\\to\\your\\config.properties")) {
+        try (FileInputStream input = new FileInputStream("C:\\Users\\Zoya\\IdeaProjectsUltimate\\NoteNinja\\src\\local.properties")) {
             properties.load(input);
             return properties.getProperty("api.key");
         } catch (IOException e) {

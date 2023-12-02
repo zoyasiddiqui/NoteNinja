@@ -7,6 +7,7 @@ import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.create_AI_snippet.CreateAISnippetPresenter;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
+import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
@@ -20,6 +21,7 @@ import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
 import use_case.create_code_snippet.CreateCodeSnippetInteractor;
 import use_case.create_note.CreateNoteDataAccessInterface;
+import use_case.create_note.CreateNoteInteractor;
 import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteInputBoundary;
 import use_case.delete_note.DeleteNoteInteractor;
@@ -37,6 +39,7 @@ public class EditNoteUseCaseFactory {
     public static EditNoteView create(
             ViewManagerModel viewManagerModel,
             EditNoteViewModel editNoteViewModel,
+            CreateNoteViewModel createNoteViewModel,
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
@@ -44,9 +47,8 @@ public class EditNoteUseCaseFactory {
         
         // feel free to add more controllers and view models as necessary
 
-        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel,
-                                                                           editNoteViewModel,
-                                                                           viewManagerModel);
+        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel,
+                editNoteViewModel, searchViewModel, viewManagerModel);
 
         RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter);
 
@@ -71,10 +73,11 @@ public class EditNoteUseCaseFactory {
 
     }
 
-    private static EditNotePresenter createEditNotePresenter(SearchViewModel searchViewModel,
+    private static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
                                                              EditNoteViewModel editNoteViewModel,
+                                                             SearchViewModel searchViewModel,
                                                              ViewManagerModel viewManagerModel) {
-        return new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        return new EditNotePresenter(createNoteViewModel, editNoteViewModel, searchViewModel, viewManagerModel);
     }
 
 
