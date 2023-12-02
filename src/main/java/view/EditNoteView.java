@@ -14,6 +14,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -82,6 +84,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
         // TODO: Add a general keyTyped event to the noteTextArea which always updates noteState in live
         // TODO: this way we wont need to call noteTextArea.getText() every time, we just take from the NoteState
+
 
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
@@ -159,10 +162,13 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
                         if (result == JOptionPane.OK_OPTION) {
                             String code = codeArea.getText();
-                            String noteText = noteTextArea.getText();
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
-                                createCodeSnippetController.execute(code, noteText, editNoteState);
+                                createCodeSnippetController.execute(
+                                        code,
+                                        editNoteState.getNoteText(),
+                                        editNoteState.getNoteTitle(),
+                                        editNoteState.getNoteID());
                             } catch (IOException ex) {
                                 throw new RuntimeException(ex);
                             }
@@ -180,12 +186,14 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(noteTitleButton)) {
                             String newTitle = JOptionPane.showInputDialog("Enter a new title");
-                            String noteText = noteTextArea.getText();
                             EditNoteState editNoteState = editViewModel.getState();
                             if (newTitle != null) {
                                 try {
-                                    renameNoteController.execute(editNoteState.getNoteID(),
-                                            newTitle, noteText);
+                                    renameNoteController.execute(
+                                            editNoteState.getNoteID(),
+                                            newTitle,
+                                            editNoteState.getNoteText());
+
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
                                 }
@@ -234,6 +242,27 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         // Add the buttons JPanel to the south of this JPanel
         this.add(buttons, BorderLayout.SOUTH);
         add(noteTitleButton, BorderLayout.NORTH);// add the title button to the north of this JPanel
+
+        // ===== KEY PRESS LISTENER =====
+        noteTextArea.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        EditNoteState currentState = editViewModel.getState();
+                        String text = noteTextArea.getText() + e.getKeyChar();
+                        currentState.setNoteText(text);
+                        editViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+        // ==============================
     }
 
 
