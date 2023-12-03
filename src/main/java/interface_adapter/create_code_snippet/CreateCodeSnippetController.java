@@ -12,7 +12,7 @@ import java.io.IOException;
 public class CreateCodeSnippetController {
 
     // Private member variable to hold CreateCodeSnippetInputBoundary instance
-    private final CreateCodeSnippetInputBoundary createCodeSnippetInteractor;
+    final CreateCodeSnippetInputBoundary createCodeSnippetInteractor;
 
     // Constructor to initialize CreateCodeSnippetController with CreateCodeSnippetInputBoundary
     public CreateCodeSnippetController(CreateCodeSnippetInputBoundary createCodeSnippetInteractor) {
