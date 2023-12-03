@@ -6,7 +6,6 @@ import data_access.CreateAISnippetDataAccessObject;
 import data_access.CreateCodeSnippetDataAccessObject;
 import data_access.NoteDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.create_note.CreateNoteViewModel;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
@@ -43,7 +42,6 @@ public class Main {
         // Create view models for different views
         SearchViewModel searchViewModel = new SearchViewModel();
         EditNoteViewModel editViewModel = new EditNoteViewModel();
-        CreateNoteViewModel createNoteViewModel = new CreateNoteViewModel();
 
         // Create DAOs for data access
         NoteDataAccessObject editNoteDataAccessObject = new NoteDataAccessObject();
@@ -51,11 +49,10 @@ public class Main {
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
         // Create HomeView using the factory method
-        HomeView homeView = HomeViewUseCaseFactory.create(viewManagerModel,
-                createNoteViewModel,
+        HomeView homeView = HomeViewUseCaseFactory.create(
+                viewManagerModel,
                 editViewModel,
                 searchViewModel,
-                editNoteDataAccessObject,
                 editNoteDataAccessObject);
 
         // Add HomeView to the views panel
@@ -64,7 +61,6 @@ public class Main {
         // Create EditNoteView using the factory method
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel,
                 editViewModel,
-                createNoteViewModel,
                 searchViewModel,
                 editNoteDataAccessObject,
                 createAISnippetDataAccessObject,
