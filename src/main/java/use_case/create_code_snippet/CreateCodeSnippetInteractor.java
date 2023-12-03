@@ -36,7 +36,6 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
 
         // Convert the response to a string
         String codeReturn = new String(output);
-        System.out.println(codeReturn);
 
         // Set appropriate amount of newline characters based on existing text
         String newText = calculateNewText(currentText);
