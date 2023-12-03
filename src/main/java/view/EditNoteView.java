@@ -128,26 +128,39 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         // ==============================
 
         // ====== AI SNIPPET LISTENER =======
-        createAISnippet.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        String prompt = JOptionPane.showInputDialog(EditNoteView.this, "Enter AI prompt");
-                        EditNoteState editNoteState = editViewModel.getState();
-                        if (prompt != null) {
-                            try {
-                                createAISnippetController.execute(
-                                        prompt,
-                                        editNoteState.getNoteText(),
-                                        editNoteState.getNoteTitle(),
-                                        editNoteState.getNoteID());
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
+        createAISnippet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Special input box for entering AI prompt
+                JTextArea promptArea = new JTextArea(20, 40);
+                JScrollPane scrollPane = new JScrollPane(promptArea);
+
+                int result = JOptionPane.showConfirmDialog(
+                        EditNoteView.this,
+                        scrollPane,
+                        "Enter AI Prompt",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE
+                );
+
+                if (result == JOptionPane.OK_OPTION) {
+                    String prompt = promptArea.getText();
+                    EditNoteState editNoteState = editViewModel.getState();
+                    if (prompt != null) {
+                        try {
+                            createAISnippetController.execute(
+                                    prompt,
+                                    editNoteState.getNoteText(),
+                                    editNoteState.getNoteTitle(),
+                                    editNoteState.getNoteID());
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
                         }
                     }
                 }
-        );
+            }
+        });
+
         // ==============================
 
         // ====== CODE SNIPPET LISTENER =======
