@@ -11,7 +11,7 @@ import java.io.IOException;
 public class DeleteNoteController {
 
     // Instance variable for the DeleteNoteInputBoundary
-    private final DeleteNoteInputBoundary deleteNoteInteractor;
+    final DeleteNoteInputBoundary deleteNoteInteractor;
 
     // Constructor for initializing the DeleteNoteController with a DeleteNoteInputBoundary
     public DeleteNoteController(DeleteNoteInputBoundary deleteNoteInteractor) {

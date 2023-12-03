@@ -24,7 +24,7 @@ public class EditNoteViewModel extends ViewModel {
     private final String viewName = "editing";
 
     // PropertyChangeSupport for handling property change events
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     // Constructor for EditNoteViewModel
     public EditNoteViewModel() {

@@ -1,8 +1,8 @@
-// Package declaration
 package interface_adapter.search_notes;
 
-// Import statement for List and Note
 import entity.Note.Note;
+
+import java.util.ArrayList;
 import java.util.List;
 
 // Class declaration for SearchState
@@ -12,11 +12,13 @@ public class SearchState {
 
     // Copy constructor for SearchState
     public SearchState(SearchState copy) {
-        this.notes = copy.notes;
+        this.notes = new ArrayList<>(copy.notes);
     }
 
     // Default constructor for SearchState
-    public SearchState() {}
+    public SearchState() {
+        this.notes = new ArrayList<>();
+    }
 
     // Getter for the list of notes
     public List<Note> getNotes() {
