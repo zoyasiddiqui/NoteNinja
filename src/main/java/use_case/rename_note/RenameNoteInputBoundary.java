@@ -2,7 +2,7 @@
 package use_case.rename_note;
 
 // Import statements for classes from different packages
-import use_case.save_note.SaveNoteInputData;
+import use_case.edit_note.EditNoteInputData;
 
 // Import statement for handling IOException
 import java.io.IOException;
@@ -13,5 +13,5 @@ public interface RenameNoteInputBoundary {
     // Declaration of the execute method without implementation details
     // This method is expected to be implemented by classes that implement this interface
     // It takes a SaveNoteInputData parameter and may throw IOException
-    void execute(SaveNoteInputData saveNoteInputData) throws IOException;
+    void execute(EditNoteInputData editNoteInputData) throws IOException;
 }

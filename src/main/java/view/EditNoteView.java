@@ -10,7 +10,6 @@ import interface_adapter.edit_note.EditController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.rename_note.RenameNoteController;
-import interface_adapter.save_note.SaveController;
 
 import javax.swing.*;
 import java.awt.*;

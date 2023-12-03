@@ -4,9 +4,9 @@ package use_case.rename_note;
 // Import statements for classes from different packages
 import interface_adapter.edit_note.EditNotePresenter;
 import use_case.edit_note.EditNoteDataAccessInterface;
+import use_case.edit_note.EditNoteInputData;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
-import use_case.save_note.SaveNoteInputData;
 
 // Import statement for handling IOException
 import java.io.IOException;
@@ -28,18 +28,18 @@ public class RenameNoteInteractor implements RenameNoteInputBoundary {
 
     // Implementation of the execute method defined in the RenameNoteInputBoundary interface
     @Override
-    public void execute(SaveNoteInputData saveNoteInputData) throws IOException {
+    public void execute(EditNoteInputData editNoteInputData) throws IOException {
         // Extract note title from the input data
-        String noteTitle = saveNoteInputData.getNoteTitle();
+        String noteTitle = editNoteInputData.getNoteTitle();
 
         // Create a RenameNoteOutputData object with the new note title
         RenameNoteOutputData renameNoteOutputData = new RenameNoteOutputData(noteTitle);
 
         // Update the note with the new title using the data access object
         editNoteDataAccessObject.updateNote(
-                saveNoteInputData.getNoteID(),
-                saveNoteInputData.getNoteText(),
-                saveNoteInputData.getNoteTitle()
+                editNoteInputData.getNoteID(),
+                editNoteInputData.getNoteText(),
+                editNoteInputData.getNoteTitle()
         );
 
         // Notify the presenter about the title change

@@ -6,17 +6,19 @@ import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
+import interface_adapter.back_menu.BackMenuPresenter;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
+import interface_adapter.edit_note.EditController;
+import interface_adapter.rename_note.RenameNotePresenter;
 import interface_adapter.search_notes.SearchViewModel;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
-import interface_adapter.edit_note.RenameNoteController;
-import interface_adapter.save_note.SaveController;
-import interface_adapter.search_notes.SearchViewModel;
+import interface_adapter.rename_note.RenameNoteController;
 import use_case.back_menu.BackMenuInputBoundary;
 import use_case.back_menu.BackMenuInteractor;
+import use_case.back_menu.BackMenuOutputBoundary;
 import use_case.create_AI_snippet.*;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetInputBoundary;
@@ -25,11 +27,15 @@ import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteInputBoundary;
 import use_case.delete_note.DeleteNoteInteractor;
 import use_case.edit_note.EditNoteDataAccessInterface;
+import use_case.edit_note.EditNoteInputBoundary;
+import use_case.edit_note.EditNoteInteractor;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.rename_note.RenameNoteInputBoundary;
 import use_case.rename_note.RenameNoteInteractor;
-import use_case.save_note.SaveNoteInteractor;
+import use_case.rename_note.RenameNoteOutputBoundary;
 import view.EditNoteView;
+
+import javax.swing.text.View;
 
 // Class declaration
 public class EditNoteUseCaseFactory {
@@ -44,87 +50,79 @@ public class EditNoteUseCaseFactory {
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
-            CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
+            CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface,
+            DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
 
-        // Create an EditNoteOutputBoundary using a helper method
-        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel,
-                editNoteViewModel, viewManagerModel);
+        // we need a renaming controller, an editing controller, a back menu controller,
+        // an ai snippet controller, a code snippet controller, and a delete note controller
+        RenameNoteController renameNote = createRenameUseCase(editNoteViewModel, editNoteDataAccessInterface);
+        EditController edit = createEditUseCase(viewManagerModel, searchViewModel,
+                editNoteViewModel, editNoteDataAccessInterface);
+        CreateAISnippetController aiSnippet = createAISnippetUseCase(viewManagerModel, searchViewModel,
+                editNoteViewModel, createAISnippetDataAccessInterface);
+        CreateCodeSnippetController codeSnippet = createCodeSnippetUseCase(viewManagerModel, searchViewModel,
+                editNoteViewModel, createCodeSnippetDataAccessInterface);
+        BackMenuController backMenu = createBackMenuUseCase(viewManagerModel, searchViewModel);
+        DeleteNoteController deleteNote = createDeleteNoteUseCase(viewManagerModel, searchViewModel,
+                deleteNoteDataAccessInterface);
 
-        // Create various controllers for different use cases
-        RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter, editNoteDataAccessInterface);
-
-        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
-                editNotePresenter);
-
-        BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
-
-        DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter,
-                (DeleteNoteDataAccessInterface) editNoteDataAccessInterface);
-
-        CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(editNotePresenter,
-                createAISnippetDataAccessInterface);
-
-        CreateCodeSnippetController createCodeSnippetUseCase = createCodeSnippetUseCase(editNotePresenter,
-                createCodeSnippetDataAccessInterface);
 
         // Return an instance of EditNoteView with the created controllers
-        return new EditNoteView(editNoteViewModel, renameUseCase, saveNoteUseCase, backMenuUseCase, deleteNoteUseCase, createAISnippetUseCase, createCodeSnippetUseCase);
+        return new EditNoteView(editNoteViewModel, renameNote, edit, backMenu, deleteNote,
+                aiSnippet, codeSnippet);
 
     }
 
-    // Helper method to create an EditNotePresenter
-    private static EditNotePresenter createEditNotePresenter(SearchViewModel searchViewModel,
-                                                             EditNoteViewModel editNoteViewModel,
-                                                             ViewManagerModel viewManagerModel) {
-        return new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
-
+    private static RenameNoteController createRenameUseCase(EditNoteViewModel editNoteViewModel,
+                                                            EditNoteDataAccessInterface editNoteDataAccessInterface) {
+        RenameNoteOutputBoundary renameNoteOutputBoundary = new RenameNotePresenter(editNoteViewModel);
+        RenameNoteInputBoundary renameNoteInputBoundary = new RenameNoteInteractor(renameNoteOutputBoundary,
+                editNoteDataAccessInterface);
+        return new RenameNoteController(renameNoteInputBoundary);
     }
 
-    // Helper method to create a BackMenuController
-    static BackMenuController createBackMenuUseCase(EditNoteOutputBoundary editNotePresenter) {
-        BackMenuInputBoundary backMenuInteractor = new BackMenuInteractor(editNotePresenter);
-        return new BackMenuController(backMenuInteractor);
-    }
-
-    // Helper method to create a DeleteNoteController
-    static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                        DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
-        DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNotePresenter, deleteNoteDataAccessInterface);
-        return new DeleteNoteController(deleteNoteInteractor);
-    }
-
-    // Helper method to create a RenameNoteController
-    // Note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
-    // RenameUseCase only updates the note's state and fires the property change in view model
-    static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter,
+    private static EditController createEditUseCase(ViewManagerModel viewManagerModel,
+                                                    SearchViewModel searchViewModel,
+                                                    EditNoteViewModel editNoteViewModel,
                                                     EditNoteDataAccessInterface editNoteDataAccessInterface) {
-        RenameNoteInputBoundary renameNoteInteractor = new RenameNoteInteractor(editNotePresenter, editNoteDataAccessInterface);
-        return new RenameNoteController(renameNoteInteractor);
+
+        EditNoteOutputBoundary editNoteOutputBoundary = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        EditNoteInputBoundary editNoteInputBoundary = new EditNoteInteractor(editNoteDataAccessInterface, editNoteOutputBoundary);
+        return new EditController(editNoteInputBoundary);
     }
 
-    // Helper method to create a SaveController
-    public static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
-                                                   EditNoteOutputBoundary editNotePresenter) {
-
-        // We need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
-        NoteFactory noteFactory = new CommonNoteFactory();
-        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory, editNotePresenter);
-        return new SaveController(saveNoteInteractor);
+    private static CreateAISnippetController createAISnippetUseCase(ViewManagerModel viewManagerModel,
+                                                                    SearchViewModel searchViewModel,
+                                                                    EditNoteViewModel editNoteViewModel,
+                                                                    CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface) {
+        EditNoteOutputBoundary editNoteOutputBoundary = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        CreateAISnippetInputBoundary createAISnippetInputBoundary =
+                new CreateAISnippetInteractor(createAISnippetDataAccessInterface, editNoteOutputBoundary);
+        return new CreateAISnippetController(createAISnippetInputBoundary);
     }
 
-    // Helper method to create a CreateAISnippetController
-    static CreateAISnippetController createAISnippetUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                            CreateAISnippetDataAccessInterface createAISnippetDataAccessObject) {
-
-        CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNotePresenter);
-        return new CreateAISnippetController(createAISnippetInteractor);
+    private static CreateCodeSnippetController createCodeSnippetUseCase(ViewManagerModel viewManagerModel,
+                                                                        SearchViewModel searchViewModel,
+                                                                        EditNoteViewModel editNoteViewModel,
+                                                                        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
+        EditNoteOutputBoundary editNoteOutputBoundary = new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+        CreateCodeSnippetInputBoundary createCodeSnippetInputBoundary = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessInterface, editNoteOutputBoundary);
+        return new CreateCodeSnippetController(createCodeSnippetInputBoundary);
     }
 
-    // Helper method to create a CreateCodeSnippetController
-    static CreateCodeSnippetController createCodeSnippetUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject) {
-
-        CreateCodeSnippetInputBoundary createCodeSnippetInteractor = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessObject, editNotePresenter);
-        return new CreateCodeSnippetController(createCodeSnippetInteractor);
+    private static BackMenuController createBackMenuUseCase(ViewManagerModel viewManagerModel,
+                                                            SearchViewModel searchViewModel) {
+        BackMenuOutputBoundary backMenuOutputBoundary = new BackMenuPresenter(viewManagerModel, searchViewModel);
+        BackMenuInputBoundary backMenuInputBoundary = new BackMenuInteractor(backMenuOutputBoundary);
+        return new BackMenuController(backMenuInputBoundary);
     }
+
+    private static DeleteNoteController createDeleteNoteUseCase(ViewManagerModel viewManagerModel,
+                                                                SearchViewModel searchViewModel,
+                                                                DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
+        BackMenuOutputBoundary backMenuOutputBoundary = new BackMenuPresenter(viewManagerModel, searchViewModel);
+        DeleteNoteInputBoundary deleteNoteInputBoundary = new DeleteNoteInteractor(backMenuOutputBoundary, deleteNoteDataAccessInterface);
+        return new DeleteNoteController(deleteNoteInputBoundary);
+    }
+
 }

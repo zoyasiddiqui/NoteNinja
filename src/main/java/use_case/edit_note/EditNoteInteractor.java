@@ -16,15 +16,12 @@ public class EditNoteInteractor implements EditNoteInputBoundary {
 
     // Private instance variables for dependencies
     private final EditNoteDataAccessInterface noteDataAccessObject;
-    private final NoteFactory noteFactory;
     private final EditNoteOutputBoundary editNotePresenter;
 
     // Constructor for initializing the SaveNoteInteractor object with dependencies
     public EditNoteInteractor(EditNoteDataAccessInterface noteDataAccessObject,
-                              NoteFactory noteFactory,
                               EditNoteOutputBoundary editNotePresenter) {
         this.noteDataAccessObject = noteDataAccessObject;
-        this.noteFactory = noteFactory;
         this.editNotePresenter = editNotePresenter;
     }
 
