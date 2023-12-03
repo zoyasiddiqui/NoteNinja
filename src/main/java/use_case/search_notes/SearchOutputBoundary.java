@@ -1,13 +1,16 @@
 // Package declaration indicating the location of the interface within the project structure
 package use_case.search_notes;
 
+import use_case.edit_note.EditNoteOutputData;
+
 // Definition of the SearchOutputBoundary interface
 public interface SearchOutputBoundary {
 
     // Method signature for preparing a success view with search results
-    void prepareSuccessView(SearchOutputData usersDeleted);
+    void prepareNewNote(EditNoteOutputData editNoteOutputData);
 
     // Method signature for preparing a fail view with an error message
     void prepareFailView(String errorMessage);
 
+    void prepareExistingNote(EditNoteOutputData editNoteOutputData);
 }
