@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public interface RetrieveInputBoundary {
-    ArrayList execute() throws IOException;
+    void execute() throws IOException;
 }
