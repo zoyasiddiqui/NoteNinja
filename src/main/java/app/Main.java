@@ -59,7 +59,8 @@ public class Main {
         views.add(homeView, homeView.viewName);
 
         // Create EditNoteView using the factory method
-        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel,
+        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(
+                viewManagerModel,
                 editViewModel,
                 searchViewModel,
                 editNoteDataAccessObject,
