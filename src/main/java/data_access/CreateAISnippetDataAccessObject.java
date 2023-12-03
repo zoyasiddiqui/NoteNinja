@@ -23,10 +23,12 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
     @Override
     public StringBuilder getResponse(String prompt) {
         // Creating an instance of AISnippet
+
+        String prompts = parsePrompt(prompt);
         AISnippet aiSnippet = new CommonAISnippet();
 
         // Set the snippet question using the provided prompt
-        aiSnippet.setSnippetQuestion(prompt);
+        aiSnippet.setSnippetQuestion(prompts);
 
         // API endpoint URL
         String url = "https://api.openai.com/v1/chat/completions";
@@ -99,6 +101,10 @@ public class CreateAISnippetDataAccessObject implements CreateAISnippetDataAcces
             // Handle IOException by throwing a RuntimeException
             throw new RuntimeException(e);
         }
+    }
+
+    private String parsePrompt(String code) {
+        return code.replaceAll("\"", " ");
     }
 
     // Helper method to read the API key from a local properties file
