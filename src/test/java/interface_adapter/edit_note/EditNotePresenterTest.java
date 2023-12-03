@@ -31,18 +31,18 @@ class EditNotePresenterTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void prepareNote_shouldSetNoteStateAndChangeView() {
-
-    }
-
-    @Test
-    void prepareTitleChange_shouldSetTitleAndFirePropertyChanged() {
-
-    }
-
-    @Test
-    void prepareBackMenu_shouldSetActiveViewAndFirePropertyChanged() {
-
-    }
+//    @Test
+//    void prepareNote_shouldSetNoteStateAndChangeView() {
+//
+//    }
+//
+//    @Test
+//    void prepareTitleChange_shouldSetTitleAndFirePropertyChanged() {
+//
+//    }
+//
+//    @Test
+//    void prepareBackMenu_shouldSetActiveViewAndFirePropertyChanged() {
+//
+//    }
 }
