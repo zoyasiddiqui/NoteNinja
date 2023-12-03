@@ -59,13 +59,8 @@ public class Main {
         views.add(homeView, homeView.viewName);
 
         // Create EditNoteView using the factory method
-        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(
-                viewManagerModel,
-                editViewModel,
-                searchViewModel,
-                editNoteDataAccessObject,
-                createAISnippetDataAccessObject,
-                createCodeSnippetDataAccessObject);
+        EditNoteView noteEditorView = EditNoteUseCaseFactory.create(viewManagerModel, editViewModel, searchViewModel,
+                editNoteDataAccessObject, createAISnippetDataAccessObject, createCodeSnippetDataAccessObject, editNoteDataAccessObject);
 
         // Add EditNoteView to the views panel
         views.add(noteEditorView, noteEditorView.viewName);

@@ -1,30 +1,41 @@
 // Package declaration indicating the location of the class within the project structure
 package use_case.edit_note;
 
-// Import statements for classes from different packages
+// Import statements for handling IOException and other classes/interfaces
 import entity.Note.Note;
+import entity.Note.NoteFactory;
+import use_case.create_note.CreateNoteDataAccessInterface;
+import use_case.edit_note.EditNoteDataAccessInterface;
+import use_case.edit_note.EditNoteOutputBoundary;
+import use_case.edit_note.EditNoteOutputData;
 
-// Import statement for handling IOException
 import java.io.IOException;
 
-// Definition of the EditNoteInteractor class implementing the EditNoteInputBoundary interface
+// Definition of the SaveNoteInteractor class implementing SaveNoteInputBoundary interface
 public class EditNoteInteractor implements EditNoteInputBoundary {
 
-    // Instance variables to hold references to the data access interface and output boundary presenter
-    final EditNoteDataAccessInterface editNoteDataAccessInterface;
-    final EditNoteOutputBoundary editNotePresenter;
+    // Private instance variables for dependencies
+    private final EditNoteDataAccessInterface noteDataAccessObject;
+    private final EditNoteOutputBoundary editNotePresenter;
 
-    // Constructor for the EditNoteInteractor class, taking two parameters
-    public EditNoteInteractor(EditNoteDataAccessInterface editNoteDataAccessInterface,
+    // Constructor for initializing the SaveNoteInteractor object with dependencies
+    public EditNoteInteractor(EditNoteDataAccessInterface noteDataAccessObject,
                               EditNoteOutputBoundary editNotePresenter) {
-        // Assign the provided references to the corresponding instance variables
-        this.editNoteDataAccessInterface = editNoteDataAccessInterface;
+        this.noteDataAccessObject = noteDataAccessObject;
         this.editNotePresenter = editNotePresenter;
     }
 
-    // Implementation of the execute method defined in the EditNoteInputBoundary interface
     @Override
-    public void execute() throws IOException {
-        // Implementation details for the execute method can be added here
+    public void execute(EditNoteInputData editNoteInputData) throws IOException {
+        int noteID = editNoteInputData.getNoteID();
+        String noteText = editNoteInputData.getNoteText();
+        String noteTitle = editNoteInputData.getNoteTitle();
+
+        if (noteDataAccessObject.existsByID(noteID)) {
+            noteDataAccessObject.updateNote(noteID, noteText, noteTitle);
+
+            EditNoteOutputData editNoteOutputData = new EditNoteOutputData(noteID, noteTitle, noteText);
+            editNotePresenter.prepareNote(editNoteOutputData);
+        }
     }
 }

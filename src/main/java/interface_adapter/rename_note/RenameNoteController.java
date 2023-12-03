@@ -1,10 +1,10 @@
 // Package declaration
-package interface_adapter.edit_note;
+package interface_adapter.rename_note;
 
 // Import statements for various classes and interfaces
+import use_case.edit_note.EditNoteInputData;
 import use_case.rename_note.RenameNoteInputBoundary;
 import use_case.rename_note.RenameNoteInputData;
-import use_case.save_note.SaveNoteInputData;
 
 import java.io.IOException;
 
@@ -21,8 +21,8 @@ public class RenameNoteController {
     // Method to execute renaming of a note
     public void execute(int noteID, String noteTitle, String noteText) throws IOException {
         // Create SaveNoteInputData using provided parameters
-        SaveNoteInputData saveNoteInputData = new SaveNoteInputData(noteTitle, noteText, noteID);
+        EditNoteInputData editNoteInputData = new EditNoteInputData(noteTitle, noteText, noteID);
         // Execute the rename operation using RenameNoteInputBoundary
-        renameInteractor.execute(saveNoteInputData);
+        renameInteractor.execute(editNoteInputData);
     }
 }

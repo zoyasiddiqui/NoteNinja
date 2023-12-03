@@ -3,6 +3,7 @@ package use_case.delete_note;
 
 // Import statements for classes from different packages
 import entity.Note.Note;
+import use_case.back_menu.BackMenuOutputBoundary;
 import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.edit_note.EditNoteOutputBoundary;
 
@@ -14,14 +15,14 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
 
     // Instance variables to hold references to the data access interface and output boundary presenter
     private final DeleteNoteDataAccessInterface deleteNoteDataAccessInterface;
-    private final EditNoteOutputBoundary editNotePresenter;
+    private final BackMenuOutputBoundary backMenuPresenter;
 
     // Constructor for the DeleteNoteInteractor class, taking two parameters
-    public DeleteNoteInteractor(EditNoteOutputBoundary editNotePresenter,
+    public DeleteNoteInteractor(BackMenuOutputBoundary backMenuPresenter,
                                 DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
         // Assign the provided references to the corresponding instance variables
         this.deleteNoteDataAccessInterface = deleteNoteDataAccessInterface;
-        this.editNotePresenter = editNotePresenter;
+        this.backMenuPresenter = backMenuPresenter;
     }
 
     // Implementation of the execute method defined in the DeleteNoteInputBoundary interface
@@ -30,14 +31,13 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
 
         // Note here that we cast deleteNoteDataAccessInterface to EditNoteDataAccessInterface because
         // it is one EditNoteDataAccessObject which implements several interfaces.
-        Note note = ((EditNoteDataAccessInterface) deleteNoteDataAccessInterface).getNoteById(noteId - 1);
-        System.out.println("Looking for " + noteId + " and found " + note.getID());
+        Note note = ((EditNoteDataAccessInterface) deleteNoteDataAccessInterface).getNoteById(noteId);
 
         // Call the delete method from the data access object
         deleteNoteDataAccessInterface.delete(note);
 
         // You may want to notify the presenter or handle the result in some way
         // For example:
-        editNotePresenter.prepareBackMenu(); // Assuming you have a method like this in your presenter
+        backMenuPresenter.prepareBackMenu(); // Assuming you have a method like this in your presenter
     }
 }

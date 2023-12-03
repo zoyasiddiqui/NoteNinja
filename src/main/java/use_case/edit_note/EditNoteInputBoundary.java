@@ -10,5 +10,5 @@ public interface EditNoteInputBoundary {
     // Declaration of the execute method without implementation details
     // This method is expected to be implemented by classes that implement this interface
     // It may throw IOException
-    void execute() throws IOException;
+    void execute(EditNoteInputData editNoteInputData) throws IOException;
 }

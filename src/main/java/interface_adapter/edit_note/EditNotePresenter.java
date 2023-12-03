@@ -38,19 +38,4 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
-    // Method to prepare the title change view
-    @Override
-    public void prepareTitleChange(RenameNoteOutputData title) {
-        EditNoteState noteState = editNoteViewModel.getState();
-        noteState.setNoteTitle(title.getTitle());
-        this.editNoteViewModel.setState(noteState);
-        this.editNoteViewModel.firePropertyChanged();
-    }
-
-    // Method to prepare the back to menu view
-    @Override
-    public void prepareBackMenu() {
-        viewManagerModel.setActiveView(searchNoteViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
 }
