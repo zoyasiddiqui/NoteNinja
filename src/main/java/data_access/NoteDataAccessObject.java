@@ -6,28 +6,18 @@ import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.edit_note.EditNoteDataAccessInterface;
 import use_case.search_notes.SearchNotesAccessInterface;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
-
-// TODO: we currently rely on the root/notes folder already having been created by the user.
-// TODO: make it so that we first check if the folder exists and if it does not, the code creates one
-// TODO: this way our program will not rely on users having properly instantiated the folders by themselves
-// TODO: if u guys (zoro) dont have time, then ill just do it myself (dandelion)
 
 public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
 
     private static final Map<Note, File> allNotes = new HashMap<>();
     private static Note currentNote;
-    private int tempNoteCount; // delete this after implementing getNoteCount() and incrementNoteCount()
 
     @Override
     public void create(Note note) throws IOException {
-        tempNoteCount++;
-//        this.incrementNoteCount(); // implement this!!
+        this.incrementNoteCount(); // implement this!!
 
         // setting the ID of note most recently accessed
         int noteNumber = note.getID();
@@ -43,16 +33,51 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
 
     @Override
     public int getNoteCount() {
-        // TODO: create a file in notes, notes/data.csv, which holds the number of notes created as an integer value
-        // TODO: the data.csv file will only contain 1 integer entry, representing the NoteCount
-        // TODO: if the file does not exist (it wont for first time), create it and set the integer value to 0, then return this 0 value
-        // TODO: if the file already exists, read the value from it and return it
-        return tempNoteCount; // temporary attribute value for one-run testing. we lose this value after stopping program; hence the entire reason we must add a data.csv file for persistence
+        String dataPath = "notes/data.csv";
+        File file = new File(dataPath); // create File object for the specified path
+        file.getParentFile().mkdirs(); // create parent directories if they don't exist
+
+        // create data.csv file if it doesn't exist
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+
+                // write "0" into the first line of data.csv when we create it for the first time
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataPath))) {
+                    writer.write("0");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String noteCount = null;
+        try (BufferedReader br = new BufferedReader(new FileReader(dataPath))) {
+            noteCount = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assert noteCount != null;
+        return Integer.parseInt(noteCount); // temporary attribute value for one-run testing. we lose this value after stopping program; hence the entire reason we must add a data.csv file for persistence
+
     }
 
     @Override
     public void incrementNoteCount() {
-        // TODO: see above todos. call getNoteCount() and add 1 to it then write the incremented value to the data.csv
+        String noteCount = String.valueOf(this.getNoteCount() + 1);
+        String dataPath = "notes/data.csv";
+        File file = new File(dataPath); // create File object for the specified path
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataPath))) {
+            writer.write(noteCount);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -117,7 +142,6 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         }
         else {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileToEdit));
-            System.out.println(noteText);
             writer.write(noteText);
             writer.newLine();
             writer.close();
