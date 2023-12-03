@@ -6,18 +6,23 @@ import entity.Note.CommonNoteFactory;
 import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteController;
-import interface_adapter.create_note.CreateNoteViewModel;
+import interface_adapter.search_notes.SearchViewModel;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
+import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.search_notes.SearchController;
-import interface_adapter.search_notes.SearchViewModel;
+import interface_adapter.search_notes.SearchPresenter;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.create_note.CreateNoteInputBoundary;
 import use_case.create_note.CreateNoteInteractor;
-import use_case.edit_note.EditNoteOutputBoundary;
+import use_case.retrieve_usecase.RetrieveInputBoundary;
+import use_case.retrieve_usecase.RetrieveInteractor;
 import use_case.search_notes.SearchInteractor;
 import use_case.search_notes.SearchNotesAccessInterface;
+import use_case.search_notes.SearchOutputBoundary;
 import view.HomeView;
+
+import java.io.IOException;
 
 // Class declaration
 public class HomeViewUseCaseFactory {
@@ -27,65 +32,60 @@ public class HomeViewUseCaseFactory {
 
     // Factory method to create a HomeView
     public static HomeView create(ViewManagerModel viewManagerModel,
-                                  CreateNoteViewModel createNoteViewModel,
                                   EditNoteViewModel editNoteViewModel,
                                   SearchViewModel searchViewModel,
-                                  CreateNoteDataAccessInterface noteDataAccessObject,
-                                  SearchNotesAccessInterface searchNotesAccessInterface) {
+                                  CreateNoteDataAccessInterface noteDataAccessObject) throws IOException {
 
         // Create a NoteFactory for creating notes
         NoteFactory noteFactory = new CommonNoteFactory();
 
+        SearchOutputBoundary searchNotePresenter = createSearchNotePresenter(
+                searchViewModel,
+                editNoteViewModel,
+                viewManagerModel);
+
         // Create controllers for creating and searching notes
-        CreateNoteController createNoteController = createCreateNoteController(createNoteViewModel,
-                editNoteViewModel, viewManagerModel, searchViewModel, noteDataAccessObject, noteFactory);
-        SearchController searchController = createSearchController(createNoteViewModel, editNoteViewModel,
-                searchViewModel, viewManagerModel, searchNotesAccessInterface);
+        CreateNoteController createNoteController = createCreateNoteController(searchNotePresenter, noteDataAccessObject, noteFactory);
+        SearchController searchController = createSearchController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
+        RetrieveController retrieveController = createRetrieveController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
 
         // Return an instance of HomeView with the created controllers
-        return new HomeView(createNoteViewModel, createNoteController, searchController);
+        return new HomeView(searchViewModel, createNoteController, searchController, retrieveController);
     }
 
-    // Helper method to create an EditNotePresenter
-    private static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
-                                                             EditNoteViewModel editNoteViewModel,
-                                                             ViewManagerModel viewManagerModel) {
-        return new EditNotePresenter(createNoteViewModel, editNoteViewModel, viewManagerModel);
+    private static SearchOutputBoundary createSearchNotePresenter(SearchViewModel searchViewModel,
+                                                                  EditNoteViewModel editNoteViewModel,
+                                                                  ViewManagerModel viewManagerModel) {
+        return new SearchPresenter(searchViewModel, editNoteViewModel, viewManagerModel);
     }
+
+    private static RetrieveController createRetrieveController(SearchOutputBoundary searchNotePresenter,
+                                                               SearchNotesAccessInterface searchNotesAccessInterface) {
+        RetrieveInputBoundary retrieveInteractor = new RetrieveInteractor(searchNotePresenter, searchNotesAccessInterface);
+        return new RetrieveController(retrieveInteractor);
+    }
+
 
     // Helper method to create a CreateNoteController
-    private static CreateNoteController createCreateNoteController(CreateNoteViewModel createNoteViewModel,
-                                                                   EditNoteViewModel editNoteViewModel,
-                                                                   ViewManagerModel viewManagerModel,
-                                                                   SearchViewModel searchViewModel,
+    private static CreateNoteController createCreateNoteController(SearchOutputBoundary searchNotePresenter,
                                                                    CreateNoteDataAccessInterface noteDataAccessObject,
                                                                    NoteFactory noteFactory) {
         // To create a controller, we need an interactor.
         // To create an interactor, we need a presenter.
-
-        // Create an EditNoteOutputBoundary using a helper method
-        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel, editNoteViewModel,
-                viewManagerModel);
-
         // Create a CreateNoteInteractor with the necessary dependencies
-        CreateNoteInputBoundary createNoteInteractor = new CreateNoteInteractor(noteFactory, noteDataAccessObject, editNotePresenter);
+        CreateNoteInputBoundary createNoteInteractor = new CreateNoteInteractor(noteFactory, noteDataAccessObject, searchNotePresenter);
 
         // Return a new CreateNoteController with the created interactor
         return new CreateNoteController(createNoteInteractor);
     }
 
     // Helper method to create a SearchController
-    private static SearchController createSearchController(CreateNoteViewModel createNoteViewModel,
-                                                           EditNoteViewModel editNoteViewModel,
-                                                           SearchViewModel searchViewModel,
-                                                           ViewManagerModel viewManagerModel,
+    private static SearchController createSearchController(SearchOutputBoundary searchNotePresenter,
                                                            SearchNotesAccessInterface searchNotesAccessInterface) {
-        // Create an EditNoteOutputBoundary using a helper method
-        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel,
-                editNoteViewModel, viewManagerModel);
+        // Create an SearchOutputBoundary using a helper method
 
         // Create a SearchInteractor with the necessary dependencies
-        SearchInteractor searchInteractor = new SearchInteractor(searchNotesAccessInterface, editNotePresenter);
+        SearchInteractor searchInteractor = new SearchInteractor(searchNotesAccessInterface, searchNotePresenter);
 
         // Return a new SearchController with the created interactor
         return new SearchController(searchInteractor);
