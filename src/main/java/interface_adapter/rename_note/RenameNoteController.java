@@ -11,7 +11,7 @@ import java.io.IOException;
 // Class declaration for RenameNoteController
 public class RenameNoteController {
     // Instance variable for RenameNoteInputBoundary
-    final RenameNoteInputBoundary renameInteractor;
+    public final RenameNoteInputBoundary renameInteractor;
 
     // Constructor for RenameNoteController
     public RenameNoteController (RenameNoteInputBoundary renameInteractor) {

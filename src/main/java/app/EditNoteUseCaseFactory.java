@@ -2,8 +2,6 @@
 package app;
 
 // Import statements for various classes and interfaces
-import entity.Note.CommonNoteFactory;
-import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.back_menu.BackMenuPresenter;
@@ -35,7 +33,6 @@ import use_case.rename_note.RenameNoteInteractor;
 import use_case.rename_note.RenameNoteOutputBoundary;
 import view.EditNoteView;
 
-import javax.swing.text.View;
 
 // Class declaration
 public class EditNoteUseCaseFactory {
