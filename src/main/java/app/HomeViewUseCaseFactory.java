@@ -57,6 +57,7 @@ public class HomeViewUseCaseFactory {
                                                                   EditNoteViewModel editNoteViewModel,
                                                                   ViewManagerModel viewManagerModel) {
         return new SearchPresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+
     }
 
     private static RetrieveController createRetrieveController(SearchOutputBoundary searchNotePresenter,
