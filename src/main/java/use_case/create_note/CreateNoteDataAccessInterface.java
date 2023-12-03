@@ -19,4 +19,6 @@ public interface CreateNoteDataAccessInterface {
     // This method is expected to be implemented by classes that implement this interface
     // It returns an integer representing the count of notes
     int getNoteCount();
+
+    void setNoteCount(int count);
 }

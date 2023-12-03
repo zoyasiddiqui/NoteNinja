@@ -29,9 +29,4 @@ public interface EditNoteDataAccessInterface {
     // Set the current text
     void setCurrentText(String text);
 
-    // Get the total count of Notes
-    int getNoteCount();
-
-    // Increment the count of Notes
-    void incrementNoteCount();
 }
