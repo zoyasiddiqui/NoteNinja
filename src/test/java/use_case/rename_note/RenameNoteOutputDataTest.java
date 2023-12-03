@@ -1,0 +1,7 @@
+package use_case.rename_note;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class RenameNoteOutputDataTest {
+
+}
