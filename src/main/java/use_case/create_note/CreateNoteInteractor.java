@@ -5,7 +5,7 @@ package use_case.create_note;
 import entity.Note.Note;
 import entity.Note.NoteFactory;
 import interface_adapter.edit_note.EditNoteState;
-import use_case.edit_note.EditNoteOutputBoundary;
+import use_case.search_notes.SearchOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 
 // Import statement for handling IOException
@@ -17,14 +17,14 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary {
     // Instance variables to hold references to the note factory, data access object, and output boundary presenter
     final NoteFactory noteFactory;
     final CreateNoteDataAccessInterface noteDataAccessObject;
-    final EditNoteOutputBoundary editNotePresenter;
+    final SearchOutputBoundary searchNotePresenter;
 
     // Constructor for the CreateNoteInteractor class, taking three parameters
-    public CreateNoteInteractor(NoteFactory noteFactory, CreateNoteDataAccessInterface noteDataAccessObject, EditNoteOutputBoundary editNotePresenter) {
+    public CreateNoteInteractor(NoteFactory noteFactory, CreateNoteDataAccessInterface noteDataAccessObject, SearchOutputBoundary searchNotePresenter) {
         // Assign the provided references to the corresponding instance variables
         this.noteFactory = noteFactory;
         this.noteDataAccessObject = noteDataAccessObject;
-        this.editNotePresenter = editNotePresenter;
+        this.searchNotePresenter = searchNotePresenter;
     }
 
     // Implementation of the execute method defined in the CreateNoteInputBoundary interface
@@ -45,6 +45,6 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary {
 
         // Prepare output data and notify the presenter
         EditNoteOutputData editNoteOutputData = new EditNoteOutputData(noteID, noteTitle, noteText);
-        editNotePresenter.prepareNote(editNoteOutputData);
+        searchNotePresenter.prepareNewNote(editNoteOutputData);
     }
 }
