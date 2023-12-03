@@ -13,7 +13,4 @@ public interface EditNoteOutputBoundary {
     // Prepare for displaying note content
     void prepareNote(EditNoteOutputData note);
 
-    // Prepare for displaying title change
-    void prepareTitleChange(RenameNoteOutputData title);
-
 }

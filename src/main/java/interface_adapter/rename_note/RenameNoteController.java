@@ -1,5 +1,5 @@
 // Package declaration
-package interface_adapter.edit_note;
+package interface_adapter.rename_note;
 
 // Import statements for various classes and interfaces
 import use_case.rename_note.RenameNoteInputBoundary;
