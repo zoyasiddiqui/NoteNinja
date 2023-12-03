@@ -52,7 +52,7 @@ public class CreateCodeSnippetInteractor implements CreateCodeSnippetInputBounda
     }
 
     // Helper method to calculate the appropriate newline characters to add based on existing text
-    private String calculateNewText(String currentText) {
+    String calculateNewText(String currentText) {
         String newText = "\n\n";
         int length = currentText.length();
 
