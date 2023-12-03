@@ -1,5 +1,5 @@
 // Package declaration
-package interface_adapter.save_note;
+package interface_adapter.edit_note;
 
 // Import statements for various classes and interfaces
 import use_case.save_note.SaveNoteInputBoundary;
@@ -9,12 +9,12 @@ import use_case.save_note.SaveNoteInteractor;
 import java.io.IOException;
 
 // Class declaration for SaveController
-public class SaveController {
+public class EditController {
     // Instance variable for SaveNoteInputBoundary
     final SaveNoteInputBoundary saveNoteInteractor;
 
     // Constructor for SaveController
-    public SaveController(SaveNoteInteractor saveNoteInteractor) {
+    public EditController(SaveNoteInteractor saveNoteInteractor) {
         this.saveNoteInteractor = saveNoteInteractor;
     }
 

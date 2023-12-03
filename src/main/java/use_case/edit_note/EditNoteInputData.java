@@ -1,17 +1,15 @@
 // Package declaration indicating the location of the class within the project structure
-package use_case.save_note;
+package use_case.edit_note;
 
 // Definition of the SaveNoteInputData class
-public class SaveNoteInputData {
+public class EditNoteInputData {
 
     // Private instance variables to store note title, note text, and note ID
     final private String noteTitle;
     final private String noteText;
     final private int noteID;
 
-    // Constructor for initializing the SaveNoteInputData object with a note title, note text, and note ID
-    // TODO: figure out how we identify notes in our API database and construct the InputData with the proper ID
-    public SaveNoteInputData(String noteTitle, String noteText, int noteID) {
+    public EditNoteInputData(String noteTitle, String noteText, int noteID) {
         this.noteID = noteID;
         this.noteText = noteText;
         this.noteTitle = noteTitle;

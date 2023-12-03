@@ -6,9 +6,10 @@ import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
 import interface_adapter.delete_note.DeleteNoteController;
+import interface_adapter.edit_note.EditController;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
-import interface_adapter.edit_note.RenameNoteController;
+import interface_adapter.rename_note.RenameNoteController;
 import interface_adapter.save_note.SaveController;
 
 import javax.swing.*;
@@ -29,7 +30,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     // Instance variables for controllers, models, and UI elements
     private final EditNoteViewModel editViewModel;
     private final RenameNoteController renameNoteController;
-    private final SaveController saveNoteController;
+    private final EditController editController;
     private final BackMenuController backMenuController;
     private final CreateAISnippetController createAISnippetController;
     private final DeleteNoteController deleteNoteController;
@@ -47,14 +48,14 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
     // Constructor for EditNoteView
     public EditNoteView(EditNoteViewModel editViewModel,
                         RenameNoteController renameNoteController,
-                        SaveController saveNoteController,
+                        EditController editController,
                         BackMenuController backMenuController,
                         DeleteNoteController deleteNoteController,
                         CreateAISnippetController createAISnippetController,
                         CreateCodeSnippetController createCodeSnippetController) {
         // Initialization of instance variables
         this.editViewModel = editViewModel;
-        this.saveNoteController = saveNoteController;
+        this.editController = editController;
         this.deleteNoteController = deleteNoteController;
         this.createAISnippetController = createAISnippetController;
         this.createCodeSnippetController = createCodeSnippetController;
@@ -99,7 +100,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                         if (e.getSource().equals(saveNote)) {
                             EditNoteState editNoteState = editViewModel.getState();
                             try {
-                                EditNoteView.this.saveNoteController.execute(editNoteState.getNoteTitle(),
+                                EditNoteView.this.editController.execute(editNoteState.getNoteTitle(),
                                         editNoteState.getNoteText(),
                                         editNoteState.getNoteID());
                             } catch (IOException ex) {

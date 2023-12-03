@@ -1,5 +1,5 @@
 // Package declaration indicating the location of the class within the project structure
-package use_case.save_note;
+package use_case.edit_note;
 
 // Import statements for handling IOException and other classes/interfaces
 import entity.Note.Note;
@@ -12,7 +12,7 @@ import use_case.edit_note.EditNoteOutputData;
 import java.io.IOException;
 
 // Definition of the SaveNoteInteractor class implementing SaveNoteInputBoundary interface
-public class SaveNoteInteractor implements SaveNoteInputBoundary {
+public class EditNoteInteractor implements EditNoteInputBoundary {
 
     // Private instance variables for dependencies
     private final EditNoteDataAccessInterface noteDataAccessObject;
@@ -20,7 +20,7 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary {
     private final EditNoteOutputBoundary editNotePresenter;
 
     // Constructor for initializing the SaveNoteInteractor object with dependencies
-    public SaveNoteInteractor(EditNoteDataAccessInterface noteDataAccessObject,
+    public EditNoteInteractor(EditNoteDataAccessInterface noteDataAccessObject,
                               NoteFactory noteFactory,
                               EditNoteOutputBoundary editNotePresenter) {
         this.noteDataAccessObject = noteDataAccessObject;
@@ -28,26 +28,17 @@ public class SaveNoteInteractor implements SaveNoteInputBoundary {
         this.editNotePresenter = editNotePresenter;
     }
 
-    // Implementation of the execute method from the SaveNoteInputBoundary interface
     @Override
-    public void execute(SaveNoteInputData saveNoteInputData) throws IOException {
-        int noteID = saveNoteInputData.getNoteID();
+    public void execute(EditNoteInputData editNoteInputData) throws IOException {
+        int noteID = editNoteInputData.getNoteID();
+        String noteText = editNoteInputData.getNoteText();
+        String noteTitle = editNoteInputData.getNoteTitle();
 
-        // Create a note entity using the InputData if the note does not exist
-        String noteText = saveNoteInputData.getNoteText();
-        String noteTitle = saveNoteInputData.getNoteTitle();
-
-        if (noteDataAccessObject.existsByID(noteID)) { // Note already exists
-
+        if (noteDataAccessObject.existsByID(noteID)) {
             noteDataAccessObject.updateNote(noteID, noteText, noteTitle);
 
-            // Prepare the output data and notify the presenter
             EditNoteOutputData editNoteOutputData = new EditNoteOutputData(noteID, noteTitle, noteText);
             editNotePresenter.prepareNote(editNoteOutputData);
-        } else {
-            // Create a new note using the factory and save it through the CreateNoteDataAccessInterface
-            Note note = noteFactory.create(noteTitle, noteText, noteID);
-            ((CreateNoteDataAccessInterface) noteDataAccessObject).create(note);
         }
     }
 }
