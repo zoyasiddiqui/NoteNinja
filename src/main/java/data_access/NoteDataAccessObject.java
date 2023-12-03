@@ -1,6 +1,8 @@
 package data_access;
 
+import entity.Note.CommonNoteFactory;
 import entity.Note.Note;
+import entity.Note.NoteFactory;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.edit_note.EditNoteDataAccessInterface;
@@ -15,20 +17,100 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
     private static final Map<Note, File> allNotes = new HashMap<>();
     private static Note currentNote;
 
+    public NoteDataAccessObject() {
+
+        //setup allNotes using the file we have, if necessary
+        String filePath = "notes/allNotes.csv";
+        File file = new File(filePath);
+
+        if (file.exists()) {
+
+            try {
+                BufferedReader r = new BufferedReader(new FileReader(filePath));
+
+                String l;
+                String text = "";
+                while ((l = r.readLine()) != null) {
+
+                    String[] split = l.split(":");
+                    String noteName = split[1];
+                    Integer noteID = Integer.parseInt(split[2]);
+                    BufferedReader r2 = new BufferedReader(new FileReader(split[0]));
+
+                    String a;
+                    while ((a = r2.readLine()) != null) {
+                        text += a;
+                    }
+
+                    NoteFactory noteFactory = new CommonNoteFactory();
+                    Note note = noteFactory.create(noteName, text, noteID);
+
+                    allNotes.put(note, new File(split[0]));
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        System.out.println("All Notes:\n");
+        System.out.println(allNotes.keySet());
+        System.out.println(allNotes.values());
+
+    }
+
     @Override
     public void create(Note note) throws IOException {
-        this.incrementNoteCount(); // implement this!!
+        this.setNoteCount(this.getNoteCount() + 1); // increases the note count by 1
 
         // setting the ID of note most recently accessed
         int noteNumber = note.getID();
 
-        File noteFile = new File("notes/note"+ noteNumber +".csv");
-
         // updating variables so we can more easily edit the note
         currentNote = note;
+
+        File noteFile = new File("notes/note"+ noteNumber +".csv");
         allNotes.put(note, noteFile);
 
+        //updating the note in the csv file
         this.updateNote(note.getID(), note.getText(), note.getName());
+        this.updateAllNotesFile();
+
+    }
+
+    /*
+    This method updates the file holding the information about all of the notes
+     */
+    private void updateAllNotesFile() {
+        String allNotesPath = "notes/allNotes.csv";
+        File allNotesFile = new File(allNotesPath);
+
+        if (!allNotesFile.exists()) {
+            try{
+                allNotesFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            Set<Note> noteSet = allNotes.keySet();
+            BufferedWriter w = new BufferedWriter(new FileWriter(allNotesFile));
+
+            for (Note n : noteSet) {
+                String notePath = allNotes.get(n).getPath();
+                w.write(notePath + ":" + n.getName() + ":" + n.getID());
+                w.newLine();
+            }
+
+            w.flush();
+            w.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -43,8 +125,9 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
                 file.createNewFile();
 
                 // write "0" into the first line of data.csv when we create it for the first time
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataPath))) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                     writer.write("0");
+                    writer.flush();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -67,17 +150,21 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
     }
 
     @Override
-    public void incrementNoteCount() {
-        String noteCount = String.valueOf(this.getNoteCount() + 1);
+    public void setNoteCount(int count) {
+        String noteCount = String.valueOf(count);
         String dataPath = "notes/data.csv";
-        File file = new File(dataPath); // create File object for the specified path
+        File file = new File(dataPath);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataPath))) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             writer.write(noteCount);
+            writer.flush();
+            writer.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -85,18 +172,23 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
 
         try {
             Set<Note> noteSet = allNotes.keySet();
+            Note toDelete = null;
             for (Note curNote : noteSet) {
                 if (note.getID() == curNote.getID()) {
                     //emptying the file
-                    this.updateNote(note.getID(), "", note.getName());
-
-                    // removing from list of notes
-                    allNotes.remove(curNote);
+                    toDelete = curNote;
                 }
             }
+
+            this.updateNote(note.getID(), "", note.getName());
+            // removing from list of notes
+            allNotes.remove(toDelete);
+
         } catch (NullPointerException e) {
             return;
         }
+
+        this.updateAllNotesFile();
     }
 
     @Override
@@ -144,12 +236,16 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileToEdit));
             writer.write(noteText);
             writer.newLine();
+            writer.flush();
             writer.close();
 
             currentNote.setText(noteText);
             currentNote.setID(noteID);
             currentNote.setName(noteTitle);
         }
+
+        this.updateAllNotesFile();
+
     }
 
     @Override
