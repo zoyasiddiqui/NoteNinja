@@ -8,7 +8,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.back_menu.BackMenuController;
 import interface_adapter.create_AI_snippet.CreateAISnippetController;
 import interface_adapter.create_code_snippet.CreateCodeSnippetController;
-import interface_adapter.create_note.CreateNoteViewModel;
+import interface_adapter.search_notes.SearchViewModel;
 import interface_adapter.delete_note.DeleteNoteController;
 import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
@@ -41,14 +41,13 @@ public class EditNoteUseCaseFactory {
     public static EditNoteView create(
             ViewManagerModel viewManagerModel,
             EditNoteViewModel editNoteViewModel,
-            CreateNoteViewModel createNoteViewModel,
             SearchViewModel searchViewModel,
             EditNoteDataAccessInterface editNoteDataAccessInterface,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
             CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
 
         // Create an EditNoteOutputBoundary using a helper method
-        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel,
+        EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(searchViewModel,
                 editNoteViewModel, viewManagerModel);
 
         // Create various controllers for different use cases
@@ -74,10 +73,11 @@ public class EditNoteUseCaseFactory {
     }
 
     // Helper method to create an EditNotePresenter
-    static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
-                                                     EditNoteViewModel editNoteViewModel,
-                                                     ViewManagerModel viewManagerModel) {
-        return new EditNotePresenter(createNoteViewModel, editNoteViewModel, viewManagerModel);
+    private static EditNotePresenter createEditNotePresenter(SearchViewModel searchViewModel,
+                                                             EditNoteViewModel editNoteViewModel,
+                                                             ViewManagerModel viewManagerModel) {
+        return new EditNotePresenter(searchViewModel, editNoteViewModel, viewManagerModel);
+
     }
 
     // Helper method to create a BackMenuController

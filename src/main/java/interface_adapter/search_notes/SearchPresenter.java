@@ -1,35 +1,53 @@
 package interface_adapter.search_notes;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.create_note.CreateNoteViewModel;
+import interface_adapter.edit_note.EditNoteState;
+import interface_adapter.edit_note.EditNoteViewModel;
+import use_case.edit_note.EditNoteOutputData;
 import use_case.search_notes.SearchOutputBoundary;
 import use_case.search_notes.SearchOutputData;
 
 public class SearchPresenter implements SearchOutputBoundary{
 
-    private final CreateNoteViewModel createNoteViewModel;
+    private final SearchViewModel searchViewModel;
+    private final EditNoteViewModel editNoteViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public SearchPresenter(CreateNoteViewModel createNoteViewModel,
+    public SearchPresenter(SearchViewModel searchViewModel,
+                           EditNoteViewModel editNoteViewModel,
                            ViewManagerModel viewManagerModel) {
-        this.createNoteViewModel = createNoteViewModel;
+        this.searchViewModel = searchViewModel;
+        this.editNoteViewModel = editNoteViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
-    public void prepareSuccessView(SearchOutputData searchOutputData) {
-        SearchState searchState = new SearchState();
-        searchState.setNotes(searchOutputData.getNotes());
+    public void prepareNewNote(EditNoteOutputData editNoteOutputData) {
+        EditNoteState noteState = editNoteViewModel.getState();
+        noteState.setNoteTitle(editNoteOutputData.getNoteTitle());
+        noteState.setNoteText(editNoteOutputData.getNoteText());
+        noteState.setNoteID(editNoteOutputData.getNoteID()); // be careful that createNoteInteractor is the only one that affects this
+        this.editNoteViewModel.setState(noteState);
+        this.editNoteViewModel.firePropertyChanged();
 
-        this.createNoteViewModel.setState(searchState);
-        this.createNoteViewModel.firePropertyChanged();
-
-        viewManagerModel.setActiveView(createNoteViewModel.getViewName());
+        viewManagerModel.setActiveView(editNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String errormessage) {
 
+    }
+
+    @Override
+    public void prepareExistingNote(EditNoteOutputData editNoteOutputData) {
+        EditNoteState noteState = editNoteViewModel.getState();
+        noteState.setNoteText(editNoteOutputData.getNoteText());
+        noteState.setNoteTitle(editNoteOutputData.getNoteTitle());
+        this.editNoteViewModel.setState(noteState);
+        this.editNoteViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(editNoteViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }

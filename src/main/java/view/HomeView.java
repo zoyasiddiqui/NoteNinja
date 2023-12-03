@@ -3,8 +3,11 @@ package view;
 
 // Import statements for various classes and interfaces
 import interface_adapter.create_note.CreateNoteController;
-import interface_adapter.create_note.CreateNoteViewModel;
+import interface_adapter.edit_note.EditNoteViewModel;
+import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.search_notes.SearchController;
+import interface_adapter.search_notes.SearchViewModel;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -13,14 +16,16 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 // Class declaration for HomeView extending JPanel and implementing ActionListener and PropertyChangeListener
 public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
     // Constant for viewName
-    public final String viewName = "create note";
+    public final String viewName = "search notes";
 
     // Instance variables for models, controllers, and UI elements
-    private final CreateNoteViewModel createNoteViewModel;
+    private final SearchViewModel searchViewModel;
     private final CreateNoteController createNoteController;
     private final SearchController searchController;
     private final JButton createNote;
@@ -28,18 +33,32 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
     private final JLabel homeTitle;
     private final JTextField searchBar;
 
-    // Constructor for HomeView
-    public HomeView(CreateNoteViewModel createNoteViewModel,
+    // fsl:
+    private JTextField searchField;
+    private JList<String> optionsList;
+    private java.util.List<String> allOptions;
+    private List<String> filteredOptions;
+
+
+    // don't need EditViewModel right now, but feel free to add it later if we need to addPropertyChangeListener(this)
+    public HomeView(SearchViewModel searchViewModel,
                     CreateNoteController createNoteController,
-                    SearchController searchController) {
+                    SearchController searchController,
+                    RetrieveController retrieveController) throws IOException {
+
         // Initialization of instance variables
-        this.createNoteViewModel = createNoteViewModel;
+        this.searchViewModel = searchViewModel;
         this.createNoteController = createNoteController;
         this.searchController = searchController;
-        createNoteViewModel.addPropertyChangeListener(this);
+        searchViewModel.addPropertyChangeListener(this);
+
+
+        // ==== RETRIEVE LIST OF NOTES ====
+//        TODO: DO THIS USE CASE AHHHHH!!
+//        ArrayList notesList = retrieveController.execute();
+        // ================================
 
         // ==== MAKING BUTTONS/ LABELS ====
-
         // JPanel for buttons
         JPanel buttons = new JPanel();
         buttons.setLayout(null);
@@ -49,7 +68,7 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
         buttons.add(homeTitle);
 
         // Create Note button
-        this.createNote = new JButton(createNoteViewModel.CREATE_BUTTON);
+        this.createNote = new JButton(searchViewModel.CREATE_BUTTON);
         buttons.add(createNote);
 
         // === ADD ACTION LISTENERS ===

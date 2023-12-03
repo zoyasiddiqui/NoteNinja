@@ -3,7 +3,7 @@ package interface_adapter.edit_note;
 
 // Import statements for various classes and interfaces
 import interface_adapter.ViewManagerModel;
-import interface_adapter.create_note.CreateNoteViewModel;
+import interface_adapter.search_notes.SearchViewModel;
 import use_case.edit_note.EditNoteOutputBoundary;
 import use_case.edit_note.EditNoteOutputData;
 import use_case.rename_note.RenameNoteOutputData;
@@ -12,15 +12,15 @@ import use_case.rename_note.RenameNoteOutputData;
 public class EditNotePresenter implements EditNoteOutputBoundary {
 
     // Instance variables for associated ViewModels and ViewManagerModel
-    private final CreateNoteViewModel createNoteViewModel;
+    private final SearchViewModel searchNoteViewModel;
     private final EditNoteViewModel editNoteViewModel;
     private final ViewManagerModel viewManagerModel;
 
     // Constructor for initializing the EditNotePresenter with ViewModels and ViewManagerModel
-    public EditNotePresenter(CreateNoteViewModel createNoteViewModel,
+    public EditNotePresenter(SearchViewModel searchNoteViewModel,
                              EditNoteViewModel editNoteViewModel,
                              ViewManagerModel viewManagerModel) {
-        this.createNoteViewModel = createNoteViewModel;
+        this.searchNoteViewModel = searchNoteViewModel;
         this.editNoteViewModel = editNoteViewModel;
         this.viewManagerModel = viewManagerModel;
     }
@@ -31,7 +31,6 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
         EditNoteState noteState = editNoteViewModel.getState();
         noteState.setNoteTitle(note.getNoteTitle());
         noteState.setNoteText(note.getNoteText());
-        noteState.setNoteID(note.getNoteID()); // be careful that createNote is the only one that affects this
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
 
@@ -51,7 +50,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     // Method to prepare the back to menu view
     @Override
     public void prepareBackMenu() {
-        viewManagerModel.setActiveView(createNoteViewModel.getViewName());
+        viewManagerModel.setActiveView(searchNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }
