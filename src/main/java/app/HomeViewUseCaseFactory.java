@@ -47,19 +47,19 @@ public class HomeViewUseCaseFactory {
     }
 
     // Helper method to create an EditNotePresenter
-    private static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
-                                                             EditNoteViewModel editNoteViewModel,
-                                                             ViewManagerModel viewManagerModel) {
+    static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
+                                                     EditNoteViewModel editNoteViewModel,
+                                                     ViewManagerModel viewManagerModel) {
         return new EditNotePresenter(createNoteViewModel, editNoteViewModel, viewManagerModel);
     }
 
     // Helper method to create a CreateNoteController
-    private static CreateNoteController createCreateNoteController(CreateNoteViewModel createNoteViewModel,
-                                                                   EditNoteViewModel editNoteViewModel,
-                                                                   ViewManagerModel viewManagerModel,
-                                                                   SearchViewModel searchViewModel,
-                                                                   CreateNoteDataAccessInterface noteDataAccessObject,
-                                                                   NoteFactory noteFactory) {
+    static CreateNoteController createCreateNoteController(CreateNoteViewModel createNoteViewModel,
+                                                           EditNoteViewModel editNoteViewModel,
+                                                           ViewManagerModel viewManagerModel,
+                                                           SearchViewModel searchViewModel,
+                                                           CreateNoteDataAccessInterface noteDataAccessObject,
+                                                           NoteFactory noteFactory) {
         // To create a controller, we need an interactor.
         // To create an interactor, we need a presenter.
 
@@ -75,11 +75,11 @@ public class HomeViewUseCaseFactory {
     }
 
     // Helper method to create a SearchController
-    private static SearchController createSearchController(CreateNoteViewModel createNoteViewModel,
-                                                           EditNoteViewModel editNoteViewModel,
-                                                           SearchViewModel searchViewModel,
-                                                           ViewManagerModel viewManagerModel,
-                                                           SearchNotesAccessInterface searchNotesAccessInterface) {
+    static SearchController createSearchController(CreateNoteViewModel createNoteViewModel,
+                                                   EditNoteViewModel editNoteViewModel,
+                                                   SearchViewModel searchViewModel,
+                                                   ViewManagerModel viewManagerModel,
+                                                   SearchNotesAccessInterface searchNotesAccessInterface) {
         // Create an EditNoteOutputBoundary using a helper method
         EditNoteOutputBoundary editNotePresenter = createEditNotePresenter(createNoteViewModel,
                 editNoteViewModel, viewManagerModel);

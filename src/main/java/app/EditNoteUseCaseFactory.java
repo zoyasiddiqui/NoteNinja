@@ -74,21 +74,21 @@ public class EditNoteUseCaseFactory {
     }
 
     // Helper method to create an EditNotePresenter
-    private static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
-                                                             EditNoteViewModel editNoteViewModel,
-                                                             ViewManagerModel viewManagerModel) {
+    static EditNotePresenter createEditNotePresenter(CreateNoteViewModel createNoteViewModel,
+                                                     EditNoteViewModel editNoteViewModel,
+                                                     ViewManagerModel viewManagerModel) {
         return new EditNotePresenter(createNoteViewModel, editNoteViewModel, viewManagerModel);
     }
 
     // Helper method to create a BackMenuController
-    private static BackMenuController createBackMenuUseCase(EditNoteOutputBoundary editNotePresenter) {
+    static BackMenuController createBackMenuUseCase(EditNoteOutputBoundary editNotePresenter) {
         BackMenuInputBoundary backMenuInteractor = new BackMenuInteractor(editNotePresenter);
         return new BackMenuController(backMenuInteractor);
     }
 
     // Helper method to create a DeleteNoteController
-    private static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
+    static DeleteNoteController createDeleteNoteUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                        DeleteNoteDataAccessInterface deleteNoteDataAccessInterface) {
         DeleteNoteInputBoundary deleteNoteInteractor = new DeleteNoteInteractor(editNotePresenter, deleteNoteDataAccessInterface);
         return new DeleteNoteController(deleteNoteInteractor);
     }
@@ -96,15 +96,15 @@ public class EditNoteUseCaseFactory {
     // Helper method to create a RenameNoteController
     // Note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
     // RenameUseCase only updates the note's state and fires the property change in view model
-    private static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                            EditNoteDataAccessInterface editNoteDataAccessInterface) {
+    static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                    EditNoteDataAccessInterface editNoteDataAccessInterface) {
         RenameNoteInputBoundary renameNoteInteractor = new RenameNoteInteractor(editNotePresenter, editNoteDataAccessInterface);
         return new RenameNoteController(renameNoteInteractor);
     }
 
     // Helper method to create a SaveController
-    private static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
-                                                    EditNoteOutputBoundary editNotePresenter) {
+    public static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
+                                                   EditNoteOutputBoundary editNotePresenter) {
 
         // We need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
         NoteFactory noteFactory = new CommonNoteFactory();
@@ -113,16 +113,16 @@ public class EditNoteUseCaseFactory {
     }
 
     // Helper method to create a CreateAISnippetController
-    private static CreateAISnippetController createAISnippetUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                    CreateAISnippetDataAccessInterface createAISnippetDataAccessObject) {
+    static CreateAISnippetController createAISnippetUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                            CreateAISnippetDataAccessInterface createAISnippetDataAccessObject) {
 
         CreateAISnippetInputBoundary createAISnippetInteractor = new CreateAISnippetInteractor(createAISnippetDataAccessObject, editNotePresenter);
         return new CreateAISnippetController(createAISnippetInteractor);
     }
 
     // Helper method to create a CreateCodeSnippetController
-    private static CreateCodeSnippetController createCodeSnippetUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                                        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject) {
+    static CreateCodeSnippetController createCodeSnippetUseCase(EditNoteOutputBoundary editNotePresenter,
+                                                                CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject) {
 
         CreateCodeSnippetInputBoundary createCodeSnippetInteractor = new CreateCodeSnippetInteractor(createCodeSnippetDataAccessObject, editNotePresenter);
         return new CreateCodeSnippetController(createCodeSnippetInteractor);
