@@ -8,18 +8,17 @@ import use_case.edit_note.EditNoteOutputBoundary;
 public class BackMenuInteractor implements BackMenuInputBoundary {
 
     // Instance variable to hold the reference to the EditNoteOutputBoundary presenter
-    final EditNoteOutputBoundary editNotePresenter;
+    final BackMenuOutputBoundary backMenuPresenter;
 
     // Constructor for the BackMenuInteractor class, taking an EditNoteOutputBoundary as a parameter
-    public BackMenuInteractor (EditNoteOutputBoundary editNotePresenter) {
-        // Assign the provided EditNoteOutputBoundary reference to the instance variable
-        this.editNotePresenter = editNotePresenter;
+    public BackMenuInteractor (BackMenuOutputBoundary backMenuPresenter) {
+        this.backMenuPresenter = backMenuPresenter;
     }
 
     // Implementation of the execute method defined in the BackMenuInputBoundary interface
     @Override
     public void execute() {
         // Call the prepareBackMenu method on the EditNoteOutputBoundary presenter
-        editNotePresenter.prepareBackMenu();
+        backMenuPresenter.prepareBackMenu();
     }
 }

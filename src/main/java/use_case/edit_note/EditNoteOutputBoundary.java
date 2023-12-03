@@ -16,6 +16,4 @@ public interface EditNoteOutputBoundary {
     // Prepare for displaying title change
     void prepareTitleChange(RenameNoteOutputData title);
 
-    // Prepare for navigating back to the menu
-    void prepareBackMenu();
 }
