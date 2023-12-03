@@ -6,8 +6,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class SearchViewModel extends ViewModel {
-
+    public final String CREATE_BUTTON = "Create New Note";
     private SearchState state = new SearchState();
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public SearchViewModel() {
         super("search notes");
@@ -20,7 +21,6 @@ public class SearchViewModel extends ViewModel {
     public void setState(SearchState state) {
         this.state = state;
     }
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     @Override
     public void firePropertyChanged() {
