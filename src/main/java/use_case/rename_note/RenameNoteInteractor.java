@@ -15,14 +15,14 @@ import java.io.IOException;
 public class RenameNoteInteractor implements RenameNoteInputBoundary {
 
     // Instance variables to hold references to the output boundary presenter and data access interface
-    final EditNoteOutputBoundary editNotePresenter;
+    final RenameNoteOutputBoundary renameNotePresenter;
     final EditNoteDataAccessInterface editNoteDataAccessObject;
 
     // Constructor for the RenameNoteInteractor class, taking two parameters
-    public RenameNoteInteractor(EditNoteOutputBoundary editNotePresenter,
+    public RenameNoteInteractor(RenameNoteOutputBoundary renameNotePresenter,
                                 EditNoteDataAccessInterface editNoteDataAccessObject) {
         // Assign the provided references to the corresponding instance variables
-        this.editNotePresenter = editNotePresenter;
+        this.renameNotePresenter = renameNotePresenter;
         this.editNoteDataAccessObject = editNoteDataAccessObject;
     }
 
@@ -43,6 +43,6 @@ public class RenameNoteInteractor implements RenameNoteInputBoundary {
         );
 
         // Notify the presenter about the title change
-        editNotePresenter.prepareTitleChange(renameNoteOutputData);
+        renameNotePresenter.prepareNewTitle(renameNoteOutputData);
     }
 }
