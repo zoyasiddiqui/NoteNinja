@@ -2,6 +2,7 @@
 package use_case.search_notes;
 
 import use_case.edit_note.EditNoteOutputData;
+import use_case.retrieve.RetrieveOutputData;
 
 // Definition of the SearchOutputBoundary interface
 public interface SearchOutputBoundary {
@@ -13,4 +14,6 @@ public interface SearchOutputBoundary {
     void prepareFailView(String errorMessage);
 
     void prepareExistingNote(EditNoteOutputData editNoteOutputData);
+
+    void loadOptions(RetrieveOutputData retrieveOutputData);
 }
