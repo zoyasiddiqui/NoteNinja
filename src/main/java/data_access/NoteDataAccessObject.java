@@ -11,8 +11,11 @@ import use_case.search_notes.SearchNotesAccessInterface;
 import java.io.*;
 import java.util.*;
 
-public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
-        EditNoteDataAccessInterface, DeleteNoteDataAccessInterface, SearchNotesAccessInterface {
+public class NoteDataAccessObject implements
+        CreateNoteDataAccessInterface,
+        EditNoteDataAccessInterface,
+        DeleteNoteDataAccessInterface,
+        SearchNotesAccessInterface {
 
     private static final Map<Note, File> allNotes = new HashMap<>();
     private static Note currentNote;
@@ -54,11 +57,6 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
             }
 
         }
-
-        System.out.println("All Notes:\n");
-        System.out.println(allNotes.keySet());
-        System.out.println(allNotes.values());
-
     }
 
     @Override
@@ -181,7 +179,7 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
             }
 
             this.removeNote(note.getID());
-            // removing from list of notes
+//             removing from list of notes
             allNotes.remove(toDelete);
 
         } catch (NullPointerException e) {
@@ -197,13 +195,30 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
         String dataPath = "notes/note" + noteID + ".csv";
         File file = new File(dataPath);
         if (file.exists()) {
-            if (file.delete()) {
-                System.out.println("File deleted successfully.");
-            } else {
-                throw new Exception("Unable to delete the file.");
+            try {
+                if (file.delete()) {
+                    System.out.println("File deleted successfully.");
+                } else {
+                    System.err.println("Unable to delete the file (delete returned false).");
+
+                    // Additional prints for debugging
+                    System.err.println("File path: " + file.getAbsolutePath());
+                    System.err.println("File canRead: " + file.canRead());
+                    System.err.println("File canWrite: " + file.canWrite());
+                    System.err.println("File isFile: " + file.isFile());
+
+                    // Print the stack trace to get more details about the exception
+                    // This will help identify the specific issue preventing the deletion
+                }
+            } catch (SecurityException e) {
+                System.err.println("SecurityException: Unable to delete the file. Check permissions.");
+                e.printStackTrace();
+            } catch (Exception e) {
+                System.err.println("Exception while deleting the file.");
+                e.printStackTrace();
             }
         } else {
-            throw new Exception("File does not exist.");
+            System.err.println("File does not exist.");
         }
     }
 

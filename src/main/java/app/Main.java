@@ -11,7 +11,7 @@ import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import view.EditNoteView;
-import view.SearchVIew;
+import view.SearchView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -49,7 +49,7 @@ public class Main {
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
         // Create HomeView using the factory method
-        SearchVIew searchVIew = HomeViewUseCaseFactory.create(
+        SearchView searchVIew = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 editViewModel,
                 searchViewModel,

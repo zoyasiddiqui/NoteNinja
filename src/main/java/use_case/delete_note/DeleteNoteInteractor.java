@@ -27,17 +27,21 @@ public class DeleteNoteInteractor implements DeleteNoteInputBoundary {
     // Implementation of the execute method defined in the DeleteNoteInputBoundary interface
     @Override
     public void execute(int noteId) throws IOException {
+        System.out.println(noteId);
 
         // Note here that we cast deleteNoteDataAccessInterface to EditNoteDataAccessInterface because
         // it is one EditNoteDataAccessObject which implements several interfaces.
-        Note note = ((EditNoteDataAccessInterface) deleteNoteDataAccessInterface).getNoteById(noteId - 1);
-        System.out.println("Looking for " + noteId + " and found " + note.getID());
+        Note note = ((EditNoteDataAccessInterface) deleteNoteDataAccessInterface).getNoteById(noteId);
 
-        // Call the delete method from the data access object
-        deleteNoteDataAccessInterface.delete(note);
+        if (note == null) {
+            editNotePresenter.prepareBackMenu();
+        } else {
+            System.out.println("Looking for " + noteId + " and found " + note.getID());
 
-        // You may want to notify the presenter or handle the result in some way
-        // For example:
-        editNotePresenter.prepareBackMenu(); // Assuming you have a method like this in your presenter
+            // Call the delete method from the data access object
+            deleteNoteDataAccessInterface.delete(note);
+            editNotePresenter.prepareBackMenu();
+        }
+
     }
 }

@@ -6,7 +6,7 @@ import interface_adapter.search_notes.SearchViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.search_notes.SearchNotesAccessInterface;
-import view.SearchVIew;
+import view.SearchView;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ class HomeViewUseCaseFactoryTest {
         SearchNotesAccessInterface searchNotesAccessInterface = mock(SearchNotesAccessInterface.class, withSettings().extraInterfaces(CreateNoteDataAccessInterface.class));
 
         // Call the method under test
-        SearchVIew searchVIew = HomeViewUseCaseFactory.create(
+        SearchView searchVIew = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 editNoteViewModel,
                 searchViewModel,

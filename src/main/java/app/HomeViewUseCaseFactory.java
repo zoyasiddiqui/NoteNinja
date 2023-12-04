@@ -16,7 +16,7 @@ import use_case.create_note.CreateNoteInteractor;
 import use_case.search_notes.SearchInteractor;
 import use_case.search_notes.SearchNotesAccessInterface;
 import use_case.search_notes.SearchOutputBoundary;
-import view.SearchVIew;
+import view.SearchView;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class HomeViewUseCaseFactory {
     private HomeViewUseCaseFactory() {}
 
     // Factory method to create a HomeView
-    public static SearchVIew create(ViewManagerModel viewManagerModel,
+    public static SearchView create(ViewManagerModel viewManagerModel,
                                     EditNoteViewModel editNoteViewModel,
                                     SearchViewModel searchViewModel,
                                     CreateNoteDataAccessInterface noteDataAccessObject) throws IOException {
@@ -45,7 +45,7 @@ public class HomeViewUseCaseFactory {
         SearchController searchController = createSearchController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
 
         // Return an instance of HomeView with the created controllers
-        return new SearchVIew(searchViewModel, createNoteController, searchController);
+        return new SearchView(searchViewModel, createNoteController, searchController);
     }
 
     private static SearchOutputBoundary createSearchNotePresenter(SearchViewModel searchViewModel,
