@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.search_notes.SearchNotesAccessInterface;
-import view.HomeView;
+import view.SearchVIew;
 
-public class HomeViewUseCaseFactoryTest {
+public class SearchVIewUseCaseFactoryTest {
 
     @Test
     void testCreateEditNotePresenter() {
@@ -93,7 +93,7 @@ public class HomeViewUseCaseFactoryTest {
         SearchNotesAccessInterface searchNotesAccessInterface = Mockito.mock(SearchNotesAccessInterface.class);
 
         // Create an instance of HomeView using the factory method
-        HomeView homeView = HomeViewUseCaseFactory.create(
+        SearchVIew searchVIew = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 createNoteViewModel,
                 editNoteViewModel,
@@ -103,6 +103,6 @@ public class HomeViewUseCaseFactoryTest {
         );
 
         // Assert that the HomeView is not null
-        assertNotNull(homeView);
+        assertNotNull(searchVIew);
     }
 }

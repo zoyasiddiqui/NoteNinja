@@ -7,7 +7,6 @@ import entity.Note.NoteFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteController;
 import interface_adapter.search_notes.SearchViewModel;
-import interface_adapter.edit_note.EditNotePresenter;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.search_notes.SearchController;
@@ -20,7 +19,7 @@ import use_case.retrieve_usecase.RetrieveInteractor;
 import use_case.search_notes.SearchInteractor;
 import use_case.search_notes.SearchNotesAccessInterface;
 import use_case.search_notes.SearchOutputBoundary;
-import view.HomeView;
+import view.SearchVIew;
 
 import java.io.IOException;
 
@@ -31,10 +30,10 @@ public class HomeViewUseCaseFactory {
     private HomeViewUseCaseFactory() {}
 
     // Factory method to create a HomeView
-    public static HomeView create(ViewManagerModel viewManagerModel,
-                                  EditNoteViewModel editNoteViewModel,
-                                  SearchViewModel searchViewModel,
-                                  CreateNoteDataAccessInterface noteDataAccessObject) throws IOException {
+    public static SearchVIew create(ViewManagerModel viewManagerModel,
+                                    EditNoteViewModel editNoteViewModel,
+                                    SearchViewModel searchViewModel,
+                                    CreateNoteDataAccessInterface noteDataAccessObject) throws IOException {
 
         // Create a NoteFactory for creating notes
         NoteFactory noteFactory = new CommonNoteFactory();
@@ -50,7 +49,7 @@ public class HomeViewUseCaseFactory {
         RetrieveController retrieveController = createRetrieveController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
 
         // Return an instance of HomeView with the created controllers
-        return new HomeView(searchViewModel, createNoteController, searchController, retrieveController);
+        return new SearchVIew(searchViewModel, createNoteController, searchController, retrieveController);
     }
 
     private static SearchOutputBoundary createSearchNotePresenter(SearchViewModel searchViewModel,

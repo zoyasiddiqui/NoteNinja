@@ -39,9 +39,6 @@ public class CreateNoteInteractor implements CreateNoteInputBoundary {
         // Get the appropriate noteID to set and set it on the state (not DAO)
         int noteID = noteDataAccessObject.getNoteCount() + 1;
 
-        Note note = noteFactory.create(createNoteInputData.getNoteTitle(), createNoteInputData.getNoteText(), noteID);
-        noteDataAccessObject.create(note);
-
         // Extract data from the input object
         String noteText = createNoteInputData.getNoteText();
         String noteTitle = createNoteInputData.getNoteTitle();

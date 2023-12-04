@@ -3,7 +3,6 @@ package view;
 
 // Import statements for various classes and interfaces
 import interface_adapter.create_note.CreateNoteController;
-import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.search_notes.SearchController;
 import interface_adapter.search_notes.SearchViewModel;
@@ -16,11 +15,10 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 // Class declaration for HomeView extending JPanel and implementing ActionListener and PropertyChangeListener
-public class HomeView extends JPanel implements ActionListener, PropertyChangeListener {
+public class SearchVIew extends JPanel implements ActionListener, PropertyChangeListener {
     // Constant for viewName
     public final String viewName = "search notes";
 
@@ -41,10 +39,10 @@ public class HomeView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     // don't need EditViewModel right now, but feel free to add it later if we need to addPropertyChangeListener(this)
-    public HomeView(SearchViewModel searchViewModel,
-                    CreateNoteController createNoteController,
-                    SearchController searchController,
-                    RetrieveController retrieveController) throws IOException {
+    public SearchVIew(SearchViewModel searchViewModel,
+                      CreateNoteController createNoteController,
+                      SearchController searchController,
+                      RetrieveController retrieveController) throws IOException {
 
         // Initialization of instance variables
         this.searchViewModel = searchViewModel;

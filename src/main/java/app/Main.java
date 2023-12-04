@@ -11,7 +11,7 @@ import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
 import view.EditNoteView;
-import view.HomeView;
+import view.SearchVIew;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -49,14 +49,14 @@ public class Main {
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
         // Create HomeView using the factory method
-        HomeView homeView = HomeViewUseCaseFactory.create(
+        SearchVIew searchVIew = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 editViewModel,
                 searchViewModel,
                 editNoteDataAccessObject);
 
         // Add HomeView to the views panel
-        views.add(homeView, homeView.viewName);
+        views.add(searchVIew, searchVIew.viewName);
 
         // Create EditNoteView using the factory method
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(
@@ -71,7 +71,7 @@ public class Main {
         views.add(noteEditorView, noteEditorView.viewName);
 
         // Set HomeView as the active view
-        viewManagerModel.setActiveView(homeView.viewName);
+        viewManagerModel.setActiveView(searchVIew.viewName);
 
         // Fire property change to update the UI
         viewManagerModel.firePropertyChanged();

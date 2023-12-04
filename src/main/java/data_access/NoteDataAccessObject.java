@@ -180,15 +180,31 @@ public class NoteDataAccessObject implements CreateNoteDataAccessInterface,
                 }
             }
 
-            this.updateNote(note.getID(), "", note.getName());
+            this.removeNote(note.getID());
             // removing from list of notes
             allNotes.remove(toDelete);
 
         } catch (NullPointerException e) {
             return;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         this.updateAllNotesFile();
+    }
+
+    private void removeNote(int noteID) throws Exception {
+        String dataPath = "notes/note" + noteID + ".csv";
+        File file = new File(dataPath);
+        if (file.exists()) {
+            if (file.delete()) {
+                System.out.println("File deleted successfully.");
+            } else {
+                throw new Exception("Unable to delete the file.");
+            }
+        } else {
+            throw new Exception("File does not exist.");
+        }
     }
 
     @Override
