@@ -3,6 +3,7 @@ package view;
 
 // Import statements for various classes and interfaces
 import interface_adapter.create_note.CreateNoteController;
+import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.search_notes.SearchController;
 import interface_adapter.search_notes.SearchViewModel;
 
@@ -25,6 +26,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchViewModel searchViewModel;
     private final CreateNoteController createNoteController;
     private final SearchController searchController;
+    private final RetrieveController retrieveController;
     private final JButton createNote;
     private final JButton searchNotes;
     private final JLabel homeTitle;
@@ -40,18 +42,21 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     // don't need EditViewModel right now, but feel free to add it later if we need to addPropertyChangeListener(this)
     public SearchView(SearchViewModel searchViewModel,
                       CreateNoteController createNoteController,
-                      SearchController searchController) throws IOException {
+                      SearchController searchController,
+                      RetrieveController retrieveController) throws IOException {
 
         // Initialization of instance variables
         this.searchViewModel = searchViewModel;
         this.createNoteController = createNoteController;
         this.searchController = searchController;
+        this.retrieveController = retrieveController;
+
         searchViewModel.addPropertyChangeListener(this);
 
 
         // ==== RETRIEVE LIST OF NOTES ====
 //        TODO: DO THIS USE CASE AHHHHH!!
-//        retrieveController.execute();
+        retrieveController.execute();
         // ================================
 
         // ==== MAKING BUTTONS/ LABELS ====
