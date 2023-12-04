@@ -44,6 +44,7 @@ public class SearchPresenter implements SearchOutputBoundary{
         EditNoteState noteState = editNoteViewModel.getState();
         noteState.setNoteText(editNoteOutputData.getNoteText());
         noteState.setNoteTitle(editNoteOutputData.getNoteTitle());
+        noteState.setNoteID(editNoteOutputData.getNoteID());
         this.editNoteViewModel.setState(noteState);
         this.editNoteViewModel.firePropertyChanged();
 
