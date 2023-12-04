@@ -1,45 +1,76 @@
 package data_access;
 
+import entity.Note.CommonNoteFactory;
+import entity.Note.Note;
+import entity.Note.NoteFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 public class NoteDataAccessObjectTest {
+
+    private NoteDataAccessObject noteDAO;
+
+    @BeforeEach
+    void setUp() {
+        noteDAO = new NoteDataAccessObject();
+    }
+
     @Test
-    public void testParseCode() {
-        // Create an instance of the data access object
-        CreateCodeSnippetDataAccessObject dataAccessObject = new CreateCodeSnippetDataAccessObject();
+    void createNoteAndCheckIfExists() throws IOException {
+        // Given
+        NoteFactory noteFactory = new CommonNoteFactory();
+        Note note = noteFactory.create("Test Note", "This is a test.", 1);
 
-        // Use reflection to access the private method
-        try {
-            String codeWithQuotes = "print(\"Hello, World!\")";
+        // When
+        noteDAO.create(note);
 
-            // Test the parseCode method using reflection
-            String parsedCode = invokePrivateMethod(dataAccessObject, "parseCode", codeWithQuotes);
-
-            // Assert that the parsed code does not contain double quotes
-            assertFalse(parsedCode.contains("\""));
-
-            // You can add more specific assertions based on the expected behavior of parseCode
-        } catch (Exception e) {
-            fail("Exception during test: " + e.getMessage());
-        }
+        // Then
+        assertTrue(noteDAO.existsByID(note.getID()));
     }
 
-    private String invokePrivateMethod(Object object, String methodName, Object... parameters) throws Exception {
-        Class<?>[] parameterTypes = new Class[parameters.length];
-        for (int i = 0; i < parameters.length; i++) {
-            parameterTypes[i] = parameters[i].getClass();
-        }
+    @Test
+    void deleteNoteAndCheckIfNotExists() throws IOException {
+        // Given
+        NoteFactory noteFactory = new CommonNoteFactory();
+        Note note = noteFactory.create("Test Note", "This is a test.", 2);
 
-        Method method = object.getClass().getDeclaredMethod(methodName, parameterTypes);
-        method.setAccessible(true);
+        // When
+        noteDAO.create(note);
+        noteDAO.delete(note);
 
-        return (String) method.invoke(object, parameters);
+        // Then
+        assertFalse(noteDAO.existsByID(note.getID()));
     }
 
-    // You can add more test methods for other functionalities as needed
+    @Test
+    void updateNoteAndCheckIfUpdated() throws IOException {
+        // Given
+        NoteFactory noteFactory = new CommonNoteFactory();
+        Note note = noteFactory.create("Test Note", "This is a test.", 3);
+
+        // When
+        noteDAO.create(note);
+        noteDAO.updateNote(note.getID(), "Updated text.", "Updated Title");
+
+        // Then
+        assertEquals("Updated text.", noteDAO.getNoteById(note.getID()).getText());
+        assertEquals("Updated Title", noteDAO.getNoteById(note.getID()).getName());
+    }
+
+    @Test
+    void searchNoteByTitle() throws IOException {
+        // Given
+        NoteFactory noteFactory = new CommonNoteFactory();
+        Note note = noteFactory.create("Search Test", "This is a search test.", 4);
+
+        // When
+        noteDAO.create(note);
+
+
+    }
+
 }
