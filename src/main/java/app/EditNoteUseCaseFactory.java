@@ -58,17 +58,9 @@ public class EditNoteUseCaseFactory {
 
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
 
-        DeleteNoteController deleteNoteUseCase = null;
-        try {
-            if (editNoteDataAccessObject instanceof DeleteNoteDataAccessInterface) {
-                deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, (DeleteNoteDataAccessInterface) editNoteDataAccessObject);
-            } else {
-                int casein = 1;
-            }
-        } catch (Exception e) {
-            // Handle other exceptions if needed
-            e.printStackTrace();
-        }
+
+        DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, (DeleteNoteDataAccessInterface) editNoteDataAccessObject);
+
 
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(editNotePresenter,
                 createAISnippetDataAccessInterface);
