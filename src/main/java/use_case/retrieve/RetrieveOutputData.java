@@ -7,8 +7,10 @@ import java.util.ArrayList;
 public class RetrieveOutputData {
     private final ArrayList<Note> notes;
     RetrieveOutputData (ArrayList<Note> notes) {
-    // TODO: figure out the parameters
         this.notes = notes;
+    }
+    public ArrayList<Note> getNotes() {
+        return notes;
     }
 }
 
