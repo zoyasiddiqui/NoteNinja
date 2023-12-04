@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_note.EditNoteState;
 import interface_adapter.edit_note.EditNoteViewModel;
 import use_case.edit_note.EditNoteOutputData;
+import use_case.retrieve.RetrieveOutputData;
 import use_case.search_notes.SearchOutputBoundary;
 import use_case.search_notes.SearchOutputData;
 
@@ -50,5 +51,11 @@ public class SearchPresenter implements SearchOutputBoundary{
 
         viewManagerModel.setActiveView(editNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void loadOptions(RetrieveOutputData retrieveOutputData) {
+        SearchState searchState = searchViewModel.getState();
+        searchState.setNotes(retrieveOutputData.getNotes());
     }
 }
