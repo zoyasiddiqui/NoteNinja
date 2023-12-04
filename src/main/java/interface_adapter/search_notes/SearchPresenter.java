@@ -57,5 +57,6 @@ public class SearchPresenter implements SearchOutputBoundary{
     public void loadOptions(RetrieveOutputData retrieveOutputData) {
         SearchState searchState = searchViewModel.getState();
         searchState.setNotes(retrieveOutputData.getNotes());
+        searchViewModel.setState(searchState);
     }
 }
