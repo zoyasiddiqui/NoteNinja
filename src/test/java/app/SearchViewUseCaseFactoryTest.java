@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.search_notes.SearchNotesAccessInterface;
-import view.SearchVIew;
+import view.SearchView;
 
-public class SearchVIewUseCaseFactoryTest {
+public class SearchViewUseCaseFactoryTest {
 
     @Test
     void testCreateEditNotePresenter() {
@@ -93,7 +93,7 @@ public class SearchVIewUseCaseFactoryTest {
         SearchNotesAccessInterface searchNotesAccessInterface = Mockito.mock(SearchNotesAccessInterface.class);
 
         // Create an instance of HomeView using the factory method
-        SearchVIew searchVIew = HomeViewUseCaseFactory.create(
+        SearchView searchVIew = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 createNoteViewModel,
                 editNoteViewModel,

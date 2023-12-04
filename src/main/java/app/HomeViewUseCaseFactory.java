@@ -45,11 +45,7 @@ public class HomeViewUseCaseFactory {
         SearchController searchController = createSearchController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
 
         // Return an instance of HomeView with the created controllers
-<<<<<<< HEAD
-        return new SearchView(searchViewModel, createNoteController, searchController, retrieveController);
-=======
-        return new SearchVIew(searchViewModel, createNoteController, searchController);
->>>>>>> 691ff37f48fbcb17a44777737fa3eb21b18afc35
+        return new SearchView(searchViewModel, createNoteController, searchController);
     }
 
     private static SearchOutputBoundary createSearchNotePresenter(SearchViewModel searchViewModel,
