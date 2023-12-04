@@ -49,7 +49,7 @@ public class HomeViewUseCaseFactory {
         RetrieveController retrieveController = createRetrieveController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
 
         // Return an instance of HomeView with the created controllers
-        return new SearchView(searchViewModel, createNoteController, searchController);
+        return new SearchView(searchViewModel, createNoteController, searchController, retrieveController);
     }
 
 

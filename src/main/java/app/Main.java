@@ -50,14 +50,14 @@ public class Main {
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessObject = new CreateCodeSnippetDataAccessObject();
 
         // Create HomeView using the factory method
-        SearchView searchVIew = HomeViewUseCaseFactory.create(
+        SearchView searchView = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 editViewModel,
                 searchViewModel,
                 editNoteDataAccessObject);
 
         // Add HomeView to the views panel
-        views.add(searchVIew, searchVIew.viewName);
+        views.add(searchView, searchView.viewName);
 
         // Create EditNoteView using the factory method
         EditNoteView noteEditorView = EditNoteUseCaseFactory.create(
@@ -72,13 +72,14 @@ public class Main {
         views.add(noteEditorView, noteEditorView.viewName);
 
         // Set HomeView as the active view
-        viewManagerModel.setActiveView(searchVIew.viewName);
+        viewManagerModel.setActiveView(searchView.viewName);
 
         // Fire property change to update the UI
         viewManagerModel.firePropertyChanged();
 
         // Start the application maximized
-        application.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        application.setPreferredSize(new Dimension(1000, 600));
+        application.pack();
         application.setVisible(true);
     }
 }

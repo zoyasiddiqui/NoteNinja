@@ -8,5 +8,5 @@ import java.io.IOException;
 public interface SearchInputBoundary {
 
     // Method signature for the execute method, which takes a search string and may throw IOException
-    void execute(String search) throws IOException;
+    void execute(int noteID) throws IOException;
 }

@@ -13,4 +13,6 @@ public interface SearchNotesAccessInterface {
     Note findByTitle(String noteTitle);
 
     ArrayList<Note> getNotes();
+
+    Note findByID(int noteID);
 }

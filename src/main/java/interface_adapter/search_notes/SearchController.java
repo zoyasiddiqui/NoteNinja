@@ -18,8 +18,8 @@ public class SearchController {
     }
 
     // Method to execute search for notes
-    public void execute(String search) throws IOException {
+    public void execute(int noteID) throws IOException {
         // Execute the search operation using SearchInputBoundary
-        this.searchNotesInteractor.execute(search);
+        this.searchNotesInteractor.execute(noteID);
     }
 }

@@ -306,4 +306,17 @@ public class NoteDataAccessObject implements
     public ArrayList<Note> getNotes() {
         return new ArrayList<>(allNotes.keySet());
     }
+
+    @Override
+    public Note findByID(int noteID) {
+        Set<Note> noteSet = allNotes.keySet();
+
+        for (Note n : noteSet) {
+            if (n.getID() == noteID) {
+                return n;
+            }
+        }
+
+        return null;
+    }
 }
