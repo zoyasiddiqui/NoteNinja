@@ -24,9 +24,9 @@ public class SearchInteractor implements SearchInputBoundary {
 
     // Implementation of the execute method from the SearchInputBoundary interface
     @Override
-    public void execute(String search) throws IOException {
+    public void execute(int noteID) throws IOException {
         // Find a Note using the searchNotesAccessInterface
-        Note note = this.searchNotesAccessInterface.findByTitle(search);
+        Note note = searchNotesAccessInterface.findByID(noteID);
 
         // Check if a matching Note is found
         if (note != null) {
