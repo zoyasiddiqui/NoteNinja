@@ -2,6 +2,7 @@ package app;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.withSettings;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_note.EditNoteViewModel;
@@ -21,7 +22,8 @@ class EditNoteUseCaseFactoryTest {
         ViewManagerModel viewManagerModel = mock(ViewManagerModel.class);
         EditNoteViewModel editNoteViewModel = mock(EditNoteViewModel.class);
         SearchViewModel searchViewModel = mock(SearchViewModel.class);
-        EditNoteDataAccessInterface editNoteDataAccessInterface = mock(EditNoteDataAccessInterface.class);
+        EditNoteDataAccessInterface editNoteDataAccessInterface = mock(EditNoteDataAccessInterface.class,
+                withSettings().extraInterfaces(DeleteNoteDataAccessInterface.class));
         CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface = mock(CreateAISnippetDataAccessInterface.class);
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = mock(CreateCodeSnippetDataAccessInterface.class);
 
