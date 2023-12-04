@@ -301,4 +301,9 @@ public class NoteDataAccessObject implements
 
         return null;
     }
+
+    @Override
+    public ArrayList<Note> getNotes() {
+        return new ArrayList<>(allNotes.keySet());
+    }
 }
