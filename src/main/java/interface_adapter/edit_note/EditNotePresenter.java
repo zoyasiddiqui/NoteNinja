@@ -50,6 +50,7 @@ public class EditNotePresenter implements EditNoteOutputBoundary {
     // Method to prepare the back to menu view
     @Override
     public void prepareBackMenu() {
+        searchNoteViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(searchNoteViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
