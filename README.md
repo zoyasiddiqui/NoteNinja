@@ -1,34 +1,75 @@
 # NoteNinja
-A note-taking app with python code snippets and AI helpers.
+A note-taking app for computer science students, with python code snippets and 
+AI-assisted helper.
+
+## Table of Contents:
+*** 
+* Software Overview
+* Entities in the Domain
+* Getting Started
+* Features
+***
 
 ## Software Specifications
-#### _Notes_:
 
-Users should be able to create and edit notes.
+NoteNinja's is a fully functional note-taking app for computer-science students
+(or any developer for that fact). NoteNinja's has the following core features, including
+some bonus features for coders too.
 
-Each note should support runnable code snippets and AI snippets.
-
-The ability to tag notes with dates and categories should be available.
-
-
-#### _User Authentication_:
-
-The application should provide a secure login system to ensure user data privacy.
-
-Registered users should be able to access their own set of notes and preferences.
+***
+* **Runnable AI & Code Snippets**: Users can write simple ```Python-code``` and run it within their
+note-taking environment. An extremely helpful note-taking feature for computer-science 
+students in class. The AI-Snippet feature allows the user to prompt chat-GPT to aid with understanding
+, saving GPTs responses in the note.
 
 
-#### _Runnable Code Snippets and AI Snippets_:
-
-Users should have the capability to insert code snippets directly within their notes.
-
-They should be able to edit and run code and get results.
-
-Users should be able to include a prompt to AI and get the results back, edit them, and include them in their notes
+* **Note-searching**: User's can create as many notes as they need. To aid users with navigating
+of their notes an effective search-bar is provided on the home page (allowing for navigation
+by note title).
 
 
-#### _Search and Retrieval_:
+* **Functional Note-editor**: Along with the bonus code/AI-snippets NoteNinjas includes a fully
+functional text editor style note-taking application to help with standard note-taking needs.
+The note editor allows users to save, name, and delete notes as required.
+***
 
-The app should feature a search function, allowing users to search for notes based on tag or title
+## Entities of the Domain:
 
-Search results should be presented in a clear and organized manner. 
+NoteNinja's is structured around major entities of the domain. The following list out the 
+entities of NoteNinja's and each entities key pieces of data (Instance Variables).
+
+
+### AI Snippet
+***
+* ```String snippetQuestion```: User's AI prompt/question.
+* ```String snippetResponse```: Open AI AI response to prompt.
+***
+
+### Code Snippet
+***
+*  ```String code```: User's ```Python``` code input.
+* ```String output```: Glott api response (Glott takes Python code and gives Python code output).
+***
+
+### Note
+***
+* ```String name```: Title of users note.
+*  ```String text```: Text within the users note.
+* ``` int ID```: ID associated with note, utilized for code search.
+***
+
+# Future Enhancements
+Upcoming updates and enhancements:
+
+***
+* **User-login Authentication System**: Allow for secure registration and log in 
+to allow for note-protection.
+
+* **Tagging/Sorting Notes**: Add tagging and sorting of notes for ease of note navigation.
+
+* **Cloud Back-up System**: Using user-login/information implement cloud back-up to prevent 
+note/data loss prevention.
+***
+
+
+
