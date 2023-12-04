@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 // Class declaration for HomeView extending JPanel and implementing ActionListener and PropertyChangeListener
-public class SearchVIew extends JPanel implements ActionListener, PropertyChangeListener {
+public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
     // Constant for viewName
     public final String viewName = "search notes";
 
@@ -39,7 +39,7 @@ public class SearchVIew extends JPanel implements ActionListener, PropertyChange
 
 
     // don't need EditViewModel right now, but feel free to add it later if we need to addPropertyChangeListener(this)
-    public SearchVIew(SearchViewModel searchViewModel,
+    public SearchView(SearchViewModel searchViewModel,
                       CreateNoteController createNoteController,
                       SearchController searchController,
                       RetrieveController retrieveController) throws IOException {
