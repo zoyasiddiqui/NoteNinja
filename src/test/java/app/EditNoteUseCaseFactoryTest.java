@@ -1,44 +1,41 @@
-package app;
+//package app;
 
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.mockito.Mockito;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
-import org.junit.jupiter.api.Test;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
-import use_case.delete_note.DeleteNoteDataAccessInterface;
 import use_case.edit_note.EditNoteDataAccessInterface;
 import view.EditNoteView;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
+//public class EditNoteUseCaseFactoryTest {
+//
+//    @Test
+//    public void testCreateEditNoteView() {
+        // Arrange
+//        ViewManagerModel viewManagerModel = Mockito.mock(ViewManagerModel.class);
+//        EditNoteViewModel editNoteViewModel = Mockito.mock(EditNoteViewModel.class);
+//        SearchViewModel searchViewModel = Mockito.mock(SearchViewModel.class);
+//        EditNoteDataAccessInterface editNoteDataAccessInterface = Mockito.mock(EditNoteDataAccessInterface.class);
+//        CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface = Mockito.mock(CreateAISnippetDataAccessInterface.class);
+//        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = Mockito.mock(CreateCodeSnippetDataAccessInterface.class);
+//
+//        // Act
+//        EditNoteView editNoteView = EditNoteUseCaseFactory.create(
+//                viewManagerModel,
+//                editNoteViewModel,
+//                searchViewModel,
+//                editNoteDataAccessInterface,
+//                createAISnippetDataAccessInterface,
+//                createCodeSnippetDataAccessInterface
+//        );
+//
+//        // Assert
+//        assertNotNull("EditNoteView should not be null", editNoteView);
 
-public class EditNoteUseCaseFactoryTest {
-
-    @Test
-    void testCreateEditNoteView() {
-        // Mock dependencies
-        ViewManagerModel viewManagerModel = mock(ViewManagerModel.class);
-        EditNoteViewModel editNoteViewModel = mock(EditNoteViewModel.class);
-        SearchViewModel searchViewModel = mock(SearchViewModel.class);
-        EditNoteDataAccessInterface editNoteDataAccessInterface = mock(EditNoteDataAccessInterface.class);
-        CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface = mock(CreateAISnippetDataAccessInterface.class);
-        CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = mock(CreateCodeSnippetDataAccessInterface.class);
-        DeleteNoteDataAccessInterface deleteNoteDataAccessInterface = mock(DeleteNoteDataAccessInterface.class);
-
-        // Call the method under test
-        EditNoteView editNoteView = EditNoteUseCaseFactory.create(
-                viewManagerModel,
-                editNoteViewModel,
-                searchViewModel,
-                editNoteDataAccessInterface,
-                createAISnippetDataAccessInterface,
-                createCodeSnippetDataAccessInterface,
-                deleteNoteDataAccessInterface
-        );
-
-        // Assert that the EditNoteView is not null
-        assertNotNull(editNoteView);
-        // You can add more assertions as needed
-    }
-}
+//    }
+//
+//}

@@ -1,37 +1,41 @@
 package use_case.back_menu;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import use_case.edit_note.EditNoteOutputBoundary;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class BackMenuInteractorTest {
 
     @Test
     void testExecute() {
-        // Mock the BackMenuOutputBoundary presenter
-        BackMenuOutputBoundary backMenuPresenter = Mockito.mock(BackMenuOutputBoundary.class);
+        // Mock the EditNoteOutputBoundary presenter
+        EditNoteOutputBoundary editNotePresenter = mock(EditNoteOutputBoundary.class);
 
         // Create an instance of BackMenuInteractor with the mocked presenter
-        BackMenuInteractor backMenuInteractor = new BackMenuInteractor(backMenuPresenter);
+        BackMenuInteractor backMenuInteractor = new BackMenuInteractor(editNotePresenter);
 
-        // Call the execute method
+        // Call the method under test
         backMenuInteractor.execute();
 
-        // Verify that the prepareBackMenu method on the presenter is called
-        verify(backMenuPresenter, Mockito.times(1)).prepareBackMenu();
+        // Verify that the prepareBackMenu method was called on the editNotePresenter
+        verify(editNotePresenter).prepareBackMenu();
     }
 
     @Test
-    void testConstructor() {
-        // Mock the BackMenuOutputBoundary presenter
-        BackMenuOutputBoundary backMenuPresenter = Mockito.mock(BackMenuOutputBoundary.class);
+    void testExecuteMultipleTimes() {
+        // Mock the EditNoteOutputBoundary presenter
+        EditNoteOutputBoundary editNotePresenter = mock(EditNoteOutputBoundary.class);
 
         // Create an instance of BackMenuInteractor with the mocked presenter
-        BackMenuInteractor backMenuInteractor = new BackMenuInteractor(backMenuPresenter);
+        BackMenuInteractor backMenuInteractor = new BackMenuInteractor(editNotePresenter);
 
-        // Assert that the backMenuPresenter instance variable is set
-        assert backMenuInteractor.backMenuPresenter != null;
-        assert backMenuInteractor.backMenuPresenter.equals(backMenuPresenter);
+        // Call the method under test multiple times
+        backMenuInteractor.execute();
+        backMenuInteractor.execute();
+        backMenuInteractor.execute();
+
+        // Verify that the prepareBackMenu method was called on the editNotePresenter exactly 3 times
+        verify(editNotePresenter, times(3)).prepareBackMenu();
     }
 }

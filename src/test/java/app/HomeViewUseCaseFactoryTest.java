@@ -6,7 +6,7 @@ import interface_adapter.search_notes.SearchViewModel;
 import org.junit.jupiter.api.Test;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.search_notes.SearchNotesAccessInterface;
-import view.HomeView;
+import view.SearchVIew;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
 
-public class HomeViewUseCaseFactoryTest {
+class HomeViewUseCaseFactoryTest {
 
     @Test
     void testCreateHomeView() throws IOException {
@@ -27,7 +27,7 @@ public class HomeViewUseCaseFactoryTest {
         SearchNotesAccessInterface searchNotesAccessInterface = mock(SearchNotesAccessInterface.class, withSettings().extraInterfaces(CreateNoteDataAccessInterface.class));
 
         // Call the method under test
-        HomeView homeView = HomeViewUseCaseFactory.create(
+        SearchVIew searchVIew = HomeViewUseCaseFactory.create(
                 viewManagerModel,
                 editNoteViewModel,
                 searchViewModel,
@@ -35,8 +35,7 @@ public class HomeViewUseCaseFactoryTest {
         );
 
         // Assert that the HomeView is not null
-        assertNotNull(homeView);
+        assertNotNull(searchVIew);
 
-        // Add more assertions as needed
     }
 }
