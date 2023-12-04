@@ -9,12 +9,15 @@ import interface_adapter.search_notes.SearchViewModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.*;
 import java.util.List;
 
 // Class declaration for HomeView extending JPanel and implementing ActionListener and PropertyChangeListener
@@ -28,15 +31,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchController searchController;
     private final RetrieveController retrieveController;
     private final JButton createNote;
-    private final JButton searchNotes;
+//    private final JButton searchNotes;
     private final JLabel homeTitle;
-    private final JTextField searchBar;
 
     // fsl:
     private JTextField searchField;
-    private JList<String> optionsList;
-    private java.util.List<String> allOptions;
-    private List<String> filteredOptions;
+    private JList<OptionItem> optionsList;
+    private List<OptionItem> allOptions;
+    private List<OptionItem> filteredOptions;
+    private Map<Integer, String> idMap;
+    boolean flag;
 
 
     // don't need EditViewModel right now, but feel free to add it later if we need to addPropertyChangeListener(this)
@@ -55,17 +59,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
 
         // ==== RETRIEVE LIST OF NOTES ====
-//        TODO: DO THIS USE CASE AHHHHH!!
-        retrieveController.execute();
+        allOptions = new ArrayList<>();
+        filteredOptions = new ArrayList<>();
+        idMap = new HashMap<>();
+        optionsList = new JList<>();
         // ================================
 
         // ==== MAKING BUTTONS/ LABELS ====
         // JPanel for buttons
+
         JPanel buttons = new JPanel();
         buttons.setLayout(null);
 
         // Main title label
-        this.homeTitle = new JLabel("NoteNinjas");
+        this.homeTitle = new JLabel("NoteNinjas                                                    ");
         buttons.add(homeTitle);
 
         // Create Note button
@@ -90,63 +97,99 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        // Create search bar
-        searchBar = new JTextField("");
-
-        // Set second button (Search)
-        this.searchNotes = new JButton("Search");
-        buttons.add(searchNotes);
-
-        // ActionListener for Search button
-        searchNotes.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        try {
-                            searchBar.requestFocus();
-                            String search = searchBar.getText();
-                            searchController.execute(search);
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                }
-        );
-        // Add this instance as ActionListener for the Search button
-        searchNotes.addActionListener(this);
-
         // Set layout for the main panel
         this.setLayout(new BorderLayout());
 
         // Add components to the main panel
         this.add(homeTitle);
-        this.add(searchBar);
         this.add(buttons);
 
         // Styling for UI elements
 
+        searchField = new JTextField();
+        searchField.setFont(new Font("Arial", Font.PLAIN, 16));
+        flag = true;
+        this.propertyUpdate();
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterOptions();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterOptions();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterOptions();
+            }
+        });
+
+        optionsList = new JList<>(filteredOptions.toArray(new OptionItem[0]));
+        optionsList.setFont(new Font("Arial", Font.PLAIN, 16));
+        optionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        optionsList.setPreferredSize(new Dimension(685, 500));
+
+        JScrollPane scrollPane = new JScrollPane(optionsList);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        setLayout(new GridBagLayout());
+
+        // Create GridBagConstraints for left-aligning components
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.insets = new Insets(10, 10, 10, 10); // Add some padding
+
+        // Add the search field to the left
+        add(searchField, gbc);
+
+        gbc.gridy = 3;
+        // Add the scroll pane to the right
+        add(scrollPane, gbc);
+
+        optionsList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                OptionItem selectedOption = optionsList.getSelectedValue();
+                if (selectedOption != null && selectedOption.getId() != -1) {
+                    int selectedId = selectedOption.getId();
+//                    System.out.println("Selected ID: " + selectedId);
+                    try {
+                        searchController.execute(selectedId);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+
+        searchField.setPreferredSize(new Dimension(700, 40));
+
+        // Initial filter to show all options
+        filterOptions();
+
         // Styling title
-        homeTitle.setBounds(200, 150, 200, 100);
         Font largerFont = homeTitle.getFont().deriveFont(Font.ITALIC, 40);
         homeTitle.setFont(largerFont);
+//        homeTitle.setBounds(200, 150, 200, 100);
 
         // Styling first button (Create Note)
         Font newButtonFont = createNote.getFont().deriveFont(Font.PLAIN, 18);
         createNote.setFont(newButtonFont);
-        createNote.setBounds(200, 240, 180, 40);
+//        createNote.setBounds(200, 240, 180, 40);
 
-        // Styling second button (Search)
-        searchNotes.setFont(newButtonFont);
-        searchNotes.setBounds(810, 410, 180, 40);
+        gbc.gridy = 0; // Set the gridy for the additional components
+        add(homeTitle, gbc);
 
-        // Styling searchBar
-        Font searchFont = searchBar.getFont().deriveFont(Font.PLAIN, 15);
-        searchBar.setFont(searchFont);
-        searchBar.setBorder(new LineBorder(Color.lightGray, 3));
-        searchBar.setBounds(400, 400, 400, 60);
+        gbc.gridy = 1; // Increment gridy for the next component
+        add(createNote, gbc);
 
         // Repaint to apply styling changes
         this.repaint();
+
+
     }
 
     // ActionListener method implementation
@@ -159,5 +202,77 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Empty method required due to interface implementation
+
+        this.propertyUpdate();
+    }
+
+    private void propertyUpdate() {
+        retrieveController.execute();
+        idMap = searchViewModel.getState().getNotes();
+        updateOptions();
+    }
+
+
+    private void updateOptions() {
+        allOptions = new ArrayList<>(); // reset options
+        for (Map.Entry<Integer, String> entry : idMap.entrySet()) {
+            addOption(entry.getKey(), entry.getValue());
+        }
+        filterOptions();
+    }
+
+
+    private void addOption(int id, String name) {
+        OptionItem optionItem = new OptionItem(id, name);
+        allOptions.add(optionItem);
+    }
+
+    private void filterOptions() {
+        String searchTerm = searchField.getText().toLowerCase();
+        filteredOptions.clear();
+
+        for (OptionItem option : allOptions) {
+            if (option.getName().toLowerCase().contains(searchTerm)) {
+                filteredOptions.add(option);
+            }
+        }
+
+        optionsList.setListData(filteredOptions.toArray(new OptionItem[0]));
+    }
+
+    private static class OptionItem {
+        private final int id;
+        private final String name;
+
+        public OptionItem(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null || getClass() != obj.getClass()) return false;
+            OptionItem that = (OptionItem) obj;
+            return id == that.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 }
