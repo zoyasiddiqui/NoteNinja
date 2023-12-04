@@ -91,6 +91,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         noteTitleButton.setFocusPainted(false);
         noteTitleButton.addActionListener(this);
 
+
         // ===== SAVE NOTE LISTENER =====
         saveNote.addActionListener(
                 new ActionListener() {
@@ -111,6 +112,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ======== BACK LISTENER =======
         backMenu.addActionListener(
                 new ActionListener() {
@@ -123,6 +125,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 }
         );
         // ==============================
+
 
         // ====== AI SNIPPET LISTENER =======
         createAISnippet.addActionListener(new ActionListener() {
@@ -160,6 +163,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
 
         // ==============================
 
+
         // ====== CODE SNIPPET LISTENER =======
         createCodeSnippet.addActionListener(
                 new ActionListener() {
@@ -195,6 +199,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
         );
         // ==============================
 
+
         // ====== RENAME LISTENER =======
         noteTitleButton.addActionListener(
                 new ActionListener() {
@@ -219,6 +224,7 @@ public class EditNoteView extends JPanel implements ActionListener, PropertyChan
                 }
         );
         // ==============================
+
 
         // ==== DELETE NOTE LISTENER ====
         deleteNote.addActionListener(
