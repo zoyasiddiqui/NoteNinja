@@ -10,6 +10,7 @@ import interface_adapter.edit_note.EditNoteViewModel;
 import interface_adapter.search_notes.SearchViewModel;
 import use_case.create_AI_snippet.CreateAISnippetDataAccessInterface;
 import use_case.create_code_snippet.CreateCodeSnippetDataAccessInterface;
+import use_case.delete_note.DeleteNoteDataAccessInterface;
 import view.EditNoteView;
 import view.SearchView;
 import view.ViewManager;

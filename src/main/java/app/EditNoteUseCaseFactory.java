@@ -42,7 +42,7 @@ public class EditNoteUseCaseFactory {
             ViewManagerModel viewManagerModel,
             EditNoteViewModel editNoteViewModel,
             SearchViewModel searchViewModel,
-            EditNoteDataAccessInterface editNoteDataAccessInterface,
+            EditNoteDataAccessInterface editNoteDataAccessObject,
             CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface,
             CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface) {
 
@@ -51,15 +51,24 @@ public class EditNoteUseCaseFactory {
                 editNoteViewModel, viewManagerModel);
 
         // Create various controllers for different use cases
-        RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter, editNoteDataAccessInterface);
+        RenameNoteController renameUseCase = createRenameUseCase(editNotePresenter, editNoteDataAccessObject);
 
-        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessInterface,
+        SaveController saveNoteUseCase = createSaveUseCase(editNoteDataAccessObject,
                 editNotePresenter);
 
         BackMenuController backMenuUseCase = createBackMenuUseCase(editNotePresenter);
 
-        DeleteNoteController deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter,
-                (DeleteNoteDataAccessInterface) editNoteDataAccessInterface);
+        DeleteNoteController deleteNoteUseCase = null;
+        try {
+            if (editNoteDataAccessObject instanceof DeleteNoteDataAccessInterface) {
+                deleteNoteUseCase = createDeleteNoteUseCase(editNotePresenter, (DeleteNoteDataAccessInterface) editNoteDataAccessObject);
+            } else {
+                int casein = 1;
+            }
+        } catch (Exception e) {
+            // Handle other exceptions if needed
+            e.printStackTrace();
+        }
 
         CreateAISnippetController createAISnippetUseCase = createAISnippetUseCase(editNotePresenter,
                 createAISnippetDataAccessInterface);
@@ -97,18 +106,18 @@ public class EditNoteUseCaseFactory {
     // Note that we don't pass in any DAO for the RenameUseCase because it does not interact with DAOs
     // RenameUseCase only updates the note's state and fires the property change in view model
     static RenameNoteController createRenameUseCase(EditNoteOutputBoundary editNotePresenter,
-                                                    EditNoteDataAccessInterface editNoteDataAccessInterface) {
-        RenameNoteInputBoundary renameNoteInteractor = new RenameNoteInteractor(editNotePresenter, editNoteDataAccessInterface);
+                                                    EditNoteDataAccessInterface editNoteDataAccessObject) {
+        RenameNoteInputBoundary renameNoteInteractor = new RenameNoteInteractor(editNotePresenter, editNoteDataAccessObject);
         return new RenameNoteController(renameNoteInteractor);
     }
 
     // Helper method to create a SaveController
-    public static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessInterface,
+    public static SaveController createSaveUseCase(EditNoteDataAccessInterface editNoteDataAccessObject,
                                                    EditNoteOutputBoundary editNotePresenter) {
 
         // We need a noteFactory for SaveNoteInteractor, so it can create a note entity when saving new notes.
         NoteFactory noteFactory = new CommonNoteFactory();
-        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessInterface, noteFactory, editNotePresenter);
+        SaveNoteInteractor saveNoteInteractor = new SaveNoteInteractor(editNoteDataAccessObject, noteFactory, editNotePresenter);
         return new SaveController(saveNoteInteractor);
     }
 
