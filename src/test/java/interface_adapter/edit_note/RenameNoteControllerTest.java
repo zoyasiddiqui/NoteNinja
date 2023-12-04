@@ -1,6 +1,5 @@
 package interface_adapter.edit_note;
 
-import interface_adapter.edit_note.RenameNoteController;
 import org.junit.jupiter.api.Test;
 import use_case.rename_note.RenameNoteInputBoundary;
 

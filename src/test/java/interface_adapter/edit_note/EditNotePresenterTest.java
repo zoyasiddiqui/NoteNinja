@@ -1,48 +1,46 @@
 package interface_adapter.edit_note;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.create_note.CreateNoteViewModel;
-import org.junit.jupiter.api.BeforeEach;
+import interface_adapter.search_notes.SearchViewModel;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import use_case.edit_note.EditNoteOutputData;
+import org.mockito.Mockito;
 import use_case.rename_note.RenameNoteOutputData;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-class EditNotePresenterTest {
+public class EditNotePresenterTest {
 
-    @Mock
-    private CreateNoteViewModel createNoteViewModel;
 
-    @Mock
-    private EditNoteViewModel editNoteViewModel;
 
-    @Mock
-    private ViewManagerModel viewManagerModel;
+    @Test
+    void testPrepareTitleChange() {
+        // Arrange
+        SearchViewModel searchNoteViewModel = Mockito.mock(SearchViewModel.class);
+        EditNoteViewModel editNoteViewModel = Mockito.mock(EditNoteViewModel.class);
+        ViewManagerModel viewManagerModel = Mockito.mock(ViewManagerModel.class);
 
-    @InjectMocks
-    private EditNotePresenter editNotePresenter;
+        EditNotePresenter editNotePresenter = new EditNotePresenter(searchNoteViewModel, editNoteViewModel, viewManagerModel);
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+        RenameNoteOutputData mockTitle = Mockito.mock(RenameNoteOutputData.class);
+        when(mockTitle.getTitle()).thenReturn("New Note Title");
+
     }
 
-//    @Test
-//    void prepareNote_shouldSetNoteStateAndChangeView() {
-//
-//    }
-//
-//    @Test
-//    void prepareTitleChange_shouldSetTitleAndFirePropertyChanged() {
-//
-//    }
-//
-//    @Test
-//    void prepareBackMenu_shouldSetActiveViewAndFirePropertyChanged() {
-//
-//    }
+    @Test
+    void testPrepareBackMenu() {
+        // Arrange
+        SearchViewModel searchNoteViewModel = Mockito.mock(SearchViewModel.class);
+        EditNoteViewModel editNoteViewModel = Mockito.mock(EditNoteViewModel.class);
+        ViewManagerModel viewManagerModel = Mockito.mock(ViewManagerModel.class);
+
+        EditNotePresenter editNotePresenter = new EditNotePresenter(searchNoteViewModel, editNoteViewModel, viewManagerModel);
+
+        // Act
+        editNotePresenter.prepareBackMenu();
+
+        // Assert
+        verify(viewManagerModel, Mockito.times(1)).setActiveView(searchNoteViewModel.getViewName());
+        verify(viewManagerModel, Mockito.times(1)).firePropertyChanged();
+    }
 }

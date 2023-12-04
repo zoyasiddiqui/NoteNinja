@@ -1,37 +1,41 @@
 package use_case.back_menu;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import use_case.edit_note.EditNoteOutputBoundary;
+
+import static org.mockito.Mockito.*;
 
 public class BackMenuInteractorTest {
 
     @Test
     void testExecute() {
         // Mock the EditNoteOutputBoundary presenter
-        EditNoteOutputBoundary editNotePresenter = Mockito.mock(EditNoteOutputBoundary.class);
+        EditNoteOutputBoundary editNotePresenter = mock(EditNoteOutputBoundary.class);
 
         // Create an instance of BackMenuInteractor with the mocked presenter
         BackMenuInteractor backMenuInteractor = new BackMenuInteractor(editNotePresenter);
 
-        // Call the execute method
+        // Call the method under test
         backMenuInteractor.execute();
 
-        // Verify that the prepareBackMenu method on the presenter is called
-        Mockito.verify(editNotePresenter, Mockito.times(1)).prepareBackMenu();
+        // Verify that the prepareBackMenu method was called on the editNotePresenter
+        verify(editNotePresenter).prepareBackMenu();
     }
 
     @Test
-    void testConstructor() {
+    void testExecuteMultipleTimes() {
         // Mock the EditNoteOutputBoundary presenter
-        EditNoteOutputBoundary editNotePresenter = Mockito.mock(EditNoteOutputBoundary.class);
+        EditNoteOutputBoundary editNotePresenter = mock(EditNoteOutputBoundary.class);
 
         // Create an instance of BackMenuInteractor with the mocked presenter
         BackMenuInteractor backMenuInteractor = new BackMenuInteractor(editNotePresenter);
 
-        // Assert that the editNotePresenter instance variable is set
-        assertNotNull(backMenuInteractor.editNotePresenter);
-        assertEquals(editNotePresenter, backMenuInteractor.editNotePresenter);
+        // Call the method under test multiple times
+        backMenuInteractor.execute();
+        backMenuInteractor.execute();
+        backMenuInteractor.execute();
+
+        // Verify that the prepareBackMenu method was called on the editNotePresenter exactly 3 times
+        verify(editNotePresenter, times(3)).prepareBackMenu();
     }
 }
