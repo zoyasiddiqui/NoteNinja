@@ -24,7 +24,6 @@ class EditNoteUseCaseFactoryTest {
         EditNoteDataAccessInterface editNoteDataAccessInterface = mock(EditNoteDataAccessInterface.class);
         CreateAISnippetDataAccessInterface createAISnippetDataAccessInterface = mock(CreateAISnippetDataAccessInterface.class);
         CreateCodeSnippetDataAccessInterface createCodeSnippetDataAccessInterface = mock(CreateCodeSnippetDataAccessInterface.class);
-        // Assuming DeleteNoteDataAccessInterface is needed for some reason in EditNoteUseCaseFactory
 
         // Act
         EditNoteView editNoteView = EditNoteUseCaseFactory.create(
