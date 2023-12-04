@@ -8,14 +8,11 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_note.CreateNoteController;
 import interface_adapter.search_notes.SearchViewModel;
 import interface_adapter.edit_note.EditNoteViewModel;
-import interface_adapter.retrieve.RetrieveController;
 import interface_adapter.search_notes.SearchController;
 import interface_adapter.search_notes.SearchPresenter;
 import use_case.create_note.CreateNoteDataAccessInterface;
 import use_case.create_note.CreateNoteInputBoundary;
 import use_case.create_note.CreateNoteInteractor;
-import use_case.retrieve_usecase.RetrieveInputBoundary;
-import use_case.retrieve_usecase.RetrieveInteractor;
 import use_case.search_notes.SearchInteractor;
 import use_case.search_notes.SearchNotesAccessInterface;
 import use_case.search_notes.SearchOutputBoundary;
@@ -46,10 +43,9 @@ public class HomeViewUseCaseFactory {
         // Create controllers for creating and searching notes
         CreateNoteController createNoteController = createCreateNoteController(searchNotePresenter, noteDataAccessObject, noteFactory);
         SearchController searchController = createSearchController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
-        RetrieveController retrieveController = createRetrieveController(searchNotePresenter, (SearchNotesAccessInterface) noteDataAccessObject);
 
         // Return an instance of HomeView with the created controllers
-        return new SearchVIew(searchViewModel, createNoteController, searchController, retrieveController);
+        return new SearchVIew(searchViewModel, createNoteController, searchController);
     }
 
     private static SearchOutputBoundary createSearchNotePresenter(SearchViewModel searchViewModel,
@@ -58,13 +54,6 @@ public class HomeViewUseCaseFactory {
         return new SearchPresenter(searchViewModel, editNoteViewModel, viewManagerModel);
 
     }
-
-    private static RetrieveController createRetrieveController(SearchOutputBoundary searchNotePresenter,
-                                                               SearchNotesAccessInterface searchNotesAccessInterface) {
-        RetrieveInputBoundary retrieveInteractor = new RetrieveInteractor(searchNotePresenter, searchNotesAccessInterface);
-        return new RetrieveController(retrieveInteractor);
-    }
-
 
     // Helper method to create a CreateNoteController
     private static CreateNoteController createCreateNoteController(SearchOutputBoundary searchNotePresenter,
