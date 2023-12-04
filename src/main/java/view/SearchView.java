@@ -51,7 +51,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         // ==== RETRIEVE LIST OF NOTES ====
 //        TODO: DO THIS USE CASE AHHHHH!!
-//        ArrayList notesList = retrieveController.execute();
+//        retrieveController.execute();
         // ================================
 
         // ==== MAKING BUTTONS/ LABELS ====
